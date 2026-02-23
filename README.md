@@ -1,196 +1,65 @@
-# Delhi Quiz Board
+# Quiz Finder
 
-> A real-time quiz event aggregator for the Delhi quizzing scene. Automatically extracts quiz announcements from a WhatsApp group, parses event details using GPT-4o vision, and serves them through a fast, filterable web interface.
+**Never miss a quiz again.** Quiz Finder aggregates quiz announcements from WhatsApp groups across India into one clean, searchable interface.
 
-```
-  ___________
- |  _______  |     Delhi Quiz Board
- | | QUIZ! | |     ==================
- | |_______| |     Never miss a quiz again.
- |   __ __   |     WhatsApp -> GPT-4o -> Web
- |  |__|__|  |
- |___________|
-```
+<!-- [**Browse quizzes →**](https://quizfinder.vercel.app) -->
+
+---
+
+## What is this?
+
+If you're into quizzing in India, you know the struggle: announcements scattered across dozens of WhatsApp groups, buried under memes and off-topic messages. Quiz Finder fixes that.
+
+We monitor popular quizzing WhatsApp groups, automatically extract event details using AI, and present everything in a filterable feed. No more scrolling through 500 unread messages to find that one quiz poster.
+
+---
+
+## Cities & Groups We Monitor
+
+| City | Groups |
+|------|--------|
+| **Delhi** | DQC Official |
+| **Bangalore** | KQA Quiz Announcements, 4 Edge Quiz Announcements |
+| **Chennai** | QFI Announcements 2 |
+| **Online** | Quiz Pro Quo |
+
+More cities and groups coming soon. Mumbai is next on the list.
+
+---
+
+## What You Can Do
+
+- **Filter by city** -- Pick your city and see only quizzes near you
+- **Filter by eligibility** -- College students? Open events? Under-23? Find what you're eligible for
+- **Online / Offline toggle** -- Quickly switch between in-person and virtual events
+- **Search** -- Find quizzes by name, organizer, or topic
+- **Quick action links** -- Register, WhatsApp the organizer, or check Instagram directly from the card
 
 ---
 
 ## How It Works
 
-```
-WhatsApp Group          Server                    Frontend
-  (DQC Official)  -->  Baileys WA API   -->    React + Vite
-                       |                        |
-                       v                        v
-                    GPT-4o Vision         Filterable grid
-                    (extracts quiz        with action buttons
-                     details from         (Register, WhatsApp,
-                     text + posters)       Instagram)
-                       |
-                       v
-                    JSON data store
-                    (quizzes.json)
-```
-
-1. **Connect** your WhatsApp account via QR scan in the admin panel
-2. **Select** the target WhatsApp group (e.g., Delhi Quiz Club)
-3. **Sync** triggers message fetch -- text messages and poster images go through GPT-4o
-4. **Extracted** quiz details (name, date, venue, eligibility, POC, links) are stored and published
-5. **Users** browse quizzes with filters for eligibility, mode (online/offline), org, and search
+Quiz announcements (text + poster images) are picked up from WhatsApp groups and run through GPT-4o, which extracts structured details: quiz name, date, time, venue, eligibility, team size, registration links, and more. High-confidence extractions are published automatically; ambiguous ones get flagged for review.
 
 ---
 
-## Features
+## Roadmap
 
-- **Automated extraction** -- GPT-4o vision reads both text captions and poster images
-- **Smart eligibility parsing** -- Normalizes "Under 23", "UG", "Open to all DU students" into filterable categories
-- **Online/Offline/Hybrid filter** -- Quick toggle between event modes
-- **Action buttons on cards** -- WhatsApp, Register, Instagram links right on the card (no detail page needed)
-- **Admin panel** -- QR login, group selection, sync trigger, quiz editor, publish/flag workflow
-- **Deduplication** -- Fuzzy matching prevents duplicate quiz entries
-- **Confidence scoring** -- Low-confidence extractions get flagged for manual review
-
----
-
-## Quick Start
-
-### Prerequisites
-
-- Node.js 20+
-- An OpenAI API key (with GPT-4o access)
-- A WhatsApp account for the bot session
-
-### Setup
-
-```bash
-# Clone
-git clone https://github.com/kirtan05/delhiquizboard.git
-cd delhiquizboard
-
-# Install dependencies
-npm install
-cd client && npm install && cd ..
-
-# Configure
-cp .env.example .env
-# Edit .env with your OpenAI key and admin token
-```
-
-### Development
-
-```bash
-npm run dev
-# Starts both server (port 3001) and client (port 5173)
-```
-
-### Production
-
-```bash
-npm run build:client
-npm start
-# Server runs on PORT (default 3001), serves API
-```
+- **Customizable notifications** -- Get alerted when a quiz matches your preferences (city, eligibility, format)
+- **Email alerts** -- Weekly digest or instant notifications straight to your inbox
+- **Org editing & posting** -- Quiz organizers can claim and manage their event listings
+- **Instagram scraper** -- Pull quiz announcements from quizzing Instagram pages
+- **Unstop scraper** -- Automatically import quizzes listed on Unstop
+- **More cities** -- Mumbai, Hyderabad, Kolkata, Pune, and more
 
 ---
 
-## Environment Variables
+## Contributing
 
-| Variable | Description | Required |
-|---|---|---|
-| `AUTH_TOKEN` | Admin panel auth token | Yes |
-| `OPENAI_API_KEY` | OpenAI API key (GPT-4o) | Yes |
-| `WHATSAPP_GROUP_ID` | Target WhatsApp group JID | Set via admin panel |
-| `CONFIDENCE_THRESHOLD` | Min confidence to auto-publish (0-1) | No (default: 0.7) |
-| `SYNC_INTERVAL_MINUTES` | Auto-sync interval | No (default: 30) |
-| `PORT` | Server port | No (default: 3001) |
-| `CORS_ORIGIN` | Allowed CORS origin | No (default: localhost:5173) |
+Quiz Finder is open source. If you want to add a city, suggest a group to monitor, report a bug, or contribute code:
 
----
-
-## Project Structure
-
-```
-.
-├── client/                  # React frontend (Vite)
-│   └── src/
-│       ├── components/      # QuizCard, QuizGrid, QuizDetail, Filters, AdminPanel
-│       ├── utils/           # API client, tag colors
-│       └── App.jsx          # Hash router, filter state
-├── server/
-│   ├── routes/              # Express routes (quizzes, sync)
-│   ├── sync/
-│   │   ├── whatsapp.js      # Baileys WA client, message fetch
-│   │   ├── extractor.js     # GPT-4o extraction prompt
-│   │   └── dedup.js         # Fuzzy deduplication
-│   ├── utils/
-│   │   └── eligibility.js   # Eligibility normalizer
-│   ├── middleware/           # Auth middleware
-│   ├── schemas/             # Zod validation schemas
-│   └── store.js             # JSON file data store
-├── data/
-│   ├── quizzes.json         # Quiz database
-│   └── posters/             # Downloaded poster images
-└── scripts/                 # Utility scripts
-```
-
----
-
-## API Endpoints
-
-### Public
-
-| Method | Path | Description |
-|---|---|---|
-| `GET` | `/api/quizzes` | List published quizzes (supports `?search`, `?org`, `?eligibility`, `?mode`, `?upcoming`) |
-| `GET` | `/api/quizzes/:id` | Get single quiz |
-
-### Admin (requires `Authorization: Bearer <token>`)
-
-| Method | Path | Description |
-|---|---|---|
-| `GET` | `/api/quizzes/admin/all` | All quizzes (including flagged) |
-| `POST` | `/api/quizzes` | Create quiz manually |
-| `PATCH` | `/api/quizzes/:id` | Update quiz fields |
-| `POST` | `/api/quizzes/:id/publish` | Publish a flagged quiz |
-| `DELETE` | `/api/quizzes/:id` | Delete quiz |
-| `POST` | `/api/sync/trigger` | Trigger WhatsApp sync |
-| `GET` | `/api/sync/status` | WhatsApp connection status |
-| `GET` | `/api/sync/connect` | SSE endpoint for QR + status |
-| `POST` | `/api/sync/reconnect` | Clear auth, require new QR |
-| `POST` | `/api/sync/set-group` | Set target WhatsApp group |
-| `GET` | `/api/sync/groups` | List cached WhatsApp groups |
-
----
-
-## Extracted Fields
-
-Each quiz is extracted with:
-
-| Field | Example |
-|---|---|
-| `name` | "QUIZFEST'26" |
-| `date` | "2026-02-23" |
-| `time` | "12:30" |
-| `venue` | "ARSD College" |
-| `mode` | "offline" / "online" / "hybrid" |
-| `eligibility` | ["U23", "UG"] |
-| `teamSize` | 2 |
-| `crossCollege` | true |
-| `hostingOrg` | "MindMasters" |
-| `quizMasters` | ["Yuvraj", "Pavani"] |
-| `poc` | { name, phone, whatsapp } |
-| `regLink` | "https://forms.gle/..." |
-| `instagramLink` | "https://instagram.com/..." |
-| `confidence` | 0.95 |
-
----
-
-## Tech Stack
-
-- **Frontend**: React 19, Vite 7, CSS custom properties
-- **Backend**: Express 5, Node.js
-- **WhatsApp**: Baileys v7 (multi-device)
-- **AI**: OpenAI GPT-4o (vision + text)
-- **Data**: JSON file store (no database needed)
+1. [Open an issue](https://github.com/kirtan05/delhiquizboard/issues) -- suggestions, bug reports, group requests
+2. Fork and submit a PR -- code contributions welcome
 
 ---
 

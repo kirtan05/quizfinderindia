@@ -1,4 +1,4 @@
-const AGE_PATTERN = /[Uu](?:nder\s*)?(\d{2})/;
+const AGE_PATTERN = /[Uu](?:nder)?[\s-]*(\d{2})/;
 const OPEN_PATTERNS = [/\bopen\b/i, /\beveryone\b/i, /\ball\b/i, /\banyone\b/i];
 const UG_PATTERNS = [/\bug\b/i, /\bundergrad/i, /\bbachelor/i];
 const PG_PATTERNS = [/\bpg\b/i, /\bpostgrad/i, /\bmaster/i, /\bmba\b/i];

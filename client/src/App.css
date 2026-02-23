@@ -158,6 +158,25 @@ img {
   transform: translateY(0);
 }
 
+.city-picker__online {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.6rem 1.4rem;
+  background: none;
+  color: var(--text-muted);
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.city-picker__online:hover {
+  color: var(--accent-electric);
+  border-color: var(--accent-electric);
+}
+
 /* ---- Disclaimer ---- */
 .disclaimer {
   display: flex;

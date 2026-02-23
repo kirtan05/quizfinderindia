@@ -1,7 +1,28 @@
 {
   "cities": {
     "Delhi": {
+      "groups": [
+        { "name": "DQC Official", "id": "919910038334-1526411369@g.us" }
+      ]
+    },
+    "Bangalore": {
+      "groups": [
+        { "name": "KQA Quiz Announcements", "id": "919902444486-1522038543@g.us" },
+        { "name": "4 Edge Quiz Announcements 2", "id": "120363417487420594@g.us" }
+      ]
+    },
+    "Chennai": {
+      "groups": [
+        { "name": "QFI Announcements 2", "id": "918610809414-1533791094@g.us" }
+      ]
+    },
+    "Mumbai": {
       "groups": []
+    },
+    "Online": {
+      "groups": [
+        { "name": "Quiz Pro Quo x4", "id": "918867610999-1628951766@g.us" }
+      ]
     }
   }
 }

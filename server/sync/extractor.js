@@ -28,6 +28,7 @@ Extract the following fields from the message and/or poster image. Return ONLY v
   },
   "regLink": "Registration link or null",
   "instagramLink": "Instagram link or null",
+  "city": "City where the quiz is happening. Infer from venue, organizer, or any location clues. Use one of: Delhi, Bangalore, Chennai, Mumbai, or null if online-only or unclear.",
   "confidence": 0.85,
   "extractedFields": ["list", "of", "fields", "that", "were", "actually", "found"]
 }
@@ -40,6 +41,7 @@ Rules:
 - teamSize: Extract from phrases like "team of 2", "lone wolf", "solo", "teams of 3", "1 to 3 members". Return the maximum allowed team size as a number.
 - crossCollege: Look for "cross-college", "inter-college", "cross institution", "open to all colleges".
 - mode: "offline" if there's a physical venue/college/room. "online" if Zoom/Meet/virtual/online-only. "hybrid" if both. Default to "offline" when a venue is present.
+- city: Infer the city from venue address, organizer name, or location clues. Known cities: Delhi (incl. NCR/Noida/Gurgaon/Gurugram), Bangalore (incl. Bengaluru), Chennai, Mumbai. If the quiz is online-only (Zoom/Meet/virtual), set city to null. If you can't determine the city, set to null.
 - For dates, use the current year (2026) if only month/day mentioned.
 - Return ONLY the JSON object, nothing else.`;
 

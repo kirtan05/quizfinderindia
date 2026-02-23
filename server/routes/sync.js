@@ -6,8 +6,8 @@ import makeWASocket, { useMultiFileAuthState, DisconnectReason } from 'baileys';
 import QRCode from 'qrcode';
 import pino from 'pino';
 import { requireAuth } from '../middleware/auth.js';
-import { syncWhatsApp, getWhatsAppStatus } from '../sync/whatsapp.js';
-import { saveWaStatus, getWaGroups, saveWaGroups, getWaStatus } from '../store.js';
+import { syncWhatsApp, getWhatsAppStatus, processMessage } from '../sync/whatsapp.js';
+import { saveWaStatus, getWaGroups, getWaStatus, getGroupCityMap } from '../store.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const AUTH_DIR = path.join(__dirname, '..', '..', 'auth_info_baileys');
@@ -93,11 +93,34 @@ router.get('/connect', requireAuth, async (req, res) => {
 
   async function startSocket() {
     const { state, saveCreds } = await useMultiFileAuthState(AUTH_DIR);
-    const sock = makeWASocket({ auth: state, logger: pino({ level: 'warn' }) });
+    const sock = makeWASocket({ auth: state, logger: pino({ level: 'warn' }), syncFullHistory: true });
     currentSock = sock;
     activeConnection = sock;
 
     sock.ev.on('creds.update', saveCreds);
+
+    // Collect history messages for processing
+    const groupCityMap = getGroupCityMap();
+    const targetGroupSet = new Set(Object.keys(groupCityMap));
+    const historyMessages = [];
+    let historyBatches = 0;
+
+    sock.ev.on('messaging-history.set', ({ messages, isLatest, progress }) => {
+      historyBatches++;
+      const relevant = messages.filter(m => targetGroupSet.has(m.key?.remoteJid));
+      if (relevant.length > 0) {
+        historyMessages.push(...relevant);
+      }
+      if (!ended) send('status', { status: 'syncing', message: `History batch #${historyBatches}: ${historyMessages.length} relevant messages (${progress ?? '?'}%)` });
+    });
+
+    sock.ev.on('messages.upsert', ({ messages }) => {
+      for (const msg of messages) {
+        if (targetGroupSet.has(msg.key?.remoteJid)) {
+          historyMessages.push(msg);
+        }
+      }
+    });
 
     let groupTimeout;
 
@@ -111,7 +134,7 @@ router.get('/connect', requireAuth, async (req, res) => {
       }
 
       if (connection === 'open') {
-        send('status', { status: 'connected', message: 'WhatsApp connected!' });
+        send('status', { status: 'connected', message: 'WhatsApp connected! Waiting for history sync...' });
 
         saveWaStatus({
           connected: true,
@@ -120,30 +143,49 @@ router.get('/connect', requireAuth, async (req, res) => {
           error: null,
         });
 
-        // Fetch groups, cache them, send to client
-        try {
+        // Wait for history sync (up to 90s, checking every 3s)
+        let waited = 0;
+        let lastCount = 0;
+        while (waited < 90000 && !ended) {
           await new Promise(r => setTimeout(r, 3000));
-          if (ended) return;
-          const groups = await sock.groupFetchAllParticipating();
-          const groupList = Object.values(groups)
-            .map(g => ({
-              id: g.id,
-              name: g.subject || null,
-              members: g.participants?.length || 0,
-            }))
-            .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-
-          saveWaGroups(groupList);
-          send('groups', { groups: groupList });
-        } catch (err) {
-          if (!ended) send('error', { message: 'Failed to fetch groups: ' + err.message });
+          waited += 3000;
+          if (historyMessages.length !== lastCount) {
+            lastCount = historyMessages.length;
+            send('status', { status: 'syncing', message: `Collecting messages: ${historyMessages.length} so far...` });
+          }
+          // If no new messages for 15s after at least one batch, consider done
+          if (historyBatches > 0 && historyMessages.length === lastCount && waited > 15000) break;
         }
 
-        // Close after 10s
+        send('status', { status: 'syncing', message: `History sync done. ${historyMessages.length} messages from ${historyBatches} batches. Processing...` });
+
+        // Process collected history messages through extraction pipeline
+        if (historyMessages.length > 0 && targetGroupSet.size > 0) {
+          const threshold = parseFloat(process.env.CONFIDENCE_THRESHOLD) || 0.7;
+          let extracted = 0;
+          for (const gid of Object.keys(groupCityMap)) {
+            const city = groupCityMap[gid];
+            const msgs = historyMessages
+              .filter(m => m.key?.remoteJid === gid)
+              .sort((a, b) => Number(b.messageTimestamp || 0) - Number(a.messageTimestamp || 0));
+            for (const msg of msgs) {
+              try {
+                const quiz = await processMessage(msg, gid, threshold, sock, city);
+                if (quiz) {
+                  extracted++;
+                  send('status', { status: 'extracting', message: `Extracted: "${quiz.name}" [${city}]` });
+                }
+              } catch {}
+            }
+          }
+          send('status', { status: 'syncing', message: `Extracted ${extracted} quizzes from history.` });
+        }
+
+        // Close after 5s
         groupTimeout = setTimeout(() => {
           send('status', { status: 'done', message: 'Session complete' });
           cleanup();
-        }, 10000);
+        }, 5000);
       }
 
       if (connection === 'close') {

@@ -137,8 +137,10 @@ export function getGroupCityMap() {
   const config = getCityGroups();
   const map = {};
   for (const [city, { groups }] of Object.entries(config.cities)) {
-    for (const gid of groups) {
-      map[gid] = city;
+    for (const g of groups) {
+      // Support both { name, id } objects and plain string IDs
+      const gid = typeof g === 'string' ? g : g.id;
+      if (gid) map[gid] = city;
     }
   }
   return map;

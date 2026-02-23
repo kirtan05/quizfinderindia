@@ -2,14 +2,23 @@ node_modules/
 client/node_modules/
 .env
 auth_info_baileys/
+auth_info_baileys.bak/
 client/dist/
 
 # Data files with sensitive/runtime content
 data/posters/*
 !data/posters/.gitkeep
+data/quizzes.json
 data/wa-groups.json
 data/wa-status.json
+data/wa-all-groups.json
 data/sync-state.json
+
+# Scripts (internal tooling)
+scripts/
+
+# Internal planning docs
+docs/plans/
 
 # OS
 .DS_Store
@@ -18,5 +27,6 @@ Thumbs.db
 # Editor
 *.swp
 *.swo
+*.kate-swp
 .idea/
 .vscode/

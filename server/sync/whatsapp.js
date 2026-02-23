@@ -28,7 +28,7 @@ export function getWhatsAppStatus() {
  * Process a single WhatsApp message through the extraction pipeline.
  * Returns the quiz object if successfully extracted, or null.
  */
-async function processMessage(msg, groupId, threshold, sock, city) {
+export async function processMessage(msg, groupId, threshold, sock, city) {
   const messageId = msg.key.id;
   if (isDuplicate(messageId)) return null;
 
@@ -66,7 +66,17 @@ async function processMessage(msg, groupId, threshold, sock, city) {
     return null;
   }
 
-  const similar = findSimilarQuiz(extracted, city);
+  // Use LLM-extracted city if available (handles cross-city posts),
+  // fall back to the group's default city.
+  // For online-only quizzes, use "Online" as the city.
+  let quizCity = city || null;
+  if (extracted.city) {
+    quizCity = extracted.city;
+  } else if (extracted.mode === 'online') {
+    quizCity = 'Online';
+  }
+
+  const similar = findSimilarQuiz(extracted, quizCity);
   if (similar) {
     console.log(`  Skipping duplicate: "${extracted.name}" ~ "${similar.name}"`);
     markMessageProcessed(messageId);
@@ -93,7 +103,7 @@ async function processMessage(msg, groupId, threshold, sock, city) {
     teamSize: extracted.teamSize ?? null,
     crossCollege: extracted.crossCollege ?? null,
     mode: extracted.mode || 'offline',
-    city: city || null,
+    city: quizCity,
     sourceGroupId: groupId,
     posterImage: imagePath ? `posters/${path.basename(imagePath)}` : null,
     sourceCaption: captionText || null,
@@ -134,6 +144,7 @@ export async function syncWhatsApp() {
   const sock = makeWASocket({
     auth: state,
     logger,
+    syncFullHistory: true,
   });
 
   sock.ev.on('creds.update', saveCreds);
@@ -143,6 +154,8 @@ export async function syncWhatsApp() {
     let connected = false;
     const pendingMessages = [];
     const targetGroupSet = new Set(groupIds);
+    let historyDone = false;
+    let historyBatches = 0;
 
     sock.ev.on('messages.upsert', async ({ messages }) => {
       for (const msg of messages) {
@@ -152,11 +165,16 @@ export async function syncWhatsApp() {
       }
     });
 
-    sock.ev.on('messaging-history.set', ({ messages }) => {
+    sock.ev.on('messaging-history.set', ({ messages, isLatest, progress }) => {
+      historyBatches++;
       const relevant = messages.filter(m => targetGroupSet.has(m.key?.remoteJid));
+      const total = messages.length;
+      console.log(`[history batch #${historyBatches}] ${total} messages total, ${relevant.length} from configured groups (progress: ${progress ?? '?'}%, isLatest: ${isLatest ?? '?'})`);
       if (relevant.length > 0) {
-        console.log(`[messaging-history.set] Got ${relevant.length} messages from configured groups`);
         pendingMessages.push(...relevant);
+      }
+      if (isLatest) {
+        historyDone = true;
       }
     });
 
@@ -208,26 +226,56 @@ export async function syncWhatsApp() {
         console.log(`Connected. Syncing ${groupIds.length} groups across ${[...new Set(Object.values(groupCityMap))].join(', ')}...`);
         saveWaStatus({ connected: true, loggedOut: false, lastSync: new Date().toISOString(), error: null });
 
-        console.log('Waiting 5s for initial history sync...');
-        await new Promise(r => setTimeout(r, 5000));
+        // Wait for history sync to complete (up to 2 minutes)
+        console.log('Waiting for history sync...');
+        const maxWait = 120_000;
+        const pollInterval = 3_000;
+        let waited = 0;
+        let lastCount = 0;
 
-        // Try fetchMessageHistory for each group that has no messages yet
+        while (waited < maxWait) {
+          await new Promise(r => setTimeout(r, pollInterval));
+          waited += pollInterval;
+
+          if (pendingMessages.length !== lastCount) {
+            console.log(`  ${pendingMessages.length} relevant messages collected so far...`);
+            lastCount = pendingMessages.length;
+          }
+
+          // Done if history sync says it's done, or if no new messages for 15s after at least one batch
+          if (historyDone) {
+            console.log('History sync complete (isLatest=true).');
+            break;
+          }
+        }
+
+        // Also try fetchMessageHistory for groups that still have 0 messages
         for (const gid of groupIds) {
-          if (pendingMessages.filter(m => m.key?.remoteJid === gid).length === 0) {
+          const count = pendingMessages.filter(m => m.key?.remoteJid === gid).length;
+          if (count === 0) {
             try {
-              console.log(`Fetching history for group ${gid}...`);
-              await sock.fetchMessageHistory(20, { remoteJid: gid, id: '', fromMe: false }, Math.floor(Date.now() / 1000));
+              console.log(`No history for ${groupCityMap[gid]} group, requesting explicitly...`);
+              await sock.fetchMessageHistory(50, { remoteJid: gid, id: '', fromMe: false }, Math.floor(Date.now() / 1000));
             } catch (err) {
-              console.log(`fetchMessageHistory not available for ${gid}: ${err.message}`);
+              console.log(`  fetchMessageHistory failed: ${err.message}`);
             }
           }
         }
 
-        console.log('Waiting 15s for history responses...');
-        await new Promise(r => setTimeout(r, 15000));
+        // Give a bit more time for any last responses
+        if (!historyDone) {
+          console.log('Waiting 10s more for any remaining history...');
+          await new Promise(r => setTimeout(r, 10_000));
+        }
+
+        console.log(`\nHistory sync done. ${pendingMessages.length} relevant messages from ${historyBatches} batches.`);
+        for (const gid of groupIds) {
+          const count = pendingMessages.filter(m => m.key?.remoteJid === gid).length;
+          console.log(`  ${groupCityMap[gid]}: ${count} messages`);
+        }
 
         await processPending();
-        console.log(`Found ${processedInSession.length} quizzes. Disconnecting...`);
+        console.log(`\nFound ${processedInSession.length} quizzes. Disconnecting...`);
         sock.end(undefined);
       }
     });
