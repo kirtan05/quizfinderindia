@@ -1,0 +1,6 @@
+node_modules/
+.env
+data/posters/*
+!data/posters/.gitkeep
+auth_info_baileys/
+client/dist/
