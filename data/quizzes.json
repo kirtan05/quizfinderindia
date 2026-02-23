@@ -9,18 +9,16 @@
     "time": "13:00",
     "venue": "Room 124, Old Building, Ramjas College, University of Delhi",
     "venueMapLink": null,
-    "eligibility": [
-      "Under-25 (Open)"
-    ],
+    "eligibility": "Cross-college teams and lone wolves permitted",
     "eligibilityCategories": [
       "Open"
     ],
     "hostingOrg": "Qnights, The Quizzing Society in collaboration with Kaalvritt, The History Department of Ramjas College",
     "quizMasters": [],
     "poc": {
-      "name": null,
-      "phone": null,
-      "whatsapp": null
+      "name": "Chaitanya",
+      "phone": "6201425310",
+      "whatsapp": "6201425310"
     },
     "regLink": "https://forms.gle/vTGkdMkFuQGZCLEG6",
     "instagramLink": "https://www.instagram.com/qnightsramjas",
@@ -28,7 +26,7 @@
     "sourceMessageId": "3A5CB3B5068F472101A2",
     "sourceTimestamp": "2026-02-23T17:25:44.000Z",
     "createdAt": "2026-02-23T17:26:01.284Z",
-    "updatedAt": "2026-02-23T17:26:01.284Z",
+    "updatedAt": "2026-02-23T18:14:15.274Z",
     "extractedFields": [
       "name",
       "description",
@@ -39,7 +37,10 @@
       "hostingOrg",
       "regLink",
       "instagramLink"
-    ]
+    ],
+    "teamSize": 2,
+    "crossCollege": true,
+    "mode": "offline"
   },
   {
     "id": "69f213d1-dde3-4ae0-9116-29a60790a5c6",
@@ -51,12 +52,8 @@
     "time": null,
     "venue": "Tangentia",
     "venueMapLink": null,
-    "eligibility": [
-      "Open"
-    ],
-    "eligibilityCategories": [
-      "Open"
-    ],
+    "eligibility": [],
+    "eligibilityCategories": [],
     "hostingOrg": "Quaternion Society",
     "quizMasters": [],
     "poc": {
@@ -70,7 +67,7 @@
     "sourceMessageId": "AC8C0D6B5D06030DD4AE1C5649D8F620",
     "sourceTimestamp": "2026-02-22T10:52:05.000Z",
     "createdAt": "2026-02-23T17:26:17.315Z",
-    "updatedAt": "2026-02-23T17:26:17.315Z",
+    "updatedAt": "2026-02-23T18:14:18.992Z",
     "extractedFields": [
       "name",
       "description",
@@ -78,7 +75,10 @@
       "eligibility",
       "hostingOrg",
       "instagramLink"
-    ]
+    ],
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "offline"
   },
   {
     "id": "d0561987-9862-43d4-84dd-aa9665d2c484",
@@ -91,8 +91,7 @@
     "venue": "ARSD College",
     "venueMapLink": null,
     "eligibility": [
-      "Under 23",
-      "College students"
+      "Open to college students under 23."
     ],
     "eligibilityCategories": [
       "U23"
@@ -102,7 +101,7 @@
     "poc": {
       "name": "Pranav",
       "phone": "8340251873",
-      "whatsapp": null
+      "whatsapp": "8340251873"
     },
     "regLink": "https://forms.gle/7kJTcCmfs5cto6SU6",
     "instagramLink": null,
@@ -110,7 +109,7 @@
     "sourceMessageId": "AC7A98E68080F62EBA8C169351360C65",
     "sourceTimestamp": "2026-02-22T07:15:34.000Z",
     "createdAt": "2026-02-23T17:26:33.788Z",
-    "updatedAt": "2026-02-23T17:26:33.788Z",
+    "updatedAt": "2026-02-23T18:14:37.083Z",
     "extractedFields": [
       "name",
       "description",
@@ -121,7 +120,10 @@
       "hostingOrg",
       "poc",
       "regLink"
-    ]
+    ],
+    "teamSize": 2,
+    "crossCollege": true,
+    "mode": "offline"
   },
   {
     "id": "fde87a13-ccbd-4f06-b360-66c8490c0787",
@@ -133,9 +135,7 @@
     "time": null,
     "venue": "Maharaja Agrasen College, University of Delhi",
     "venueMapLink": null,
-    "eligibility": [
-      "UG Students"
-    ],
+    "eligibility": "UG Students",
     "eligibilityCategories": [
       "UG"
     ],
@@ -152,7 +152,7 @@
     "sourceMessageId": "AC39E164E6E6FA37FBFADF7183525308",
     "sourceTimestamp": "2026-02-22T06:53:45.000Z",
     "createdAt": "2026-02-23T17:26:52.807Z",
-    "updatedAt": "2026-02-23T17:26:52.807Z",
+    "updatedAt": "2026-02-23T18:14:55.774Z",
     "extractedFields": [
       "name",
       "description",
@@ -161,7 +161,10 @@
       "eligibility",
       "hostingOrg",
       "regLink"
-    ]
+    ],
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "offline"
   },
   {
     "id": "6bdc3d60-e595-47e9-8458-464ed7d41478",
@@ -174,8 +177,7 @@
     "venue": "Hindu College, University of Delhi",
     "venueMapLink": null,
     "eligibility": [
-      "U23",
-      "College students"
+      "Open to college students under 23"
     ],
     "eligibilityCategories": [
       "U23"
@@ -196,7 +198,7 @@
     "sourceMessageId": "AC7FA0D3E56AB20E1D105453653483C0",
     "sourceTimestamp": "2026-02-21T18:13:44.000Z",
     "createdAt": "2026-02-23T17:27:04.783Z",
-    "updatedAt": "2026-02-23T17:27:04.783Z",
+    "updatedAt": "2026-02-23T18:15:10.901Z",
     "extractedFields": [
       "name",
       "description",
@@ -208,7 +210,10 @@
       "quizMasters",
       "poc",
       "regLink"
-    ]
+    ],
+    "teamSize": 2,
+    "crossCollege": null,
+    "mode": "offline"
   },
   {
     "id": "d3941e31-6074-40fc-9458-75712a176971",
@@ -221,14 +226,9 @@
     "venue": "S.D. Auditorium, Hindu College",
     "venueMapLink": null,
     "eligibility": [
-      "U-23",
-      "UG",
-      "PG"
+      "Team of 2 (1 mandatory female member)"
     ],
-    "eligibilityCategories": [
-      "UG",
-      "PG"
-    ],
+    "eligibilityCategories": [],
     "hostingOrg": "The Quizzing Society of Hindu College",
     "quizMasters": [],
     "poc": {
@@ -242,7 +242,7 @@
     "sourceMessageId": "AC49CF6B2D8D291E94A990E72075875C",
     "sourceTimestamp": "2026-02-21T07:31:41.000Z",
     "createdAt": "2026-02-23T17:27:16.657Z",
-    "updatedAt": "2026-02-23T17:27:16.657Z",
+    "updatedAt": "2026-02-23T18:15:24.040Z",
     "extractedFields": [
       "name",
       "description",
@@ -252,7 +252,10 @@
       "eligibility",
       "hostingOrg",
       "regLink"
-    ]
+    ],
+    "teamSize": 2,
+    "crossCollege": null,
+    "mode": "offline"
   },
   {
     "id": "26477603-e7dd-4777-87d6-2b8d0c3ebade",
@@ -265,7 +268,7 @@
     "venue": "Computer Lab 2, P.G.D.A.V College (Eve)",
     "venueMapLink": null,
     "eligibility": [
-      "UG"
+      "Open for UG students only."
     ],
     "eligibilityCategories": [
       "UG"
@@ -275,7 +278,7 @@
     "poc": {
       "name": "Harshit Tandon",
       "phone": "9354142958",
-      "whatsapp": null
+      "whatsapp": "9608441120"
     },
     "regLink": "https://forms.gle/iwHnZQfiC1jpr4uH7",
     "instagramLink": null,
@@ -283,7 +286,7 @@
     "sourceMessageId": "AC1521AA7E71557D89EF4C66BAFD6BFF",
     "sourceTimestamp": "2026-02-20T17:30:52.000Z",
     "createdAt": "2026-02-23T17:27:33.424Z",
-    "updatedAt": "2026-02-23T17:27:33.424Z",
+    "updatedAt": "2026-02-23T18:15:42.994Z",
     "extractedFields": [
       "name",
       "description",
@@ -294,7 +297,10 @@
       "hostingOrg",
       "poc",
       "regLink"
-    ]
+    ],
+    "teamSize": 2,
+    "crossCollege": true,
+    "mode": "offline"
   },
   {
     "id": "09b13ac1-4817-4587-ba58-443d293fcd71",
@@ -307,7 +313,7 @@
     "venue": "Conference Hall",
     "venueMapLink": null,
     "eligibility": [
-      "Open"
+      "Open to All!"
     ],
     "eligibilityCategories": [
       "Open"
@@ -317,7 +323,7 @@
     "poc": {
       "name": "Meet Aggarwal",
       "phone": "7009141977",
-      "whatsapp": null
+      "whatsapp": "7009141977"
     },
     "regLink": "https://forms.gle/VSvYUC2D1hxHvc9R6",
     "instagramLink": null,
@@ -325,7 +331,7 @@
     "sourceMessageId": "AC5AE86D05ADD504F56DCE288694D55E",
     "sourceTimestamp": "2026-02-20T17:21:53.000Z",
     "createdAt": "2026-02-23T17:27:47.206Z",
-    "updatedAt": "2026-02-23T17:27:47.206Z",
+    "updatedAt": "2026-02-23T18:15:57.004Z",
     "extractedFields": [
       "name",
       "description",
@@ -336,7 +342,10 @@
       "hostingOrg",
       "poc",
       "regLink"
-    ]
+    ],
+    "teamSize": 2,
+    "crossCollege": true,
+    "mode": "offline"
   },
   {
     "id": "bd1ffced-b77e-40c7-afa8-07d1d7639479",
@@ -349,7 +358,7 @@
     "venue": "Sri Venkateswara College, Moti Bagh II",
     "venueMapLink": null,
     "eligibility": [
-      "Open to all college students across all courses within Delhi and NCR"
+      "Open to all college students across all courses within Delhi and NCR!"
     ],
     "eligibilityCategories": [
       "Open"
@@ -359,7 +368,7 @@
     "poc": {
       "name": null,
       "phone": "+91 89716 76100",
-      "whatsapp": null
+      "whatsapp": "+91 89716 76100"
     },
     "regLink": "https://forms.gle/soR79k3PPexxjiyC7",
     "instagramLink": null,
@@ -367,7 +376,7 @@
     "sourceMessageId": "AC8789F2F56C219E219B85A881A2C6FC",
     "sourceTimestamp": "2026-02-20T16:30:29.000Z",
     "createdAt": "2026-02-23T17:28:05.942Z",
-    "updatedAt": "2026-02-23T17:28:05.942Z",
+    "updatedAt": "2026-02-23T18:16:15.073Z",
     "extractedFields": [
       "name",
       "description",
@@ -378,7 +387,10 @@
       "hostingOrg",
       "poc",
       "regLink"
-    ]
+    ],
+    "teamSize": 3,
+    "crossCollege": true,
+    "mode": "offline"
   },
   {
     "id": "2ce037e2-351a-470f-8dbe-7e0ba94d1325",
@@ -391,20 +403,17 @@
     "venue": "PLT, Science Block, Deshbandhu College, Kalkaji",
     "venueMapLink": null,
     "eligibility": [
-      "Open to all DU Students",
-      "Cross college/institution teams are allowed",
-      "Teams of 2 and lonewolves welcome"
+      "Open to all"
     ],
     "eligibilityCategories": [
-      "Open",
-      "DU Only"
+      "Open"
     ],
     "hostingOrg": "Physica, the Physics Society of Deshbandhu College",
     "quizMasters": [],
     "poc": {
-      "name": null,
-      "phone": null,
-      "whatsapp": null
+      "name": "Yuvraj Anand",
+      "phone": "+91 9709642717",
+      "whatsapp": "+91 9709642717"
     },
     "regLink": "https://docs.google.com/forms/d/e/1FAIpQLSftyKprxmfSzQgbhfaIgeFjJf1I01efnNZX5ywS9rAo4vYqcQ/viewform?usp=publish-editor",
     "instagramLink": null,
@@ -412,7 +421,7 @@
     "sourceMessageId": "ACA6802A694DF203D7F0CFEBD1A1DACA",
     "sourceTimestamp": "2026-02-20T16:20:43.000Z",
     "createdAt": "2026-02-23T17:28:30.086Z",
-    "updatedAt": "2026-02-23T17:28:30.086Z",
+    "updatedAt": "2026-02-23T18:16:35.619Z",
     "extractedFields": [
       "name",
       "description",
@@ -422,7 +431,10 @@
       "eligibility",
       "hostingOrg",
       "regLink"
-    ]
+    ],
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "offline"
   },
   {
     "id": "55225616-28b0-49c0-8a0c-037b8980562c",
@@ -435,7 +447,7 @@
     "venue": "Online (Finals)",
     "venueMapLink": null,
     "eligibility": [
-      "Open"
+      "ALL QUIZZES ARE OPEN"
     ],
     "eligibilityCategories": [
       "Open"
@@ -458,7 +470,7 @@
     "sourceMessageId": "ACC1FD79063F787A0E1D640AFD95B260",
     "sourceTimestamp": "2026-02-20T15:52:22.000Z",
     "createdAt": "2026-02-23T17:28:58.963Z",
-    "updatedAt": "2026-02-23T17:28:58.963Z",
+    "updatedAt": "2026-02-23T18:16:57.434Z",
     "extractedFields": [
       "name",
       "description",
@@ -468,7 +480,10 @@
       "quizMasters",
       "regLink",
       "instagramLink"
-    ]
+    ],
+    "teamSize": 3,
+    "crossCollege": true,
+    "mode": "online"
   },
   {
     "id": "c40595db-9946-4562-b4eb-4eb294d480c1",
@@ -480,10 +495,7 @@
     "time": "09:00",
     "venue": "Old Seminar Hall, PGDAV College (DU)",
     "venueMapLink": null,
-    "eligibility": [
-      "UG",
-      "PG"
-    ],
+    "eligibility": "UG & PG Students Only",
     "eligibilityCategories": [
       "UG",
       "PG"
@@ -501,7 +513,7 @@
     "sourceMessageId": "ACB53DCF2EEFB4B17B968CF2890DD877",
     "sourceTimestamp": "2026-02-20T15:52:20.000Z",
     "createdAt": "2026-02-23T17:29:16.612Z",
-    "updatedAt": "2026-02-23T17:29:16.612Z",
+    "updatedAt": "2026-02-23T18:17:12.956Z",
     "extractedFields": [
       "name",
       "description",
@@ -512,7 +524,10 @@
       "hostingOrg",
       "poc",
       "regLink"
-    ]
+    ],
+    "teamSize": 2,
+    "crossCollege": null,
+    "mode": "offline"
   },
   {
     "id": "051f6235-6cf5-4757-a2b5-acfe9049adbd",
@@ -525,14 +540,12 @@
     "venue": "Hansraj College",
     "venueMapLink": null,
     "eligibility": [
+      "Open for U.G., P.G. & U-23 participants"
+    ],
+    "eligibilityCategories": [
       "UG",
       "PG",
       "U23"
-    ],
-    "eligibilityCategories": [
-      "U23",
-      "UG",
-      "PG"
     ],
     "hostingOrg": "Illuminati and NCC Hansraj",
     "quizMasters": [],
@@ -547,7 +560,7 @@
     "sourceMessageId": "ACD609F33DD0E5F44AEE7C16D8831159",
     "sourceTimestamp": "2026-02-19T14:21:04.000Z",
     "createdAt": "2026-02-23T17:29:28.201Z",
-    "updatedAt": "2026-02-23T17:29:28.201Z",
+    "updatedAt": "2026-02-23T18:17:30.305Z",
     "extractedFields": [
       "name",
       "description",
@@ -557,7 +570,10 @@
       "eligibility",
       "hostingOrg",
       "regLink"
-    ]
+    ],
+    "teamSize": 2,
+    "crossCollege": true,
+    "mode": "offline"
   },
   {
     "id": "15861cce-4413-4af0-ad02-cd510110a841",
@@ -570,7 +586,7 @@
     "venue": null,
     "venueMapLink": null,
     "eligibility": [
-      "Open"
+      "Open to all"
     ],
     "eligibilityCategories": [
       "Open"
@@ -580,7 +596,7 @@
     "poc": {
       "name": "Ramesh Natarajan",
       "phone": "+917304787225",
-      "whatsapp": "73047 87225"
+      "whatsapp": "+917304787225"
     },
     "regLink": "https://rapidquizleague.com/powerplaySubscription",
     "instagramLink": null,
@@ -588,7 +604,7 @@
     "sourceMessageId": "3A322187D3E1DEAC98AC",
     "sourceTimestamp": "2026-02-19T11:25:37.000Z",
     "createdAt": "2026-02-23T17:29:38.510Z",
-    "updatedAt": "2026-02-23T17:29:38.510Z",
+    "updatedAt": "2026-02-23T18:17:45.896Z",
     "extractedFields": [
       "name",
       "description",
@@ -597,7 +613,10 @@
       "hostingOrg",
       "poc",
       "regLink"
-    ]
+    ],
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "online"
   },
   {
     "id": "af56aba7-f6e8-4f5e-822d-b3c0ca56ce9b",
@@ -609,22 +628,18 @@
     "time": "12:30",
     "venue": "Activity Room, Aryabhatta College",
     "venueMapLink": null,
-    "eligibility": [
+    "eligibility": "Open for all UG and PG students under 23",
+    "eligibilityCategories": [
       "UG",
       "PG",
-      "Under 23"
-    ],
-    "eligibilityCategories": [
-      "U23",
-      "UG",
-      "PG"
+      "U23"
     ],
     "hostingOrg": "Prashnottare: The Quiz Club of Aryabhatta College",
     "quizMasters": [],
     "poc": {
       "name": "Anuj Kumar",
       "phone": "9650373240",
-      "whatsapp": null
+      "whatsapp": "9860373240"
     },
     "regLink": "https://forms.gle/CEsUpKZuDMi72Q6t8",
     "instagramLink": "https://www.instagram.com/prashnottare_abc/",
@@ -632,7 +647,7 @@
     "sourceMessageId": "3A76170DBFF01CD5C14A",
     "sourceTimestamp": "2026-02-19T04:42:53.000Z",
     "createdAt": "2026-02-23T17:29:52.717Z",
-    "updatedAt": "2026-02-23T17:29:52.717Z",
+    "updatedAt": "2026-02-23T18:18:02.658Z",
     "extractedFields": [
       "name",
       "description",
@@ -644,7 +659,10 @@
       "poc",
       "regLink",
       "instagramLink"
-    ]
+    ],
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "offline"
   },
   {
     "id": "c900e1a6-d6a9-4c77-ad8a-5b0d34443b05",
@@ -671,13 +689,16 @@
     "sourceMessageId": "ACC12453D789DA43DB09BFC918542CDB",
     "sourceTimestamp": "2026-02-19T03:58:52.000Z",
     "createdAt": "2026-02-23T17:29:54.589Z",
-    "updatedAt": "2026-02-23T17:29:54.589Z",
+    "updatedAt": "2026-02-23T18:18:04.501Z",
     "extractedFields": [
       "name",
       "description",
       "date",
       "poc"
-    ]
+    ],
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "offline"
   },
   {
     "id": "bcd82158-d73e-4443-ac47-234fca722c07",
@@ -690,11 +711,9 @@
     "venue": "Nehru Centre, Worli",
     "venueMapLink": null,
     "eligibility": [
-      "Teams of 3"
+      "Teams of 3 for all quizzes"
     ],
-    "eligibilityCategories": [
-      "Custom"
-    ],
+    "eligibilityCategories": [],
     "hostingOrg": "The Bombay Quiz Club",
     "quizMasters": [],
     "poc": {
@@ -708,7 +727,7 @@
     "sourceMessageId": "AC75B9792AF4430C7F53C0E128A07D5E",
     "sourceTimestamp": "2026-02-19T03:58:50.000Z",
     "createdAt": "2026-02-23T17:30:20.048Z",
-    "updatedAt": "2026-02-23T17:30:20.048Z",
+    "updatedAt": "2026-02-23T18:18:36.844Z",
     "extractedFields": [
       "name",
       "description",
@@ -716,7 +735,10 @@
       "venue",
       "eligibility",
       "hostingOrg"
-    ]
+    ],
+    "teamSize": 3,
+    "crossCollege": null,
+    "mode": "offline"
   },
   {
     "id": "e4dff07a-2bef-4b2f-91d9-d02989514d8e",
@@ -728,19 +750,18 @@
     "time": "13:00",
     "venue": "S.D. Auditorium, Hindu College",
     "venueMapLink": null,
-    "eligibility": [
-      "U-23 UG & PG"
-    ],
+    "eligibility": "U-23 UG & PG",
     "eligibilityCategories": [
+      "U23",
       "UG",
       "PG"
     ],
     "hostingOrg": "Manthan, The Quizzing Society of Hindu College",
     "quizMasters": [],
     "poc": {
-      "name": null,
-      "phone": null,
-      "whatsapp": null
+      "name": "Prisha",
+      "phone": "9555752607",
+      "whatsapp": "9555752607"
     },
     "regLink": "https://forms.gle/REaERzAv4Ky24PZbA",
     "instagramLink": null,
@@ -748,7 +769,7 @@
     "sourceMessageId": "AC969248B6B6496A3A5B34C9BACDDFDD",
     "sourceTimestamp": "2026-02-17T16:51:48.000Z",
     "createdAt": "2026-02-23T17:30:36.015Z",
-    "updatedAt": "2026-02-23T17:30:36.015Z",
+    "updatedAt": "2026-02-23T18:18:52.920Z",
     "extractedFields": [
       "name",
       "description",
@@ -758,7 +779,10 @@
       "eligibility",
       "hostingOrg",
       "regLink"
-    ]
+    ],
+    "teamSize": 2,
+    "crossCollege": null,
+    "mode": "offline"
   },
   {
     "id": "a7b547b4-d118-4aed-9319-152a79972ef5",
@@ -770,19 +794,14 @@
     "time": "09:00",
     "venue": "Room 236, Maharaja Agrasen College",
     "venueMapLink": null,
-    "eligibility": [
-      "Open",
-      "Cross College teams allowed"
-    ],
-    "eligibilityCategories": [
-      "Open"
-    ],
+    "eligibility": "Carry a valid College/Government ID for verification.",
+    "eligibilityCategories": [],
     "hostingOrg": "InQuizitive – The Quiz Society of Maharaja Agrasen College",
     "quizMasters": [],
     "poc": {
       "name": "Arbaz",
       "phone": "9216711354",
-      "whatsapp": null
+      "whatsapp": "9216711354"
     },
     "regLink": "https://forms.gle/bA8Sn1vN9cpsP5iE9",
     "instagramLink": null,
@@ -790,7 +809,7 @@
     "sourceMessageId": "AC89CFF8C326D50FADC6B972D0103588",
     "sourceTimestamp": "2026-02-17T08:34:31.000Z",
     "createdAt": "2026-02-23T17:31:00.003Z",
-    "updatedAt": "2026-02-23T17:31:00.003Z",
+    "updatedAt": "2026-02-23T18:19:06.164Z",
     "extractedFields": [
       "name",
       "description",
@@ -801,7 +820,10 @@
       "hostingOrg",
       "poc",
       "regLink"
-    ]
+    ],
+    "teamSize": 2,
+    "crossCollege": true,
+    "mode": "offline"
   },
   {
     "id": "a9acf213-bef9-4059-8651-8ab3f76288a1",
@@ -814,7 +836,11 @@
     "venue": "Room 214, Maharaja Agrasen College",
     "venueMapLink": null,
     "eligibility": [
-      "Open"
+      "Participants can register as a Lone Wolf (individual) or as a Duo (team of two)",
+      "Cross College teams are allowed.",
+      "Individual registration is mandatory (teams can be formed on the spot)",
+      "You can come in teams, but each team member has to register individually",
+      "Carry a valid College/Government ID for verification"
     ],
     "eligibilityCategories": [
       "Open"
@@ -822,9 +848,9 @@
     "hostingOrg": "InQuizitive – The Quiz Society of Maharaja Agrasen College",
     "quizMasters": [],
     "poc": {
-      "name": null,
-      "phone": null,
-      "whatsapp": null
+      "name": "Arbaz",
+      "phone": "9216711354",
+      "whatsapp": "9216711354"
     },
     "regLink": "https://forms.gle/R7KHP5StAPj9JHXN6",
     "instagramLink": null,
@@ -832,7 +858,7 @@
     "sourceMessageId": "AC516E97BB855648A3D93999E0B48FDF",
     "sourceTimestamp": "2026-02-17T08:34:29.000Z",
     "createdAt": "2026-02-23T17:31:16.751Z",
-    "updatedAt": "2026-02-23T17:31:16.751Z",
+    "updatedAt": "2026-02-23T18:19:20.428Z",
     "extractedFields": [
       "name",
       "description",
@@ -842,6 +868,9 @@
       "eligibility",
       "hostingOrg",
       "regLink"
-    ]
+    ],
+    "teamSize": 2,
+    "crossCollege": true,
+    "mode": "offline"
   }
 ]

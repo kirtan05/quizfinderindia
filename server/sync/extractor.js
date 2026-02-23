@@ -1,6 +1,5 @@
 import OpenAI from 'openai';
 import { readFileSync } from 'fs';
-import { normalizeEligibility } from '../utils/eligibility.js';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -15,7 +14,8 @@ Extract the following fields from the message and/or poster image. Return ONLY v
   "time": "HH:MM format (24h) or descriptive like '2 PM' or null",
   "venue": "Full venue name and address or null",
   "venueMapLink": "Google Maps link if mentioned, or null",
-  "eligibility": ["Array of ONLY age/degree/university restrictions, e.g. 'Open', 'U23', 'UG', 'DU Only'. Do NOT include team size or cross-college info here."],
+  "eligibility": ["Human-readable eligibility as mentioned, e.g. 'Open to all', 'Under 23', 'UG Students only'"],
+  "eligibilityCategories": ["Normalized categories from ONLY this fixed set: 'Open', 'U18', 'U23', 'U25', 'U30', 'UG', 'PG', 'Research', 'DU Only'. Pick all that apply. Empty array if unclear."],
   "teamSize": "Maximum team size as a number (1 for solo-only, 2 for pairs, 3 for trios). null if not mentioned.",
   "crossCollege": "true if cross-college/cross-institution teams are explicitly allowed, false if restricted to one college, null if not mentioned",
   "mode": "One of: 'offline' (physical venue), 'online' (Zoom/Meet/virtual), 'hybrid' (both online and offline components). Default to 'offline' if a physical venue is mentioned.",
@@ -35,7 +35,8 @@ Extract the following fields from the message and/or poster image. Return ONLY v
 Rules:
 - confidence: 0.0-1.0 based on how much information you could extract. Below 0.5 if only name found. Above 0.8 if most fields found.
 - extractedFields: only list fields where you found actual data, not nulls.
-- eligibility: ONLY age limits (U23, Under 25), degree levels (UG, PG), or university restrictions (DU Only, Open). Never put team size or cross-college info in this array.
+- eligibility: The raw human-readable text as written in the announcement.
+- eligibilityCategories: Pick from ONLY these values: Open, U18, U23, U25, U30, UG, PG, Research, DU Only. If "Under 23" or "U-23" -> "U23". If "open to all" -> "Open". If "UG students" -> "UG". Apply all that match. Empty array if nothing matches.
 - teamSize: Extract from phrases like "team of 2", "lone wolf", "solo", "teams of 3", "1 to 3 members". Return the maximum allowed team size as a number.
 - crossCollege: Look for "cross-college", "inter-college", "cross institution", "open to all colleges".
 - mode: "offline" if there's a physical venue/college/room. "online" if Zoom/Meet/virtual/online-only. "hybrid" if both. Default to "offline" when a venue is present.
@@ -93,8 +94,5 @@ export async function extractQuizFromMessage(captionText, imagePath) {
     throw new Error(`Failed to parse OpenAI response as JSON: ${parseErr.message}`);
   }
 
-  return {
-    ...raw,
-    eligibilityCategories: normalizeEligibility(raw.eligibility),
-  };
+  return raw;
 }

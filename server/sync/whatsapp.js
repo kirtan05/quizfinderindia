@@ -94,6 +94,7 @@ async function processMessage(msg, groupId, threshold, sock) {
     crossCollege: extracted.crossCollege ?? null,
     mode: extracted.mode || 'offline',
     posterImage: imagePath ? `posters/${path.basename(imagePath)}` : null,
+    sourceCaption: captionText || null,
     sourceMessageId: messageId,
     sourceTimestamp: msg.messageTimestamp
       ? new Date(Number(msg.messageTimestamp) * 1000).toISOString()
