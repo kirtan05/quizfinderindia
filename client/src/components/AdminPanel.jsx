@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
   fetchAllQuizzes,
   createQuiz,
@@ -8,6 +8,9 @@ import {
   triggerSync,
   fetchSyncStatus,
   reconnectWhatsApp,
+  connectWhatsAppSSE,
+  fetchCachedGroups,
+  setWhatsAppGroup,
   AuthError,
 } from '../utils/api';
 import QuizEditor from './QuizEditor';
@@ -50,6 +53,230 @@ function WaStatusDot({ status }) {
   );
 }
 
+const MAX_VISIBLE_GROUPS = 50;
+
+function GroupPicker({ groups, onSelect, onClose }) {
+  const [search, setSearch] = useState('');
+  const [selected, setSelected] = useState(null);
+  const [setting, setSetting] = useState(false);
+  const [message, setMessage] = useState(null);
+
+  const filtered = groups.filter(g =>
+    (g.name || '').toLowerCase().includes(search.toLowerCase())
+  );
+  const visible = filtered.slice(0, MAX_VISIBLE_GROUPS);
+
+  async function handleConfirm() {
+    if (!selected) return;
+    setSetting(true);
+    try {
+      await setWhatsAppGroup(selected);
+      const name = groups.find(g => g.id === selected)?.name || selected;
+      setMessage(`Group set to "${name}"!`);
+      onSelect?.();
+      setTimeout(onClose, 1200);
+    } catch (err) {
+      setMessage('Failed: ' + err.message);
+    } finally {
+      setSetting(false);
+    }
+  }
+
+  return (
+    <div className="wa-modal__groups">
+      <input
+        type="text"
+        className="wa-modal__search"
+        placeholder="Search groups..."
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+        autoFocus
+      />
+      <span className="wa-modal__group-count">
+        {filtered.length === groups.length
+          ? `${groups.length} groups`
+          : `${filtered.length} of ${groups.length} groups`}
+        {filtered.length > MAX_VISIBLE_GROUPS && ` (showing first ${MAX_VISIBLE_GROUPS})`}
+      </span>
+      <div className="wa-modal__group-list">
+        {visible.map(g => (
+          <label
+            key={g.id}
+            className={`wa-modal__group-item ${selected === g.id ? 'wa-modal__group-item--selected' : ''}`}
+          >
+            <input
+              type="radio"
+              name="group"
+              value={g.id}
+              checked={selected === g.id}
+              onChange={() => setSelected(g.id)}
+            />
+            <span className="wa-modal__group-name">{g.name || '(unnamed group)'}</span>
+            <span className="wa-modal__group-meta">{g.members} members</span>
+          </label>
+        ))}
+        {filtered.length === 0 && (
+          <p className="wa-modal__message">No groups match "{search}"</p>
+        )}
+      </div>
+      {message && <p className="wa-modal__message">{message}</p>}
+      <button
+        className="btn btn--primary"
+        onClick={handleConfirm}
+        disabled={!selected || setting}
+      >
+        {setting ? 'Setting...' : 'Use This Group'}
+      </button>
+    </div>
+  );
+}
+
+function WhatsAppConnectModal({ onClose, onGroupSet, mode }) {
+  // mode: 'pick-group' (use cached groups) or 'connect' (full QR flow)
+  const [qrUrl, setQrUrl] = useState(null);
+  const [status, setStatus] = useState(mode === 'pick-group' ? 'loading-cache' : 'waiting');
+  const [message, setMessage] = useState(mode === 'pick-group' ? 'Loading groups...' : 'Starting connection...');
+  const [groups, setGroups] = useState([]);
+  const statusRef = useRef(status);
+  statusRef.current = status;
+
+  // For pick-group mode: load cached groups, fallback to live fetch
+  useEffect(() => {
+    if (mode !== 'pick-group') return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const cached = await fetchCachedGroups();
+        if (cancelled) return;
+        if (cached && cached.length > 0) {
+          setGroups(cached);
+          setStatus('selecting');
+          setMessage('Select your DQC group:');
+        } else {
+          // No cache — auto-fetch via SSE (will use existing auth, no QR needed)
+          setMessage('Fetching groups from WhatsApp...');
+          const es = connectWhatsAppSSE(
+            () => {}, // ignore QR (already authed)
+            (data) => {
+              if (data.status === 'connected' && !cancelled) {
+                setMessage('Connected! Loading groups...');
+              }
+            },
+            (data) => {
+              if (!cancelled) {
+                setGroups(data.groups);
+                setStatus('selecting');
+                setMessage('Select your DQC group:');
+              }
+              es.close();
+            },
+            (data) => {
+              if (!cancelled) { setStatus('error'); setMessage(data.message || 'Failed to fetch groups'); }
+              es.close();
+            }
+          );
+        }
+      } catch (err) {
+        if (!cancelled) { setStatus('error'); setMessage(err.message || 'Failed to load groups'); }
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [mode]);
+
+  // For connect mode: SSE
+  useEffect(() => {
+    if (mode !== 'connect') return;
+    const es = connectWhatsAppSSE(
+      (data) => { setQrUrl(data.qr); setStatus('scanning'); setMessage('Scan with WhatsApp'); },
+      (data) => {
+        if (data.status === 'connected') {
+          setStatus('connected');
+          setMessage('Connected! Fetching groups...');
+          setQrUrl(null);
+        } else if (data.status === 'done') {
+          if (statusRef.current !== 'selecting' && statusRef.current !== 'done') {
+            setStatus('done');
+            setMessage('Session complete');
+          }
+        } else if (data.status === 'logged_out') {
+          setStatus('error');
+          setMessage('Logged out. Try "Reset Session" first.');
+        } else if (data.status === 'closed') {
+          if (statusRef.current !== 'selecting' && statusRef.current !== 'done') {
+            // don't error out, just ignore
+          }
+        }
+      },
+      (data) => {
+        setGroups(data.groups);
+        setStatus('selecting');
+        setMessage('Select your DQC group:');
+      },
+      (data) => { setStatus('error'); setMessage(data.message || 'Connection error'); }
+    );
+    return () => { es.close(); };
+  }, [mode]);
+
+  const title = mode === 'pick-group' ? 'Select Group' : 'Connect WhatsApp';
+
+  return (
+    <div className="wa-modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
+      <div className="wa-modal">
+        <div className="wa-modal__header">
+          <h3>{title}</h3>
+          <button className="btn btn--ghost btn--sm" onClick={onClose}>X</button>
+        </div>
+
+        <div className="wa-modal__body">
+          {status === 'scanning' && qrUrl && (
+            <div className="wa-modal__qr">
+              <img src={qrUrl} alt="WhatsApp QR Code" width={300} height={300} />
+              <p className="wa-modal__hint">
+                WhatsApp &gt; Settings &gt; Linked Devices &gt; Link a Device
+              </p>
+            </div>
+          )}
+
+          {(status === 'waiting' || status === 'connected' || status === 'loading-cache') && (
+            <div className="wa-modal__loading">
+              <div className="loader"><span className="loader__bar" /><span className="loader__bar" /><span className="loader__bar" /></div>
+              <p className="wa-modal__message">{message}</p>
+            </div>
+          )}
+
+          {status === 'selecting' && groups.length > 0 && (
+            <GroupPicker
+              groups={groups}
+              onSelect={onGroupSet}
+              onClose={onClose}
+            />
+          )}
+
+          {status === 'done' && (
+            <>
+              <div className="wa-modal__done">
+                <span className="wa-modal__check">&#10003;</span>
+              </div>
+              <p className="wa-modal__message">{message}</p>
+            </>
+          )}
+
+          {status === 'error' && (
+            <>
+              <div className="wa-modal__error-icon">!</div>
+              <p className="wa-modal__message">{message}</p>
+            </>
+          )}
+
+          {status === 'scanning' && (
+            <p className="wa-modal__message">{message}</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminPanel({ onLogout }) {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -61,6 +288,7 @@ export default function AdminPanel({ onLogout }) {
   const [waStatus, setWaStatus] = useState(null);
   const [reconnecting, setReconnecting] = useState(false);
   const [reconnectMsg, setReconnectMsg] = useState(null);
+  const [showModal, setShowModal] = useState(null); // null | 'connect' | 'pick-group'
 
   function handleAuthError(err) {
     if (err instanceof AuthError || err.name === 'AuthError') {
@@ -216,19 +444,57 @@ export default function AdminPanel({ onLogout }) {
         {waStatus?.error && (
           <span className="wa-status__error">{waStatus.error}</span>
         )}
-        <button
-          className="btn btn--sm btn--secondary"
-          onClick={handleReconnect}
-          disabled={reconnecting}
-        >
-          {reconnecting ? 'Reconnecting...' : 'Reconnect WhatsApp'}
-        </button>
+        {waStatus?.connected ? (
+          waStatus?.groupName ? (
+            <span className="wa-status__group-name" title={waStatus.groupId}>
+              {waStatus.groupName}
+              <button
+                className="btn btn--sm btn--ghost"
+                onClick={() => setShowModal('pick-group')}
+                title="Change group"
+              >
+                Change
+              </button>
+            </span>
+          ) : (
+            <button
+              className="btn btn--sm btn--primary"
+              onClick={() => setShowModal('pick-group')}
+            >
+              Pick Group
+            </button>
+          )
+        ) : (
+          <button
+            className="btn btn--sm btn--primary"
+            onClick={() => setShowModal('connect')}
+          >
+            Connect WhatsApp
+          </button>
+        )}
+        {waStatus?.loggedOut && (
+          <button
+            className="btn btn--sm btn--ghost"
+            onClick={handleReconnect}
+            disabled={reconnecting}
+          >
+            {reconnecting ? 'Resetting...' : 'Reset Session'}
+          </button>
+        )}
       </div>
 
       {reconnectMsg && (
         <div className="admin-panel__reconnect-msg">
           {reconnectMsg}
         </div>
+      )}
+
+      {showModal && (
+        <WhatsAppConnectModal
+          mode={showModal}
+          onClose={() => { setShowModal(null); loadStatus(); }}
+          onGroupSet={() => loadStatus()}
+        />
       )}
 
       {error && <p className="admin-panel__error">{error}</p>}

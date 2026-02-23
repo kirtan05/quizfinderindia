@@ -98,6 +98,47 @@ export async function reconnectWhatsApp() {
   return res.json();
 }
 
+export async function fetchCachedGroups() {
+  const res = await fetch(`${BASE}/api/sync/groups`, { headers: authHeaders() });
+  if (res.status === 401) throw new AuthError();
+  if (res.status === 404) return null; // no cache yet
+  if (!res.ok) throw new Error('Failed to fetch groups');
+  return res.json();
+}
+
+export function connectWhatsAppSSE(onQr, onStatus, onGroups, onError) {
+  const token = localStorage.getItem('dqc_admin_token');
+  const evtSource = new EventSource(`${BASE}/api/sync/connect?token=${token}`);
+
+  evtSource.addEventListener('qr', (e) => {
+    onQr(JSON.parse(e.data));
+  });
+  evtSource.addEventListener('status', (e) => {
+    onStatus(JSON.parse(e.data));
+  });
+  evtSource.addEventListener('groups', (e) => {
+    onGroups(JSON.parse(e.data));
+  });
+  evtSource.addEventListener('error', (e) => {
+    try { onError(JSON.parse(e.data)); } catch { onError({ message: 'Connection error' }); }
+  });
+  evtSource.onerror = () => {
+    // SSE closed — expected after connection complete
+    evtSource.close();
+  };
+
+  return evtSource;
+}
+
+export async function setWhatsAppGroup(groupId) {
+  const res = await fetch(`${BASE}/api/sync/set-group`, {
+    method: 'POST', headers: authHeaders(), body: JSON.stringify({ groupId }),
+  });
+  if (res.status === 401) throw new AuthError();
+  if (!res.ok) throw new Error('Failed to set group');
+  return res.json();
+}
+
 export class AuthError extends Error {
   constructor() {
     super('Unauthorized');

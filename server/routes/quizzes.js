@@ -13,7 +13,7 @@ const router = Router();
 router.get('/', (req, res) => {
   let quizzes = getQuizzes().filter(q => q.status === 'published');
 
-  const { eligibility, org, upcoming, search } = req.query;
+  const { eligibility, org, upcoming, search, mode } = req.query;
 
   if (eligibility) {
     const filters = eligibility.split(',');
@@ -32,6 +32,13 @@ router.get('/', (req, res) => {
   if (upcoming === 'true') {
     const today = new Date().toISOString().split('T')[0];
     quizzes = quizzes.filter(q => !q.date || q.date >= today);
+  }
+
+  if (mode) {
+    quizzes = quizzes.filter(q => {
+      const quizMode = q.mode || (q.venue && !/\bonline\b/i.test(q.venue) ? 'offline' : 'online');
+      return quizMode === mode;
+    });
   }
 
   if (search) {

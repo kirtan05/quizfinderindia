@@ -28,6 +28,7 @@ function navigate(path) {
 const DEFAULT_FILTERS = {
   search: '',
   org: '',
+  mode: '',
   eligibility: [],
   upcoming: true,
 };
@@ -63,6 +64,7 @@ export default function App() {
       };
       if (filters.search) params.search = filters.search;
       if (filters.org) params.org = filters.org;
+      if (filters.mode) params.mode = filters.mode;
       if (filters.eligibility.length > 0) {
         params.eligibility = filters.eligibility.join(',');
       }
@@ -140,7 +142,7 @@ export default function App() {
       <header className="app-header">
         <a href="#/" className="app-header__brand" onClick={() => navigate('/')}>
           <span className="app-header__logo" aria-hidden="true">[?]</span>
-          <span className="app-header__title">DQC Quiz Board</span>
+          <span className="app-header__title">Delhi Quiz Board</span>
         </a>
         <nav className="app-header__nav">
           <a

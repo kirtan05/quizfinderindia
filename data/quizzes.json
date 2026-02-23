@@ -1,1 +1,847 @@
-[]
+[
+  {
+    "id": "b66b2af6-8710-4a92-aedb-3bcd594e41b9",
+    "status": "published",
+    "confidence": 0.95,
+    "name": "The Fourth Temperament",
+    "description": "**The Fourth Temperament**\n\nA History–Etymology–Lifestyle–Mythology–Geography-Politics Quiz.\n\nWhether you're a history geek or simply a quizzing enthusiast, this quiz caters to all.\n\n- **Exciting cash prizes to be won!**\n- Team Composition: Up to 2 members\n- Cross-college teams and lone wolves permitted",
+    "date": "2026-02-26",
+    "time": "13:00",
+    "venue": "Room 124, Old Building, Ramjas College, University of Delhi",
+    "venueMapLink": null,
+    "eligibility": [
+      "Under-25 (Open)"
+    ],
+    "eligibilityCategories": [
+      "Open"
+    ],
+    "hostingOrg": "Qnights, The Quizzing Society in collaboration with Kaalvritt, The History Department of Ramjas College",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": "https://forms.gle/vTGkdMkFuQGZCLEG6",
+    "instagramLink": "https://www.instagram.com/qnightsramjas",
+    "posterImage": "posters/cb0ec603-b5f3-4747-b4c6-ca41fba1ebd6.jpg",
+    "sourceMessageId": "3A5CB3B5068F472101A2",
+    "sourceTimestamp": "2026-02-23T17:25:44.000Z",
+    "createdAt": "2026-02-23T17:26:01.284Z",
+    "updatedAt": "2026-02-23T17:26:01.284Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "regLink",
+      "instagramLink"
+    ]
+  },
+  {
+    "id": "69f213d1-dde3-4ae0-9116-29a60790a5c6",
+    "status": "published",
+    "confidence": 0.85,
+    "name": "Mathematician Banega Crorepati (MBC)",
+    "description": "**Get ready for Mathematician Banega Crorepati (MBC) at Tangentia – where every answer counts!**\n\n- Just concepts, confidence and that one moment where you say —“Lock it.”\n- Fast calculations. Smart eliminations.\n- One hot seat. Limited chances.\n- If numbers are your comfort zone, prove it when the spotlight hits.",
+    "date": null,
+    "time": null,
+    "venue": "Tangentia",
+    "venueMapLink": null,
+    "eligibility": [
+      "Open"
+    ],
+    "eligibilityCategories": [
+      "Open"
+    ],
+    "hostingOrg": "Quaternion Society",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": null,
+    "instagramLink": "https://www.instagram.com/p/DU_O76SEiMr/?igsh=MTV1amd5cjh4MWozNg==",
+    "posterImage": null,
+    "sourceMessageId": "AC8C0D6B5D06030DD4AE1C5649D8F620",
+    "sourceTimestamp": "2026-02-22T10:52:05.000Z",
+    "createdAt": "2026-02-23T17:26:17.315Z",
+    "updatedAt": "2026-02-23T17:26:17.315Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "instagramLink"
+    ]
+  },
+  {
+    "id": "d0561987-9862-43d4-84dd-aa9665d2c484",
+    "status": "published",
+    "confidence": 0.95,
+    "name": "QUIZFEST'26",
+    "description": "**MindMasters — The Quiz Society of Atma Ram Sanatan Dharma College (University of Delhi)** invites you to **QUIZFEST'26**, a two-day celebration of knowledge, curiosity, and quick wit.\n\n- **Line-up:**\n  - **Day 1:** Pounced by James (Sports Quiz) | Sick Reference Bro (Pop Culture Filler)\n  - **Day 2:** HodgePodge (General Quiz) | Tesla to Tesla (Sci-Biz-Tech Filler)\n- **Fees:** ₹30/day, ₹50 both days\n- **Prize Pool:** ₹14,000\n- **Open to college students under 23.**\n  - Play solo or in teams of 2. Individual registration is mandatory.\n  - Cross-college teams are allowed.",
+    "date": "2026-02-23",
+    "time": "12:30",
+    "venue": "ARSD College",
+    "venueMapLink": null,
+    "eligibility": [
+      "Under 23",
+      "College students"
+    ],
+    "eligibilityCategories": [
+      "U23"
+    ],
+    "hostingOrg": "MindMasters, The Quizzing Society",
+    "quizMasters": [],
+    "poc": {
+      "name": "Pranav",
+      "phone": "8340251873",
+      "whatsapp": null
+    },
+    "regLink": "https://forms.gle/7kJTcCmfs5cto6SU6",
+    "instagramLink": null,
+    "posterImage": "posters/e2fdfb84-e8fa-49c1-aaad-80026077cc20.jpg",
+    "sourceMessageId": "AC7A98E68080F62EBA8C169351360C65",
+    "sourceTimestamp": "2026-02-22T07:15:34.000Z",
+    "createdAt": "2026-02-23T17:26:33.788Z",
+    "updatedAt": "2026-02-23T17:26:33.788Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "poc",
+      "regLink"
+    ]
+  },
+  {
+    "id": "fde87a13-ccbd-4f06-b360-66c8490c0787",
+    "status": "published",
+    "confidence": 0.9,
+    "name": "Jashn-E-Quiz",
+    "description": "**Get ready to put your knowledge to the ultimate test at Jashn-E-Quiz!** 🧠✨\n\nOrganised under the vibrant banner of Yuvaan – The Cultural Fest of Maharaja Agrasen College, Jashn-E-Quiz brings you not one, but TWO power-packed quizzes that promise thrill, strategy, and brain-boosting excitement!\n\n🔥 **1. The General Quiz**\n\n- **Date:** 26 February 2026\n- **Time:** 12:30 Onwards\n- **Venue:** Room no 214\n\n🏏 **2. IPL Auction Quiz**\n\n- **Date:** 27 February 2026\n- **Time:** 9:00 AM Onwards\n- **Venue:** Room no 236\n\n**Eligibility:** UG Students\n\n💡 **Why Participate?**\n- Exciting competition\n- Test your knowledge & strategy\n- Win amazing prizes\n- Experience the electrifying vibe of Yuvaan\n\n🚇 **Nearest Metro Station**\n- Blue Line - New Ashok Nagar\n- Pink Line - Trilokpuri\n\nExcited to have you all!!",
+    "date": "2026-02-26",
+    "time": null,
+    "venue": "Maharaja Agrasen College, University of Delhi",
+    "venueMapLink": null,
+    "eligibility": [
+      "UG Students"
+    ],
+    "eligibilityCategories": [
+      "UG"
+    ],
+    "hostingOrg": "Maharaja Agrasen College",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": "https://forms.gle/R7KHP5StAPj9JHXN6",
+    "instagramLink": null,
+    "posterImage": "posters/3ecd286f-bbc5-4af9-bb43-8905e3d2e4f3.jpg",
+    "sourceMessageId": "AC39E164E6E6FA37FBFADF7183525308",
+    "sourceTimestamp": "2026-02-22T06:53:45.000Z",
+    "createdAt": "2026-02-23T17:26:52.807Z",
+    "updatedAt": "2026-02-23T17:26:52.807Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "regLink"
+    ]
+  },
+  {
+    "id": "6bdc3d60-e595-47e9-8458-464ed7d41478",
+    "status": "published",
+    "confidence": 0.95,
+    "name": "Aphex Twins - A Music Quiz",
+    "description": "**Aphex Twins - A Music Quiz**\n\nDive into the rich world of music, with interesting stories and facts about your favourite artists and songs that will blow your mind!\n\n- **Prize Pool:** ₹6,000\n- **Registration Fee:** ₹30 per participant\n- **Open to college students under 23**\n- Participate in teams of 2 or as a lone wolf",
+    "date": "2025-02-25",
+    "time": "12:00",
+    "venue": "Hindu College, University of Delhi",
+    "venueMapLink": null,
+    "eligibility": [
+      "U23",
+      "College students"
+    ],
+    "eligibilityCategories": [
+      "U23"
+    ],
+    "hostingOrg": "Aria WMS, The Western Music Society of Hindu College",
+    "quizMasters": [
+      "Yuvraj",
+      "Pavani"
+    ],
+    "poc": {
+      "name": "Pavani Chourasia",
+      "phone": "+91 9818810305",
+      "whatsapp": null
+    },
+    "regLink": "https://forms.gle/aHuQ6RqVM5DUgnDK6",
+    "instagramLink": null,
+    "posterImage": "posters/19be735f-dbac-492e-a850-5e5aca3828b3.jpg",
+    "sourceMessageId": "AC7FA0D3E56AB20E1D105453653483C0",
+    "sourceTimestamp": "2026-02-21T18:13:44.000Z",
+    "createdAt": "2026-02-23T17:27:04.783Z",
+    "updatedAt": "2026-02-23T17:27:04.783Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "quizMasters",
+      "poc",
+      "regLink"
+    ]
+  },
+  {
+    "id": "d3941e31-6074-40fc-9458-75712a176971",
+    "status": "published",
+    "confidence": 0.9,
+    "name": "No Man's Land",
+    "description": "**No Man’s Land** 🎤✨\nA Filler Quiz on Women in Pop Culture — films, music, icons & moments that defined the zeitgeist.\n\nPart of “That’s What She Said”, which also features the Main General Quiz on Women (Prelims + Finals).\n\n- 🏆 *Cash Prizes: 8K+*\n- 📝 *Free Registration*\n- 👥 *Team of 2 (1 mandatory female member)*",
+    "date": "2026-02-23",
+    "time": "14:00",
+    "venue": "S.D. Auditorium, Hindu College",
+    "venueMapLink": null,
+    "eligibility": [
+      "U-23",
+      "UG",
+      "PG"
+    ],
+    "eligibilityCategories": [
+      "UG",
+      "PG"
+    ],
+    "hostingOrg": "The Quizzing Society of Hindu College",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": "https://forms.gle/REaERzAv4Ky24PZbA",
+    "instagramLink": null,
+    "posterImage": "posters/2b208d0f-c840-4732-8e32-56adfc64aa6d.jpg",
+    "sourceMessageId": "AC49CF6B2D8D291E94A990E72075875C",
+    "sourceTimestamp": "2026-02-21T07:31:41.000Z",
+    "createdAt": "2026-02-23T17:27:16.657Z",
+    "updatedAt": "2026-02-23T17:27:16.657Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "regLink"
+    ]
+  },
+  {
+    "id": "26477603-e7dd-4777-87d6-2b8d0c3ebade",
+    "status": "published",
+    "confidence": 0.95,
+    "name": "Melas Quiz",
+    "description": "**Melas Quiz Competition** organized by **Anubhuti (The Expression Society)** under **Kalanjali (The Cultural Committee of P.G.D.A.V College (Eve))** as part of the cultural fest **Pravah 2026**.\n\n**Rules:**\n- Contestants should bring their college I-cards.\n- Open for UG students only.\n- Two rounds: prelims and finals (6 teams for finals).\n- Quiz Master's decision is final.\n\n**Prizes:** Exciting cash prizes and trophies for winners.\n\n**Note:** Cross college teams allowed; participation as individuals or in pairs.",
+    "date": "2026-02-26",
+    "time": "14:00",
+    "venue": "Computer Lab 2, P.G.D.A.V College (Eve)",
+    "venueMapLink": null,
+    "eligibility": [
+      "UG"
+    ],
+    "eligibilityCategories": [
+      "UG"
+    ],
+    "hostingOrg": "Anubhuti (The Expression Society)",
+    "quizMasters": [],
+    "poc": {
+      "name": "Harshit Tandon",
+      "phone": "9354142958",
+      "whatsapp": null
+    },
+    "regLink": "https://forms.gle/iwHnZQfiC1jpr4uH7",
+    "instagramLink": null,
+    "posterImage": "posters/afa4a1ff-dca4-4637-99ce-d5cefed3b12c.jpg",
+    "sourceMessageId": "AC1521AA7E71557D89EF4C66BAFD6BFF",
+    "sourceTimestamp": "2026-02-20T17:30:52.000Z",
+    "createdAt": "2026-02-23T17:27:33.424Z",
+    "updatedAt": "2026-02-23T17:27:33.424Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "poc",
+      "regLink"
+    ]
+  },
+  {
+    "id": "09b13ac1-4817-4587-ba58-443d293fcd71",
+    "status": "published",
+    "confidence": 0.95,
+    "name": "HELM",
+    "description": "**HELM** — where history speaks, myths breathe, and literature lives.\n\nStep into a world where the past meets imagination and knowledge turns into an adventure.\n\n**Tajagna – The Quiz Society of Daulat Ram College proudly presents**\n\n**HELM: History, Entertainment, Literature & Mythology**\n\nA quiz where curiosity unrolls the scroll of wisdom.\n\n**🔓 Open to All!**\n\n💰 **Registration Fee**:\n- Lone Wolf – ₹30\n- Team of Two – ₹50\n\n📌 **Instructions**:\n- Fill in all the required details in the form.\n- Inter-college teams are allowed.\n- Attach a clear screenshot of the payment for confirmation.\n\n📜 **Unroll the scroll. Take the helm. Let the quiz begin.**",
+    "date": "2026-02-23",
+    "time": "10:00",
+    "venue": "Conference Hall",
+    "venueMapLink": null,
+    "eligibility": [
+      "Open"
+    ],
+    "eligibilityCategories": [
+      "Open"
+    ],
+    "hostingOrg": "Tajagna – The Quiz Society of Daulat Ram College",
+    "quizMasters": [],
+    "poc": {
+      "name": "Meet Aggarwal",
+      "phone": "7009141977",
+      "whatsapp": null
+    },
+    "regLink": "https://forms.gle/VSvYUC2D1hxHvc9R6",
+    "instagramLink": null,
+    "posterImage": "posters/54eeebe1-dcf8-48ac-9ae9-5a35dd120ada.jpg",
+    "sourceMessageId": "AC5AE86D05ADD504F56DCE288694D55E",
+    "sourceTimestamp": "2026-02-20T17:21:53.000Z",
+    "createdAt": "2026-02-23T17:27:47.206Z",
+    "updatedAt": "2026-02-23T17:27:47.206Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "poc",
+      "regLink"
+    ]
+  },
+  {
+    "id": "bd1ffced-b77e-40c7-afa8-07d1d7639479",
+    "status": "published",
+    "confidence": 0.95,
+    "name": "Zerodha Varsity Quiz",
+    "description": "**India's Premier Finance Quiz** on Money, Wealth, Business and Investing is now coming to your city for the first ever *Delhi Campus Edition!* \n\n- **8 Zones. 1 Grand Finale. 4.5 Lakhs worth of prizes!**\n- **Team Size**: 2-3 members\n- **Open to all college students across all courses within Delhi and NCR!**\n- **Topics**: Economics, Finance, Wealth, Entrepreneurship.\n- **Prizes**: Cash Prizes of up to 4.5 Lakhs\n  - Regional Rounds: 1st Place 12,000/- | 2nd Place 9,000/- | 3rd Place 6,000/-\n  - Grand Finale: 1st Place 90,000/- | 2nd Place 75,000/- | 3rd Place 60,000/-",
+    "date": "2026-03-13",
+    "time": "9:00",
+    "venue": "Sri Venkateswara College, Moti Bagh II",
+    "venueMapLink": null,
+    "eligibility": [
+      "Open to all college students across all courses within Delhi and NCR"
+    ],
+    "eligibilityCategories": [
+      "Open"
+    ],
+    "hostingOrg": "Zerodha Varsity",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": "+91 89716 76100",
+      "whatsapp": null
+    },
+    "regLink": "https://forms.gle/soR79k3PPexxjiyC7",
+    "instagramLink": null,
+    "posterImage": "posters/e870f3d4-b4d0-408e-88a5-b96b72cb7114.jpg",
+    "sourceMessageId": "AC8789F2F56C219E219B85A881A2C6FC",
+    "sourceTimestamp": "2026-02-20T16:30:29.000Z",
+    "createdAt": "2026-02-23T17:28:05.942Z",
+    "updatedAt": "2026-02-23T17:28:05.942Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "poc",
+      "regLink"
+    ]
+  },
+  {
+    "id": "2ce037e2-351a-470f-8dbe-7e0ba94d1325",
+    "status": "published",
+    "confidence": 0.95,
+    "name": "Coherence'26 Quiz Competition",
+    "description": "**Physica, the Physics Society of Deshbandhu College** invites you to our quiz competition under the aegis of Coherence '26, the annual cultural fest of the Physics Society \"PHYSICA\". Exciting cash prizes, endless fun, and bragging rights await!\n\n**The General Quiz will have 2 rounds:**\n- *Preliminary Round* (Elimination Round)\n- Final Round (Qualifying round)\n\n**Note:**\n- Registration deadline: 20th February 2026, 11 PM.\n- On-spot registrations will not be entertained.",
+    "date": "2026-02-23",
+    "time": "12:30 PM",
+    "venue": "PLT, Science Block, Deshbandhu College, Kalkaji",
+    "venueMapLink": null,
+    "eligibility": [
+      "Open to all DU Students",
+      "Cross college/institution teams are allowed",
+      "Teams of 2 and lonewolves welcome"
+    ],
+    "eligibilityCategories": [
+      "Open",
+      "DU Only"
+    ],
+    "hostingOrg": "Physica, the Physics Society of Deshbandhu College",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": "https://docs.google.com/forms/d/e/1FAIpQLSftyKprxmfSzQgbhfaIgeFjJf1I01efnNZX5ywS9rAo4vYqcQ/viewform?usp=publish-editor",
+    "instagramLink": null,
+    "posterImage": "posters/47b4f197-645e-4b91-8e60-835e61d3d588.jpg",
+    "sourceMessageId": "ACA6802A694DF203D7F0CFEBD1A1DACA",
+    "sourceTimestamp": "2026-02-20T16:20:43.000Z",
+    "createdAt": "2026-02-23T17:28:30.086Z",
+    "updatedAt": "2026-02-23T17:28:30.086Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "regLink"
+    ]
+  },
+  {
+    "id": "55225616-28b0-49c0-8a0c-037b8980562c",
+    "status": "published",
+    "confidence": 0.9,
+    "name": "Quizzophrenia '26",
+    "description": "**One week to go ... Before the 5th edition of QUIZZOPHRENIA is LIVE!**\n\n**REGISTRATIONS FOR ONLINE QUIZZES CLOSING SOON**\n\n- **ALL QUIZZES ARE OPEN**\n- **TEAM SIZE : 1 to 3**\n- **CASH PRIZES** worth **10,000** for **each** quiz **(70000 for all 7 quizzes)**\n\n**DATES:**\n\n**🌐ONLINE:**\n- **Via Zoom and Google Meet**\n\n**📝PRELIMS**\n  - 25th February, 7:30 PM - **Business Quiz**\n  - 26th February, 7:30 PM - **MELA Quiz**\n  - 27th February, 7:30 PM - **Sci-Tech Quiz**\n\n**🏆FINALS**\n  - 28th February, 8:30 PM - **Business Quiz Finals**\n    - **Hosted by Mr. Samanway Banerjee**\n  - 1st March, 11 AM - **MELA Quiz Finals**\n    - **Hosted by Major Chandrakant Nair**\n  - 1st March, 4PM - **Sci-Tech Quiz Finals**\n    - **Hosted by Mr. Sayak Chowdhury and Mr. Joydeep Sarkar**\n\n**OFFLINE**\n- 7th-8th March at IEM Management House Campus, Kolkata\n  - *(Details of offline quizzes accessible from the link above)*",
+    "date": null,
+    "time": null,
+    "venue": "Online (Finals)",
+    "venueMapLink": null,
+    "eligibility": [
+      "Open"
+    ],
+    "eligibilityCategories": [
+      "Open"
+    ],
+    "hostingOrg": "The Quizzard Club",
+    "quizMasters": [
+      "Samanway Banerjee",
+      "Major Chandrakant Nair",
+      "Sayak Chowdhury",
+      "Joydeep Sarkar"
+    ],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": "https://forms.gle/YBLJ95cQqauWATcy5",
+    "instagramLink": "https://linktr.ee/quizzo26",
+    "posterImage": "posters/f8ccf331-4726-4ba0-aa6e-093e93e94366.jpg",
+    "sourceMessageId": "ACC1FD79063F787A0E1D640AFD95B260",
+    "sourceTimestamp": "2026-02-20T15:52:22.000Z",
+    "createdAt": "2026-02-23T17:28:58.963Z",
+    "updatedAt": "2026-02-23T17:28:58.963Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "quizMasters",
+      "regLink",
+      "instagramLink"
+    ]
+  },
+  {
+    "id": "c40595db-9946-4562-b4eb-4eb294d480c1",
+    "status": "published",
+    "confidence": 0.95,
+    "name": "Brainiac Bonanza 3.0",
+    "description": "**Presented by Buzzer Quizzing Society, PGDAV College**\n\n- **Date:** 24th February 2026\n- **Venue:** Old Seminar Hall, PGDAV College (DU)\n- **Time:**\n  - 9:00 AM – Mindbusters (General Quiz)\n  - 11:30 AM – Mad Over Fandom\n- **Mode:** Offline\n- **Participation:**\n  - Solo (Lone Wolf)\n  - Team of 2\n- **Fees:** ₹0\n- **Prize Pool:** ₹12,000+\n- **Eligibility:** UG & PG Students Only\n- **Requirements:** Valid Institutional ID Mandatory\n- **Registration:** No On-Spot Registration (Limited Seats)",
+    "date": "2026-02-24",
+    "time": "09:00",
+    "venue": "Old Seminar Hall, PGDAV College (DU)",
+    "venueMapLink": null,
+    "eligibility": [
+      "UG",
+      "PG"
+    ],
+    "eligibilityCategories": [
+      "UG",
+      "PG"
+    ],
+    "hostingOrg": "Buzzer Quizzing Society, PGDAV College",
+    "quizMasters": [],
+    "poc": {
+      "name": "Bhawesh Binwal",
+      "phone": "9027313896",
+      "whatsapp": null
+    },
+    "regLink": "https://docs.google.com/forms/d/e/1FAIpQLSc5yHyCthTdDdVEvFWcS1T1ZpojvWhKidM5ITkz7Fv-OUYyvg/viewform?usp=publish-editor",
+    "instagramLink": null,
+    "posterImage": "posters/89f2bda6-6b68-48be-bdbe-ab320cc8d3d0.jpg",
+    "sourceMessageId": "ACB53DCF2EEFB4B17B968CF2890DD877",
+    "sourceTimestamp": "2026-02-20T15:52:20.000Z",
+    "createdAt": "2026-02-23T17:29:16.612Z",
+    "updatedAt": "2026-02-23T17:29:16.612Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "poc",
+      "regLink"
+    ]
+  },
+  {
+    "id": "051f6235-6cf5-4757-a2b5-acfe9049adbd",
+    "status": "published",
+    "confidence": 0.95,
+    "name": "VAJRA 4.0 – The General Defence Quiz",
+    "description": "**Illuminati and NCC Hansraj** present **VAJRA 4.0 – The General Defence Quiz** ⚔️\n\nFrom ships to squadrons, from battles to battalions — brace yourself for an action-packed defence quiz.\n\n📌 **Event Details:**\n- Open for U.G., P.G. & U-23 participants\n- Cross-college teams are allowed\n- ₹30 for solo | ₹50 for a team of 2\n- Exciting cash prizes & certificates for all participants\n\n🪪 **ID Requirement (Mandatory):**\n- College students must carry a valid college ID\n- Non-college participants must carry a valid government-issued ID (Required for smooth entry)",
+    "date": "2026-02-21",
+    "time": "12:00",
+    "venue": "Hansraj College",
+    "venueMapLink": null,
+    "eligibility": [
+      "UG",
+      "PG",
+      "U23"
+    ],
+    "eligibilityCategories": [
+      "U23",
+      "UG",
+      "PG"
+    ],
+    "hostingOrg": "Illuminati and NCC Hansraj",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": "https://docs.google.com/forms/d/e/1FAIpQLSeoVXaJQjmOvliEuRYfE8cxeZ0FHEcl0RYaVfvGULCRTa5lwA/viewform?usp=sharing&ouid=118120794923019865560",
+    "instagramLink": null,
+    "posterImage": "posters/b8df6b97-fd34-40e8-9977-3f1b874b7182.jpg",
+    "sourceMessageId": "ACD609F33DD0E5F44AEE7C16D8831159",
+    "sourceTimestamp": "2026-02-19T14:21:04.000Z",
+    "createdAt": "2026-02-23T17:29:28.201Z",
+    "updatedAt": "2026-02-23T17:29:28.201Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "regLink"
+    ]
+  },
+  {
+    "id": "15861cce-4413-4af0-ad02-cd510110a841",
+    "status": "published",
+    "confidence": 0.9,
+    "name": "Powerplay Cricket Quiz League",
+    "description": "**Powerplay – The Ultimate Cricket Quiz League!**\n\n- 8 weeks; over 600 questions\n- 60 quizzes; every day quizzes\n- Starting Feb 23rd till mid-April 2026\n- Wide range of questions from rules of the game, history, statistics, trivia across eras and formats\n- Fascinating cricket stories through online quizzes\n- Great curation by experts",
+    "date": "2026-02-23",
+    "time": null,
+    "venue": null,
+    "venueMapLink": null,
+    "eligibility": [
+      "Open"
+    ],
+    "eligibilityCategories": [
+      "Open"
+    ],
+    "hostingOrg": "Rapid Quiz League",
+    "quizMasters": [],
+    "poc": {
+      "name": "Ramesh Natarajan",
+      "phone": "+917304787225",
+      "whatsapp": "73047 87225"
+    },
+    "regLink": "https://rapidquizleague.com/powerplaySubscription",
+    "instagramLink": null,
+    "posterImage": "posters/062c6871-b022-4109-b13d-161e687874dd.jpg",
+    "sourceMessageId": "3A322187D3E1DEAC98AC",
+    "sourceTimestamp": "2026-02-19T11:25:37.000Z",
+    "createdAt": "2026-02-23T17:29:38.510Z",
+    "updatedAt": "2026-02-23T17:29:38.510Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "eligibility",
+      "hostingOrg",
+      "poc",
+      "regLink"
+    ]
+  },
+  {
+    "id": "af56aba7-f6e8-4f5e-822d-b3c0ca56ce9b",
+    "status": "published",
+    "confidence": 0.95,
+    "name": "Geo-Gyan: An Indian Subcontinental Geography Quiz",
+    "description": "**Prashnottare: The Quiz Club of Aryabhatta College** proudly presents **Geo-Gyan: An Indian Subcontinental Geography Quiz**. A quiz designed to explore the physical features, borders, rivers, mountains, and cultural geography of the Indian subcontinent. Test your knowledge and prove your geographical expertise.\n\n**Quiz Format:**\n- Round 1: Projector-based quiz\n- Round 2: Picture & Map based\n\n**Perks:**\n- Certificate for every participant 🏅\n- Exciting prizes for winners 🏆",
+    "date": "2026-02-24",
+    "time": "12:30",
+    "venue": "Activity Room, Aryabhatta College",
+    "venueMapLink": null,
+    "eligibility": [
+      "UG",
+      "PG",
+      "Under 23"
+    ],
+    "eligibilityCategories": [
+      "U23",
+      "UG",
+      "PG"
+    ],
+    "hostingOrg": "Prashnottare: The Quiz Club of Aryabhatta College",
+    "quizMasters": [],
+    "poc": {
+      "name": "Anuj Kumar",
+      "phone": "9650373240",
+      "whatsapp": null
+    },
+    "regLink": "https://forms.gle/CEsUpKZuDMi72Q6t8",
+    "instagramLink": "https://www.instagram.com/prashnottare_abc/",
+    "posterImage": "posters/6806fb37-2c03-4292-be67-b59e2c5293dc.jpg",
+    "sourceMessageId": "3A76170DBFF01CD5C14A",
+    "sourceTimestamp": "2026-02-19T04:42:53.000Z",
+    "createdAt": "2026-02-23T17:29:52.717Z",
+    "updatedAt": "2026-02-23T17:29:52.717Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "poc",
+      "regLink",
+      "instagramLink"
+    ]
+  },
+  {
+    "id": "c900e1a6-d6a9-4c77-ad8a-5b0d34443b05",
+    "status": "published",
+    "confidence": 0.7,
+    "name": "MQF",
+    "description": "**MQF is back!**\n- High quality quizzes\n- Catered lunch\n- Iconic venue\n- Attractive prize money",
+    "date": "2026-03-14",
+    "time": null,
+    "venue": null,
+    "venueMapLink": null,
+    "eligibility": [],
+    "eligibilityCategories": [],
+    "hostingOrg": null,
+    "quizMasters": [],
+    "poc": {
+      "name": "Rajiv Rai",
+      "phone": "9819218415",
+      "whatsapp": null
+    },
+    "regLink": null,
+    "instagramLink": null,
+    "posterImage": null,
+    "sourceMessageId": "ACC12453D789DA43DB09BFC918542CDB",
+    "sourceTimestamp": "2026-02-19T03:58:52.000Z",
+    "createdAt": "2026-02-23T17:29:54.589Z",
+    "updatedAt": "2026-02-23T17:29:54.589Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "poc"
+    ]
+  },
+  {
+    "id": "bcd82158-d73e-4443-ac47-234fca722c07",
+    "status": "published",
+    "confidence": 0.9,
+    "name": "The 14th Mumbai Quiz Festival",
+    "description": "**The Bombay Quiz Club Presents**\n\n**Day 1: Saturday, March 14th, 2026**\n- **9:30 AM | Theroux Investigation**\n  A quiz on travel and lifestyle\n  Quizmasters: Prithwish Datta, Sachin Deshpande, Sania Narulkar\n- **1:15 PM | Afsos Quiz**\n  Sawaal ek, jawaab do (Written)\n  Quizmasters: Brajendu Bhaskar, Nikhil Sonde, Ranajeet Soman\n- **3:30 PM | Funtoosh**\n  A quiz on music, entertainment, literature, and arts\n  Quizmasters: Deepanjan Deb, Kunal Roy, Rajiv Rai\n\n**Day 2: Sunday, March 15th, 2026**\n- **9:30 AM | IndQuizition**\n  A quiz on all things India\n  Quizmasters: Ameya Samant, Devang Ghia, Dhananjay Shettigar\n- **1:15 PM | Ides of March**\n  A quiz on prophecies, betrayals, and assassinations (Written)\n  Quizmasters: Aabhaas Dasgupta, Nadeem Ansari, Pulkit Malhotra\n- **3:00 PM | The MQF Open**\n  The showpiece finale of the festival\n  Quizmasters: Abhinav Dasgupta, Aditya Gadre, Shubhankar Gokhale, Vibhendu Tewari\n\nTeams of 3 for all quizzes.",
+    "date": "2026-03-14",
+    "time": null,
+    "venue": "Nehru Centre, Worli",
+    "venueMapLink": null,
+    "eligibility": [
+      "Teams of 3"
+    ],
+    "eligibilityCategories": [
+      "Custom"
+    ],
+    "hostingOrg": "The Bombay Quiz Club",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": null,
+    "instagramLink": null,
+    "posterImage": "posters/58c9c0e6-ce20-4cb6-b0c2-7729a85dee15.jpg",
+    "sourceMessageId": "AC75B9792AF4430C7F53C0E128A07D5E",
+    "sourceTimestamp": "2026-02-19T03:58:50.000Z",
+    "createdAt": "2026-02-23T17:30:20.048Z",
+    "updatedAt": "2026-02-23T17:30:20.048Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "venue",
+      "eligibility",
+      "hostingOrg"
+    ]
+  },
+  {
+    "id": "e4dff07a-2bef-4b2f-91d9-d02989514d8e",
+    "status": "published",
+    "confidence": 0.95,
+    "name": "That's What She Said",
+    "description": "**Manthan, The Quizzing Society of Hindu College** in collaboration with the **Girl Students' Welfare Ministry**, Hindu College presents a quiz celebrating women across history, politics, science, sports & pop culture.\n\n🧠 2 Quizzes:\n- General Quiz on Women\n- Filler Quiz on Women in Pop Culture\n\n🏆 **Cash Prizes: 8K+**\n📝 **Free Registration**\n👥 **Team of 2 (1 mandatory female member)**",
+    "date": "2026-02-23",
+    "time": "13:00",
+    "venue": "S.D. Auditorium, Hindu College",
+    "venueMapLink": null,
+    "eligibility": [
+      "U-23 UG & PG"
+    ],
+    "eligibilityCategories": [
+      "UG",
+      "PG"
+    ],
+    "hostingOrg": "Manthan, The Quizzing Society of Hindu College",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": "https://forms.gle/REaERzAv4Ky24PZbA",
+    "instagramLink": null,
+    "posterImage": "posters/89e0b228-80ba-4129-91c6-b823d21330d9.jpg",
+    "sourceMessageId": "AC969248B6B6496A3A5B34C9BACDDFDD",
+    "sourceTimestamp": "2026-02-17T16:51:48.000Z",
+    "createdAt": "2026-02-23T17:30:36.015Z",
+    "updatedAt": "2026-02-23T17:30:36.015Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "regLink"
+    ]
+  },
+  {
+    "id": "a7b547b4-d118-4aed-9319-152a79972ef5",
+    "status": "published",
+    "confidence": 0.95,
+    "name": "IMPACT XI",
+    "description": "**InQuizitive – The Quiz Society of Maharaja Agrasen College**, under the banner of our annual cultural fest **Yuvaan**, proudly presents **IMPACT XI - A Mock IPL Auction**. Where Brains build the squad, paddles seal the fate, and champions are crafted before the first ball is bowled. Get ready with your Hammer and FEEL THE THRILL!\n\n**Participation Rules:**\n- Participants can register as a Lone Wolf (individual) or as a Duo (team of two).\n- Cross College teams are allowed.\n- Individual registration is mandatory (teams can be formed on the spot).\n- You can come in teams, but each team member has to register individually.\n- Carry a valid College/Government ID for verification.",
+    "date": "2026-02-27",
+    "time": "09:00",
+    "venue": "Room 236, Maharaja Agrasen College",
+    "venueMapLink": null,
+    "eligibility": [
+      "Open",
+      "Cross College teams allowed"
+    ],
+    "eligibilityCategories": [
+      "Open"
+    ],
+    "hostingOrg": "InQuizitive – The Quiz Society of Maharaja Agrasen College",
+    "quizMasters": [],
+    "poc": {
+      "name": "Arbaz",
+      "phone": "9216711354",
+      "whatsapp": null
+    },
+    "regLink": "https://forms.gle/bA8Sn1vN9cpsP5iE9",
+    "instagramLink": null,
+    "posterImage": "posters/371ae0ce-70a8-4ab7-9ad4-0e6c4e8c3505.jpg",
+    "sourceMessageId": "AC89CFF8C326D50FADC6B972D0103588",
+    "sourceTimestamp": "2026-02-17T08:34:31.000Z",
+    "createdAt": "2026-02-23T17:31:00.003Z",
+    "updatedAt": "2026-02-23T17:31:00.003Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "poc",
+      "regLink"
+    ]
+  },
+  {
+    "id": "a9acf213-bef9-4059-8651-8ab3f76288a1",
+    "status": "published",
+    "confidence": 0.95,
+    "name": "Perseus – The General Quiz",
+    "description": "**InQuizitive – The Quiz Society of Maharaja Agrasen College**, under the banner of our annual cultural fest **Yuvaan**, proudly presents **Perseus – The General Quiz**. Inspired by Perseus, the timeless symbol of intelligence, courage, and sharp strategy, this quiz challenges you to rise, think boldly, and prove your brilliance.\n\n**Participation Rules:**\n\n- Participants can register as a Lone Wolf (individual) or as a Duo (team of two)\n- Cross College teams are allowed.\n- Individual registration is mandatory (teams can be formed on the spot)\n- You can come in teams, but each team member has to register individually\n- Carry a valid College/Government ID for verification",
+    "date": "2026-02-26",
+    "time": "12:30 PM",
+    "venue": "Room 214, Maharaja Agrasen College",
+    "venueMapLink": null,
+    "eligibility": [
+      "Open"
+    ],
+    "eligibilityCategories": [
+      "Open"
+    ],
+    "hostingOrg": "InQuizitive – The Quiz Society of Maharaja Agrasen College",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": "https://forms.gle/R7KHP5StAPj9JHXN6",
+    "instagramLink": null,
+    "posterImage": "posters/826a7e9a-8e2f-4d3c-abac-5d644cf575ed.jpg",
+    "sourceMessageId": "AC516E97BB855648A3D93999E0B48FDF",
+    "sourceTimestamp": "2026-02-17T08:34:29.000Z",
+    "createdAt": "2026-02-23T17:31:16.751Z",
+    "updatedAt": "2026-02-23T17:31:16.751Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "hostingOrg",
+      "regLink"
+    ]
+  }
+]

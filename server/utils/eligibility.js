@@ -4,13 +4,28 @@ const UG_PATTERNS = [/\bug\b/i, /\bundergrad/i, /\bbachelor/i];
 const PG_PATTERNS = [/\bpg\b/i, /\bpostgrad/i, /\bmaster/i, /\bmba\b/i];
 const RESEARCH_PATTERNS = [/\bresearch/i, /\bph\.?d/i, /\bdoctoral/i];
 const DU_PATTERNS = [/\bdu\b/i, /\bdelhi\s*uni/i];
-const JNU_PATTERNS = [/\bjnu\b/i, /\bjawaharlal/i];
+
+// Patterns to strip before normalizing (team size, cross-college)
+const NOISE_PATTERNS = [
+  /\bteams?\s*(of\s*)?\d+\b/i,
+  /\blone\s*wolves?\b/i,
+  /\blone\s*wolf\b/i,
+  /\bsolo\b/i,
+  /\bcross[\s-]*college\b/i,
+  /\bcross[\s-]*institution\b/i,
+  /\binter[\s-]*college\b/i,
+];
 
 export function normalizeEligibility(rawEligibility) {
   if (!rawEligibility || rawEligibility.length === 0) return [];
 
   const categories = new Set();
-  const raw = Array.isArray(rawEligibility) ? rawEligibility.join(' ') : rawEligibility;
+  let raw = Array.isArray(rawEligibility) ? rawEligibility.join(' ') : rawEligibility;
+
+  // Strip noise before normalizing
+  for (const pattern of NOISE_PATTERNS) {
+    raw = raw.replace(pattern, '');
+  }
 
   const ageMatch = raw.match(AGE_PATTERN);
   if (ageMatch) {
@@ -23,7 +38,6 @@ export function normalizeEligibility(rawEligibility) {
   if (PG_PATTERNS.some(p => p.test(raw))) categories.add('PG');
   if (RESEARCH_PATTERNS.some(p => p.test(raw))) categories.add('Research');
   if (DU_PATTERNS.some(p => p.test(raw))) categories.add('DU Only');
-  if (JNU_PATTERNS.some(p => p.test(raw))) categories.add('JNU Only');
 
   if (categories.size === 0) categories.add('Custom');
 

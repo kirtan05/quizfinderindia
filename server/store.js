@@ -83,6 +83,19 @@ export function markMessageProcessed(messageId) {
   saveSyncState(state);
 }
 
+const WA_GROUPS_PATH = path.join(DATA_DIR, 'wa-groups.json');
+
+export function getWaGroups() {
+  ensureDataDir();
+  if (!existsSync(WA_GROUPS_PATH)) return null;
+  return JSON.parse(readFileSync(WA_GROUPS_PATH, 'utf-8'));
+}
+
+export function saveWaGroups(groups) {
+  ensureDataDir();
+  writeFileSync(WA_GROUPS_PATH, JSON.stringify(groups, null, 2));
+}
+
 const DEFAULT_WA_STATUS = {
   connected: false,
   loggedOut: false,

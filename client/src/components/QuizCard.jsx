@@ -11,8 +11,14 @@ function formatDate(dateStr) {
   });
 }
 
+function waLink(number) {
+  const clean = (number || '').replace(/[^0-9]/g, '');
+  return `https://wa.me/${clean}`;
+}
+
 export default function QuizCard({ quiz, onClick }) {
   const tags = (quiz.eligibility || []).filter(Boolean);
+  const pocNumber = quiz.poc?.whatsapp || quiz.poc?.phone;
 
   return (
     <article className="quiz-card" onClick={() => onClick(quiz.id)} tabIndex={0}
@@ -64,6 +70,32 @@ export default function QuizCard({ quiz, onClick }) {
           </div>
         )}
       </div>
+
+      {(pocNumber || quiz.regLink || quiz.instagramLink) && (
+        <div className="quiz-card__actions">
+          {pocNumber && (
+            <a href={waLink(pocNumber)} target="_blank" rel="noopener noreferrer"
+              className="quiz-card__action quiz-card__action--wa"
+              onClick={e => e.stopPropagation()} title="WhatsApp">
+              WhatsApp
+            </a>
+          )}
+          {quiz.regLink && (
+            <a href={quiz.regLink} target="_blank" rel="noopener noreferrer"
+              className="quiz-card__action quiz-card__action--reg"
+              onClick={e => e.stopPropagation()} title="Register">
+              Register
+            </a>
+          )}
+          {quiz.instagramLink && (
+            <a href={quiz.instagramLink} target="_blank" rel="noopener noreferrer"
+              className="quiz-card__action quiz-card__action--ig"
+              onClick={e => e.stopPropagation()} title="Instagram">
+              Insta
+            </a>
+          )}
+        </div>
+      )}
 
       <div className="quiz-card__edge" aria-hidden="true" />
     </article>

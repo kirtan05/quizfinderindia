@@ -3,7 +3,7 @@ import { useState } from 'react';
 const ELIGIBILITY_GROUPS = {
   'Age-based': ['U18', 'U23', 'U25', 'U30'],
   'Open': ['Open'],
-  'University': ['DU Only', 'JNU Only'],
+  'University': ['DU Only'],
   'Degree': ['UG', 'PG', 'Research'],
 };
 
@@ -22,6 +22,10 @@ export default function Filters({ filters, onFilterChange, onClear }) {
     onFilterChange({ ...filters, upcoming: e.target.checked });
   }
 
+  function handleMode(e) {
+    onFilterChange({ ...filters, mode: e.target.value || '' });
+  }
+
   function handleEligibility(tag, checked) {
     const current = filters.eligibility || [];
     const next = checked
@@ -33,6 +37,7 @@ export default function Filters({ filters, onFilterChange, onClear }) {
   const activeCount = [
     filters.search,
     filters.org,
+    filters.mode,
     (filters.eligibility || []).length > 0,
     !filters.upcoming,
   ].filter(Boolean).length;
@@ -93,6 +98,23 @@ export default function Filters({ filters, onFilterChange, onClear }) {
             />
             <span className="filters__checkbox-label">Upcoming only</span>
           </label>
+        </div>
+
+        <div className="filters__field">
+          <label className="filters__label" htmlFor="filter-mode">
+            <span className="filters__label-icon">~</span> Mode
+          </label>
+          <select
+            id="filter-mode"
+            className="filters__input"
+            value={filters.mode || ''}
+            onChange={handleMode}
+          >
+            <option value="">All</option>
+            <option value="offline">Offline</option>
+            <option value="online">Online</option>
+            <option value="hybrid">Hybrid</option>
+          </select>
         </div>
 
         <fieldset className="filters__fieldset">

@@ -1,6 +1,22 @@
 node_modules/
+client/node_modules/
 .env
-data/posters/*
-!data/posters/.gitkeep
 auth_info_baileys/
 client/dist/
+
+# Data files with sensitive/runtime content
+data/posters/*
+!data/posters/.gitkeep
+data/wa-groups.json
+data/wa-status.json
+data/sync-state.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+.idea/
+.vscode/

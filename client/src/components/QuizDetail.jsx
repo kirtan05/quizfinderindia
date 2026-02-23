@@ -167,6 +167,26 @@ export default function QuizDetail({ quizId, onBack }) {
         </div>
       )}
 
+      {(quiz.teamSize || quiz.crossCollege != null) && (
+        <div className="quiz-detail__team-info">
+          {quiz.teamSize && (
+            <span className="tag tag--lg" style={{ '--tag-color': 'var(--accent-gold)' }}>
+              {quiz.teamSize === 1 ? 'Solo' : `Teams of ${quiz.teamSize}`}
+            </span>
+          )}
+          {quiz.crossCollege === true && (
+            <span className="tag tag--lg" style={{ '--tag-color': 'var(--accent-lime)' }}>
+              Cross-college OK
+            </span>
+          )}
+          {quiz.crossCollege === false && (
+            <span className="tag tag--lg" style={{ '--tag-color': 'var(--accent-red)' }}>
+              Same college only
+            </span>
+          )}
+        </div>
+      )}
+
       {quiz.description && (
         <div className="quiz-detail__section">
           <h2 className="quiz-detail__section-title">// About</h2>

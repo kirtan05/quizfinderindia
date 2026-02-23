@@ -15,13 +15,16 @@ Extract the following fields from the message and/or poster image. Return ONLY v
   "time": "HH:MM format (24h) or descriptive like '2 PM' or null",
   "venue": "Full venue name and address or null",
   "venueMapLink": "Google Maps link if mentioned, or null",
-  "eligibility": ["Array of eligibility criteria as mentioned, e.g. 'Open', 'U23', 'UG', 'DU Only'"],
+  "eligibility": ["Array of ONLY age/degree/university restrictions, e.g. 'Open', 'U23', 'UG', 'DU Only'. Do NOT include team size or cross-college info here."],
+  "teamSize": "Maximum team size as a number (1 for solo-only, 2 for pairs, 3 for trios). null if not mentioned.",
+  "crossCollege": "true if cross-college/cross-institution teams are explicitly allowed, false if restricted to one college, null if not mentioned",
+  "mode": "One of: 'offline' (physical venue), 'online' (Zoom/Meet/virtual), 'hybrid' (both online and offline components). Default to 'offline' if a physical venue is mentioned.",
   "hostingOrg": "Organization hosting the quiz or null",
   "quizMasters": ["Array of quiz master names, empty array if not mentioned"],
   "poc": {
     "name": "Contact person name or null",
     "phone": "Phone number or null",
-    "whatsapp": "WhatsApp number or null"
+    "whatsapp": "WhatsApp number if separately mentioned. If only one phone number is found and no separate WhatsApp is listed, set whatsapp to that same phone number."
   },
   "regLink": "Registration link or null",
   "instagramLink": "Instagram link or null",
@@ -32,7 +35,10 @@ Extract the following fields from the message and/or poster image. Return ONLY v
 Rules:
 - confidence: 0.0-1.0 based on how much information you could extract. Below 0.5 if only name found. Above 0.8 if most fields found.
 - extractedFields: only list fields where you found actual data, not nulls.
-- eligibility is critical: look for age limits (U23, Under 25), degree (UG, PG), university restrictions (DU Only), or Open/anyone.
+- eligibility: ONLY age limits (U23, Under 25), degree levels (UG, PG), or university restrictions (DU Only, Open). Never put team size or cross-college info in this array.
+- teamSize: Extract from phrases like "team of 2", "lone wolf", "solo", "teams of 3", "1 to 3 members". Return the maximum allowed team size as a number.
+- crossCollege: Look for "cross-college", "inter-college", "cross institution", "open to all colleges".
+- mode: "offline" if there's a physical venue/college/room. "online" if Zoom/Meet/virtual/online-only. "hybrid" if both. Default to "offline" when a venue is present.
 - For dates, use the current year (2026) if only month/day mentioned.
 - Return ONLY the JSON object, nothing else.`;
 
@@ -69,7 +75,7 @@ export async function extractQuizFromMessage(captionText, imagePath) {
   messages.push({ role: 'user', content: userContent });
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: 'gpt-4o',
     messages,
     max_tokens: 1000,
     temperature: 0.1,
