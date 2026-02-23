@@ -74,6 +74,33 @@ export async function triggerSync() {
   const res = await fetch(`${BASE}/api/sync/trigger`, {
     method: 'POST', headers: authHeaders(),
   });
-  if (!res.ok) throw new Error('Sync trigger failed');
+  if (res.status === 401) throw new AuthError();
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.message || 'Sync trigger failed');
+  }
   return res.json();
+}
+
+export async function fetchSyncStatus() {
+  const res = await fetch(`${BASE}/api/sync/status`, { headers: authHeaders() });
+  if (res.status === 401) throw new AuthError();
+  if (!res.ok) throw new Error('Failed to fetch sync status');
+  return res.json();
+}
+
+export async function reconnectWhatsApp() {
+  const res = await fetch(`${BASE}/api/sync/reconnect`, {
+    method: 'POST', headers: authHeaders(),
+  });
+  if (res.status === 401) throw new AuthError();
+  if (!res.ok) throw new Error('Reconnect failed');
+  return res.json();
+}
+
+export class AuthError extends Error {
+  constructor() {
+    super('Unauthorized');
+    this.name = 'AuthError';
+  }
 }

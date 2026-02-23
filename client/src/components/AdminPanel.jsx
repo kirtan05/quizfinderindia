@@ -6,6 +6,9 @@ import {
   deleteQuiz,
   publishQuiz,
   triggerSync,
+  fetchSyncStatus,
+  reconnectWhatsApp,
+  AuthError,
 } from '../utils/api';
 import QuizEditor from './QuizEditor';
 
@@ -22,6 +25,31 @@ function formatDate(dateStr) {
   return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
 }
 
+function WaStatusDot({ status }) {
+  let colorClass = 'wa-status--unknown';
+  let label = 'Unknown';
+
+  if (status) {
+    if (status.loggedOut) {
+      colorClass = 'wa-status--disconnected';
+      label = 'Logged out';
+    } else if (status.connected) {
+      colorClass = 'wa-status--connected';
+      label = 'Connected';
+    } else {
+      colorClass = 'wa-status--unknown';
+      label = 'Disconnected';
+    }
+  }
+
+  return (
+    <span className={`wa-status ${colorClass}`} title={`WhatsApp: ${label}`}>
+      <span className="wa-status__dot" />
+      <span className="wa-status__label">{label}</span>
+    </span>
+  );
+}
+
 export default function AdminPanel({ onLogout }) {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,6 +58,28 @@ export default function AdminPanel({ onLogout }) {
   const [saving, setSaving] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
+  const [waStatus, setWaStatus] = useState(null);
+  const [reconnecting, setReconnecting] = useState(false);
+  const [reconnectMsg, setReconnectMsg] = useState(null);
+
+  function handleAuthError(err) {
+    if (err instanceof AuthError || err.name === 'AuthError') {
+      onLogout();
+      return true;
+    }
+    return false;
+  }
+
+  const loadStatus = useCallback(async () => {
+    try {
+      const status = await fetchSyncStatus();
+      setWaStatus(status);
+    } catch (err) {
+      if (!handleAuthError(err)) {
+        setWaStatus(null);
+      }
+    }
+  }, []);
 
   const load = useCallback(async () => {
     try {
@@ -38,13 +88,15 @@ export default function AdminPanel({ onLogout }) {
       setQuizzes(data);
       setError(null);
     } catch (err) {
-      setError(err.message);
+      if (!handleAuthError(err)) {
+        setError(err.message);
+      }
     } finally {
       setLoading(false);
     }
   }, []);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => { load(); loadStatus(); }, [load, loadStatus]);
 
   async function handleSave(payload) {
     setSaving(true);
@@ -57,7 +109,9 @@ export default function AdminPanel({ onLogout }) {
       setEditing(null);
       await load();
     } catch (err) {
-      alert('Save failed: ' + err.message);
+      if (!handleAuthError(err)) {
+        alert('Save failed: ' + err.message);
+      }
     } finally {
       setSaving(false);
     }
@@ -69,7 +123,9 @@ export default function AdminPanel({ onLogout }) {
       setDeleteConfirm(null);
       await load();
     } catch (err) {
-      alert('Delete failed: ' + err.message);
+      if (!handleAuthError(err)) {
+        alert('Delete failed: ' + err.message);
+      }
     }
   }
 
@@ -78,7 +134,9 @@ export default function AdminPanel({ onLogout }) {
       await publishQuiz(id);
       await load();
     } catch (err) {
-      alert('Publish failed: ' + err.message);
+      if (!handleAuthError(err)) {
+        alert('Publish failed: ' + err.message);
+      }
     }
   }
 
@@ -87,10 +145,29 @@ export default function AdminPanel({ onLogout }) {
     try {
       await triggerSync();
       await load();
+      await loadStatus();
     } catch (err) {
-      alert('Sync failed: ' + err.message);
+      if (!handleAuthError(err)) {
+        alert('Sync failed: ' + err.message);
+      }
     } finally {
       setSyncing(false);
+    }
+  }
+
+  async function handleReconnect() {
+    setReconnecting(true);
+    setReconnectMsg(null);
+    try {
+      const result = await reconnectWhatsApp();
+      setReconnectMsg(result.message);
+      await loadStatus();
+    } catch (err) {
+      if (!handleAuthError(err)) {
+        alert('Reconnect failed: ' + err.message);
+      }
+    } finally {
+      setReconnecting(false);
     }
   }
 
@@ -128,6 +205,31 @@ export default function AdminPanel({ onLogout }) {
           </button>
         </div>
       </div>
+
+      <div className="admin-panel__wa-bar">
+        <WaStatusDot status={waStatus} />
+        {waStatus?.lastSync && (
+          <span className="wa-status__last-sync">
+            Last sync: {new Date(waStatus.lastSync).toLocaleString()}
+          </span>
+        )}
+        {waStatus?.error && (
+          <span className="wa-status__error">{waStatus.error}</span>
+        )}
+        <button
+          className="btn btn--sm btn--secondary"
+          onClick={handleReconnect}
+          disabled={reconnecting}
+        >
+          {reconnecting ? 'Reconnecting...' : 'Reconnect WhatsApp'}
+        </button>
+      </div>
+
+      {reconnectMsg && (
+        <div className="admin-panel__reconnect-msg">
+          {reconnectMsg}
+        </div>
+      )}
 
       {error && <p className="admin-panel__error">{error}</p>}
 

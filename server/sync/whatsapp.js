@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 import pino from 'pino';
 import { extractQuizFromMessage } from './extractor.js';
 import { isDuplicate, findSimilarQuiz } from './dedup.js';
-import { addQuiz, markMessageProcessed, getSyncState } from '../store.js';
+import { addQuiz, markMessageProcessed, getSyncState, getWaStatus, saveWaStatus } from '../store.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const AUTH_DIR = path.join(__dirname, '..', '..', 'auth_info_baileys');
@@ -19,9 +19,22 @@ const POSTERS_DIR = path.join(__dirname, '..', '..', 'data', 'posters');
 
 const logger = pino({ level: 'warn' });
 
+export function getWhatsAppStatus() {
+  return getWaStatus();
+}
+
 export async function syncWhatsApp() {
   const groupId = process.env.WHATSAPP_GROUP_ID;
   if (!groupId) throw new Error('WHATSAPP_GROUP_ID not set in .env');
+
+  // Check if WhatsApp is logged out before attempting to connect
+  const waStatus = getWaStatus();
+  if (waStatus.loggedOut) {
+    throw new Error(
+      'WhatsApp is logged out. Please re-scan the QR code to reconnect. ' +
+      'Use the "Reconnect WhatsApp" button in the admin panel, then scan the QR code in the terminal.'
+    );
+  }
 
   const threshold = parseFloat(process.env.CONFIDENCE_THRESHOLD) || 0.7;
 
@@ -44,8 +57,22 @@ export async function syncWhatsApp() {
 
       if (connection === 'close') {
         const statusCode = lastDisconnect?.error?.output?.statusCode;
-        if (statusCode !== DisconnectReason.loggedOut) {
+        if (statusCode === DisconnectReason.loggedOut) {
+          console.log('WhatsApp logged out — QR re-scan required');
+          saveWaStatus({
+            connected: false,
+            loggedOut: true,
+            lastSync: waStatus.lastSync,
+            error: 'Logged out from WhatsApp. QR re-scan required.',
+          });
+        } else {
           console.log('Connection closed, will resolve with what we have');
+          saveWaStatus({
+            connected: false,
+            loggedOut: false,
+            lastSync: waStatus.lastSync,
+            error: null,
+          });
         }
         clearTimeout(timeout);
         resolve(processedInSession);
@@ -53,6 +80,12 @@ export async function syncWhatsApp() {
 
       if (connection === 'open') {
         console.log('Connected to WhatsApp');
+        saveWaStatus({
+          connected: true,
+          loggedOut: false,
+          lastSync: new Date().toISOString(),
+          error: null,
+        });
         timeout = setTimeout(() => {
           console.log('Sync window complete, disconnecting');
           sock.end(undefined);

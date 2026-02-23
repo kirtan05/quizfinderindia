@@ -6,6 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const QUIZZES_PATH = path.join(DATA_DIR, 'quizzes.json');
 const SYNC_STATE_PATH = path.join(DATA_DIR, 'sync-state.json');
+const WA_STATUS_PATH = path.join(DATA_DIR, 'wa-status.json');
 
 function ensureDataDir() {
   if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
@@ -80,4 +81,24 @@ export function markMessageProcessed(messageId) {
   state.processedMessageIds.push(messageId);
   state.lastSyncTimestamp = new Date().toISOString();
   saveSyncState(state);
+}
+
+const DEFAULT_WA_STATUS = {
+  connected: false,
+  loggedOut: false,
+  lastSync: null,
+  error: null,
+};
+
+export function getWaStatus() {
+  ensureDataDir();
+  if (!existsSync(WA_STATUS_PATH)) {
+    writeFileSync(WA_STATUS_PATH, JSON.stringify(DEFAULT_WA_STATUS, null, 2));
+  }
+  return JSON.parse(readFileSync(WA_STATUS_PATH, 'utf-8'));
+}
+
+export function saveWaStatus(status) {
+  ensureDataDir();
+  writeFileSync(WA_STATUS_PATH, JSON.stringify(status, null, 2));
 }
