@@ -3,8 +3,8 @@ import { useState } from 'react';
 const ELIGIBILITY_GROUPS = {
   'Age-based': ['U18', 'U23', 'U25', 'U30'],
   'Open': ['Open'],
-  'University': ['DU Only'],
-  'Degree': ['UG', 'PG'],
+  'University': ['DU Only', 'JNU Only'],
+  'Degree': ['UG', 'PG', 'Research'],
 };
 
 export default function Filters({ filters, onFilterChange, onClear }) {

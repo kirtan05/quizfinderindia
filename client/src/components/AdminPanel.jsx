@@ -52,7 +52,7 @@ export default function AdminPanel({ onLogout }) {
       if (editing === 'new') {
         await createQuiz(payload);
       } else {
-        await updateQuiz(editing._id, payload);
+        await updateQuiz(editing.id, payload);
       }
       setEditing(null);
       await load();
@@ -158,7 +158,7 @@ export default function AdminPanel({ onLogout }) {
             <tbody>
               {quizzes.map(q => (
                 <tr
-                  key={q._id}
+                  key={q.id}
                   className={
                     q.status === 'flagged' ? 'admin-panel__row--flagged' : ''
                   }
@@ -172,8 +172,8 @@ export default function AdminPanel({ onLogout }) {
                     </span>
                   </td>
                   <td className="admin-panel__cell--conf">
-                    {q.confidenceScore != null
-                      ? `${Math.round(q.confidenceScore * 100)}%`
+                    {q.confidence != null
+                      ? `${Math.round(q.confidence * 100)}%`
                       : '--'}
                   </td>
                   <td className="admin-panel__cell--actions">
@@ -186,16 +186,16 @@ export default function AdminPanel({ onLogout }) {
                     {q.status === 'flagged' && (
                       <button
                         className="btn btn--sm btn--primary"
-                        onClick={() => handlePublish(q._id)}
+                        onClick={() => handlePublish(q.id)}
                       >
                         Publish
                       </button>
                     )}
-                    {deleteConfirm === q._id ? (
+                    {deleteConfirm === q.id ? (
                       <>
                         <button
                           className="btn btn--sm btn--danger"
-                          onClick={() => handleDelete(q._id)}
+                          onClick={() => handleDelete(q.id)}
                         >
                           Confirm
                         </button>
@@ -209,7 +209,7 @@ export default function AdminPanel({ onLogout }) {
                     ) : (
                       <button
                         className="btn btn--sm btn--danger"
-                        onClick={() => setDeleteConfirm(q._id)}
+                        onClick={() => setDeleteConfirm(q.id)}
                       >
                         Delete
                       </button>

@@ -76,7 +76,16 @@ export async function extractQuizFromMessage(captionText, imagePath) {
     response_format: { type: 'json_object' },
   });
 
-  const raw = JSON.parse(response.choices[0].message.content);
+  if (!response.choices || response.choices.length === 0) {
+    throw new Error('OpenAI returned no choices');
+  }
+
+  let raw;
+  try {
+    raw = JSON.parse(response.choices[0].message.content);
+  } catch (parseErr) {
+    throw new Error(`Failed to parse OpenAI response as JSON: ${parseErr.message}`);
+  }
 
   return {
     ...raw,

@@ -6,6 +6,7 @@ const EMPTY_FORM = {
   date: '',
   time: '',
   venue: '',
+  venueMapLink: '',
   eligibility: '',
   hostingOrg: '',
   quizMasters: '',
@@ -18,13 +19,13 @@ const EMPTY_FORM = {
 
 function quizToForm(quiz) {
   if (!quiz) return { ...EMPTY_FORM };
-  const d = quiz.date ? new Date(quiz.date) : null;
   return {
     name: quiz.name || '',
     description: quiz.description || '',
-    date: d ? d.toISOString().slice(0, 10) : '',
-    time: d ? d.toTimeString().slice(0, 5) : '',
+    date: quiz.date || '',
+    time: quiz.time || '',
     venue: quiz.venue || '',
+    venueMapLink: quiz.venueMapLink || '',
     eligibility: (quiz.eligibility || []).join(', '),
     hostingOrg: quiz.hostingOrg || '',
     quizMasters: (quiz.quizMasters || []).join(', '),
@@ -37,18 +38,13 @@ function quizToForm(quiz) {
 }
 
 function formToPayload(form) {
-  // Combine date + time into ISO string
-  let date = null;
-  if (form.date) {
-    const timeStr = form.time || '00:00';
-    date = new Date(`${form.date}T${timeStr}:00`).toISOString();
-  }
-
   return {
     name: form.name,
     description: form.description,
-    date,
+    date: form.date || null,
+    time: form.time || null,
     venue: form.venue,
+    venueMapLink: form.venueMapLink || null,
     eligibility: form.eligibility.split(',').map(s => s.trim()).filter(Boolean),
     hostingOrg: form.hostingOrg,
     quizMasters: form.quizMasters.split(',').map(s => s.trim()).filter(Boolean),
@@ -146,6 +142,19 @@ export default function QuizEditor({ quiz, onSave, onCancel, saving }) {
               value={form.venue}
               onChange={handleChange}
               placeholder="Seminar Hall, North Campus"
+            />
+          </label>
+        </div>
+
+        <div className="quiz-editor__row">
+          <label className="quiz-editor__label">
+            Venue Map Link
+            <input
+              className="quiz-editor__input"
+              name="venueMapLink"
+              value={form.venueMapLink}
+              onChange={handleChange}
+              placeholder="https://maps.google.com/..."
             />
           </label>
         </div>

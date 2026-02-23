@@ -54,15 +54,7 @@ router.get('/', (req, res) => {
   res.json(quizzes);
 });
 
-router.get('/:id', (req, res) => {
-  const quiz = getQuizById(req.params.id);
-  if (!quiz || quiz.status !== 'published') {
-    return res.status(404).json({ error: 'Quiz not found' });
-  }
-  res.json(quiz);
-});
-
-// --- Admin routes ---
+// --- Admin routes (must be above /:id to avoid interception) ---
 
 router.get('/admin/all', requireAuth, (req, res) => {
   const quizzes = getQuizzes();
@@ -72,6 +64,14 @@ router.get('/admin/all', requireAuth, (req, res) => {
 router.get('/admin/flagged', requireAuth, (req, res) => {
   const quizzes = getQuizzes().filter(q => q.status === 'flagged');
   res.json(quizzes);
+});
+
+router.get('/:id', (req, res) => {
+  const quiz = getQuizById(req.params.id);
+  if (!quiz || quiz.status !== 'published') {
+    return res.status(404).json({ error: 'Quiz not found' });
+  }
+  res.json(quiz);
 });
 
 router.post('/', requireAuth, (req, res) => {

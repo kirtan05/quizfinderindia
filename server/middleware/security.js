@@ -25,5 +25,5 @@ export function setupSecurity(app) {
     max: 30,
     message: { error: 'Too many admin requests, try again later' },
   });
-  app.use('/api/admin/', adminLimiter);
+  app.use('/api/quizzes/admin/', adminLimiter);
 }

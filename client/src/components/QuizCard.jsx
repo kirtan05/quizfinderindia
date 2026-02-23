@@ -15,14 +15,14 @@ export default function QuizCard({ quiz, onClick }) {
   const tags = (quiz.eligibility || []).filter(Boolean);
 
   return (
-    <article className="quiz-card" onClick={() => onClick(quiz._id)} tabIndex={0}
-      onKeyDown={e => { if (e.key === 'Enter') onClick(quiz._id); }}
+    <article className="quiz-card" onClick={() => onClick(quiz.id)} tabIndex={0}
+      onKeyDown={e => { if (e.key === 'Enter') onClick(quiz.id); }}
       role="button"
       aria-label={`View details for ${quiz.name}`}
     >
       <div className="quiz-card__poster">
-        {quiz.posterUrl ? (
-          <img src={quiz.posterUrl} alt={`${quiz.name} poster`} loading="lazy" />
+        {quiz.posterImage ? (
+          <img src={`/${quiz.posterImage}`} alt={`${quiz.name} poster`} loading="lazy" />
         ) : (
           <div className="quiz-card__placeholder">
             <span className="quiz-card__placeholder-icon">?!</span>

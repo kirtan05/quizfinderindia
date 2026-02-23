@@ -43,7 +43,7 @@ export default function QuizGrid({ quizzes, loading, onSelectQuiz }) {
   return (
     <div className="quiz-grid" role="list">
       {quizzes.map(quiz => (
-        <QuizCard key={quiz._id} quiz={quiz} onClick={onSelectQuiz} />
+        <QuizCard key={quiz.id} quiz={quiz} onClick={onSelectQuiz} />
       ))}
     </div>
   );

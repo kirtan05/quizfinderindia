@@ -15,8 +15,7 @@ export function normalizeEligibility(rawEligibility) {
   const ageMatch = raw.match(AGE_PATTERN);
   if (ageMatch) {
     const age = parseInt(ageMatch[1]);
-    if ([18, 23, 25, 30].includes(age)) categories.add(`U${age}`);
-    else categories.add(`U${age}`);
+    categories.add(`U${age}`);
   }
 
   if (OPEN_PATTERNS.some(p => p.test(raw))) categories.add('Open');

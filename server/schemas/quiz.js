@@ -10,7 +10,7 @@ export const EligibilityCategory = z.enum([
 
 export const QuizSchema = z.object({
   id: z.string().uuid(),
-  status: z.enum(['published', 'draft', 'flagged']),
+  status: z.enum(['published', 'draft', 'flagged']).default('published'),
   confidence: z.number().min(0).max(1),
   name: z.string().min(1),
   description: z.string().default(''),

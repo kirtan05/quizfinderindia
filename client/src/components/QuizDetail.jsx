@@ -24,23 +24,31 @@ function renderMarkdown(text) {
   return html;
 }
 
-function formatDateTime(dateStr) {
+function formatDateTime(dateStr, timeStr) {
   if (!dateStr) return { date: 'TBA', time: '' };
-  const d = new Date(dateStr);
+  // Parse date string manually to avoid timezone issues
+  const parts = dateStr.split('-');
+  if (parts.length !== 3) return { date: dateStr, time: '' };
+  const [year, month, day] = parts.map(Number);
+  const d = new Date(year, month - 1, day);
   if (isNaN(d)) return { date: dateStr, time: '' };
-  return {
-    date: d.toLocaleDateString('en-IN', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    }),
-    time: d.toLocaleTimeString('en-IN', {
+  const formattedDate = d.toLocaleDateString('en-IN', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+  let formattedTime = '';
+  if (timeStr) {
+    const [h, m] = timeStr.split(':').map(Number);
+    const t = new Date(2000, 0, 1, h, m);
+    formattedTime = t.toLocaleTimeString('en-IN', {
       hour: '2-digit',
       minute: '2-digit',
       hour12: true,
-    }),
-  };
+    });
+  }
+  return { date: formattedDate, time: formattedTime };
 }
 
 function mapsUrl(venue) {
@@ -93,7 +101,7 @@ export default function QuizDetail({ quizId, onBack }) {
     );
   }
 
-  const { date, time } = formatDateTime(quiz.date);
+  const { date, time } = formatDateTime(quiz.date, quiz.time);
   const tags = (quiz.eligibility || []).filter(Boolean);
   const quizMasters = (quiz.quizMasters || []).filter(Boolean);
   const poc = quiz.poc || {};
@@ -105,10 +113,10 @@ export default function QuizDetail({ quizId, onBack }) {
       </button>
 
       <div className="quiz-detail__hero">
-        {quiz.posterUrl ? (
+        {quiz.posterImage ? (
           <img
             className="quiz-detail__poster"
-            src={quiz.posterUrl}
+            src={`/${quiz.posterImage}`}
             alt={`${quiz.name} poster`}
           />
         ) : (
@@ -139,7 +147,7 @@ export default function QuizDetail({ quizId, onBack }) {
         <div className="quiz-detail__venue">
           <span className="quiz-detail__venue-label">Where</span>
           <a
-            href={mapsUrl(quiz.venue)}
+            href={quiz.venueMapLink || mapsUrl(quiz.venue)}
             target="_blank"
             rel="noopener noreferrer"
             className="quiz-detail__venue-link"
