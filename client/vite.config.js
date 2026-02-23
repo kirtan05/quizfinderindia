@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { cpSync, mkdirSync } from 'fs';
+import { cpSync, mkdirSync, existsSync } from 'fs';
 import { resolve } from 'path';
 
 function copyDataPlugin() {
@@ -8,10 +8,19 @@ function copyDataPlugin() {
     name: 'copy-data',
     closeBundle() {
       const dataDir = resolve(__dirname, '..', 'data');
-      const outDir = resolve(__dirname, 'dist', 'data');
-      mkdirSync(outDir, { recursive: true });
-      cpSync(resolve(dataDir, 'quizzes.json'), resolve(outDir, 'quizzes.json'));
-      cpSync(resolve(dataDir, 'city-groups.json'), resolve(outDir, 'city-groups.json'));
+      const distDir = resolve(__dirname, 'dist');
+
+      // Copy JSON data files
+      const dataOut = resolve(distDir, 'data');
+      mkdirSync(dataOut, { recursive: true });
+      cpSync(resolve(dataDir, 'quizzes.json'), resolve(dataOut, 'quizzes.json'));
+      cpSync(resolve(dataDir, 'city-groups.json'), resolve(dataOut, 'city-groups.json'));
+
+      // Copy poster images
+      const postersDir = resolve(dataDir, 'posters');
+      if (existsSync(postersDir)) {
+        cpSync(postersDir, resolve(distDir, 'posters'), { recursive: true });
+      }
     },
   };
 }

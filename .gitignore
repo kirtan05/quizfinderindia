@@ -6,8 +6,7 @@ auth_info_baileys.bak/
 client/dist/
 
 # Data files with sensitive/runtime content
-data/posters/*
-!data/posters/.gitkeep
+data/posters/.gitkeep
 data/wa-groups.json
 data/wa-status.json
 data/wa-all-groups.json
