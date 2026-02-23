@@ -8,7 +8,6 @@ client/dist/
 # Data files with sensitive/runtime content
 data/posters/*
 !data/posters/.gitkeep
-data/quizzes.json
 data/wa-groups.json
 data/wa-status.json
 data/wa-all-groups.json

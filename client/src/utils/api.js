@@ -1,12 +1,96 @@
+const IS_STATIC = import.meta.env.PROD;
 const BASE = '';
 
+// --- Static mode helpers (Vercel / no backend) ---
+
+let _quizzesCache = null;
+let _citiesCache = null;
+
+async function loadStaticQuizzes() {
+  if (_quizzesCache) return _quizzesCache;
+  const res = await fetch(`${BASE}/data/quizzes.json`);
+  if (!res.ok) return [];
+  _quizzesCache = await res.json();
+  return _quizzesCache;
+}
+
+async function loadStaticCities() {
+  if (_citiesCache) return _citiesCache;
+  const res = await fetch(`${BASE}/data/city-groups.json`);
+  if (!res.ok) return [];
+  const config = await res.json();
+  _citiesCache = Object.keys(config.cities || {});
+  return _citiesCache;
+}
+
+function filterQuizzesLocally(allQuizzes, params) {
+  let quizzes = allQuizzes.filter(q => q.status === 'published');
+
+  if (params.city) {
+    quizzes = quizzes.filter(q => q.city === params.city);
+  }
+
+  if (params.eligibility) {
+    const filters = params.eligibility.split(',');
+    quizzes = quizzes.filter(q =>
+      (q.eligibilityCategories || []).some(e => filters.includes(e))
+    );
+  }
+
+  if (params.org) {
+    const orgLower = params.org.toLowerCase();
+    quizzes = quizzes.filter(q =>
+      q.hostingOrg?.toLowerCase().includes(orgLower)
+    );
+  }
+
+  if (params.upcoming === true || params.upcoming === 'true') {
+    const today = new Date().toISOString().split('T')[0];
+    quizzes = quizzes.filter(q => !q.date || q.date >= today);
+  }
+
+  if (params.mode) {
+    quizzes = quizzes.filter(q => {
+      const quizMode = q.mode || (q.venue && !/\bonline\b/i.test(q.venue) ? 'offline' : 'online');
+      return quizMode === params.mode;
+    });
+  }
+
+  if (params.search) {
+    const s = params.search.toLowerCase();
+    quizzes = quizzes.filter(q =>
+      q.name?.toLowerCase().includes(s) ||
+      q.description?.toLowerCase().includes(s) ||
+      q.hostingOrg?.toLowerCase().includes(s) ||
+      (q.quizMasters || []).some(qm => qm.toLowerCase().includes(s))
+    );
+  }
+
+  quizzes.sort((a, b) => {
+    if (a.date && b.date) return a.date.localeCompare(b.date);
+    if (a.date) return -1;
+    if (b.date) return 1;
+    return (b.createdAt || '').localeCompare(a.createdAt || '');
+  });
+
+  return quizzes;
+}
+
+// --- Public API ---
+
 export async function fetchCities() {
+  if (IS_STATIC) return loadStaticCities();
   const res = await fetch(`${BASE}/api/quizzes/cities`);
   if (!res.ok) throw new Error('Failed to fetch cities');
   return res.json();
 }
 
 export async function fetchQuizzes(params = {}) {
+  if (IS_STATIC) {
+    const all = await loadStaticQuizzes();
+    return filterQuizzesLocally(all, params);
+  }
+
   const query = new URLSearchParams();
   if (params.city) query.set('city', params.city);
   if (params.eligibility) query.set('eligibility', params.eligibility);
@@ -20,10 +104,18 @@ export async function fetchQuizzes(params = {}) {
 }
 
 export async function fetchQuiz(id) {
+  if (IS_STATIC) {
+    const all = await loadStaticQuizzes();
+    const quiz = all.find(q => q.id === id && q.status === 'published');
+    if (!quiz) throw new Error('Quiz not found');
+    return quiz;
+  }
   const res = await fetch(`${BASE}/api/quizzes/${id}`);
   if (!res.ok) throw new Error('Quiz not found');
   return res.json();
 }
+
+// --- Admin API (only works with backend) ---
 
 function authHeaders() {
   const token = localStorage.getItem('dqc_admin_token');
@@ -108,7 +200,7 @@ export async function reconnectWhatsApp() {
 export async function fetchCachedGroups() {
   const res = await fetch(`${BASE}/api/sync/groups`, { headers: authHeaders() });
   if (res.status === 401) throw new AuthError();
-  if (res.status === 404) return null; // no cache yet
+  if (res.status === 404) return null;
   if (!res.ok) throw new Error('Failed to fetch groups');
   return res.json();
 }
@@ -130,7 +222,6 @@ export function connectWhatsAppSSE(onQr, onStatus, onGroups, onError) {
     try { onError(JSON.parse(e.data)); } catch { onError({ message: 'Connection error' }); }
   });
   evtSource.onerror = () => {
-    // SSE closed — expected after connection complete
     evtSource.close();
   };
 
