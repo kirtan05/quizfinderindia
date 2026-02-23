@@ -1,8 +1,7 @@
 {
   "buildCommand": "cd client && npm install && npx vite build",
   "outputDirectory": "client/dist",
-  "routes": [
-    { "src": "/data/(.*)", "dest": "/data/$1" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
