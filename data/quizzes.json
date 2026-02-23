@@ -40,7 +40,9 @@
     ],
     "teamSize": 2,
     "crossCollege": true,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "69f213d1-dde3-4ae0-9116-29a60790a5c6",
@@ -78,7 +80,9 @@
     ],
     "teamSize": null,
     "crossCollege": null,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "d0561987-9862-43d4-84dd-aa9665d2c484",
@@ -123,7 +127,9 @@
     ],
     "teamSize": 2,
     "crossCollege": true,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "fde87a13-ccbd-4f06-b360-66c8490c0787",
@@ -164,7 +170,9 @@
     ],
     "teamSize": null,
     "crossCollege": null,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "6bdc3d60-e595-47e9-8458-464ed7d41478",
@@ -213,7 +221,9 @@
     ],
     "teamSize": 2,
     "crossCollege": null,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "d3941e31-6074-40fc-9458-75712a176971",
@@ -255,7 +265,9 @@
     ],
     "teamSize": 2,
     "crossCollege": null,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "26477603-e7dd-4777-87d6-2b8d0c3ebade",
@@ -300,7 +312,9 @@
     ],
     "teamSize": 2,
     "crossCollege": true,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "09b13ac1-4817-4587-ba58-443d293fcd71",
@@ -345,7 +359,9 @@
     ],
     "teamSize": 2,
     "crossCollege": true,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "bd1ffced-b77e-40c7-afa8-07d1d7639479",
@@ -390,7 +406,9 @@
     ],
     "teamSize": 3,
     "crossCollege": true,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "2ce037e2-351a-470f-8dbe-7e0ba94d1325",
@@ -434,7 +452,9 @@
     ],
     "teamSize": null,
     "crossCollege": null,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "55225616-28b0-49c0-8a0c-037b8980562c",
@@ -483,7 +503,9 @@
     ],
     "teamSize": 3,
     "crossCollege": true,
-    "mode": "online"
+    "mode": "online",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "c40595db-9946-4562-b4eb-4eb294d480c1",
@@ -527,7 +549,9 @@
     ],
     "teamSize": 2,
     "crossCollege": null,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "051f6235-6cf5-4757-a2b5-acfe9049adbd",
@@ -573,7 +597,9 @@
     ],
     "teamSize": 2,
     "crossCollege": true,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "15861cce-4413-4af0-ad02-cd510110a841",
@@ -616,7 +642,9 @@
     ],
     "teamSize": null,
     "crossCollege": null,
-    "mode": "online"
+    "mode": "online",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "af56aba7-f6e8-4f5e-822d-b3c0ca56ce9b",
@@ -662,7 +690,9 @@
     ],
     "teamSize": null,
     "crossCollege": null,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "c900e1a6-d6a9-4c77-ad8a-5b0d34443b05",
@@ -698,7 +728,9 @@
     ],
     "teamSize": null,
     "crossCollege": null,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "bcd82158-d73e-4443-ac47-234fca722c07",
@@ -738,7 +770,9 @@
     ],
     "teamSize": 3,
     "crossCollege": null,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "e4dff07a-2bef-4b2f-91d9-d02989514d8e",
@@ -782,7 +816,9 @@
     ],
     "teamSize": 2,
     "crossCollege": null,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "a7b547b4-d118-4aed-9319-152a79972ef5",
@@ -823,7 +859,9 @@
     ],
     "teamSize": 2,
     "crossCollege": true,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   },
   {
     "id": "a9acf213-bef9-4059-8651-8ab3f76288a1",
@@ -871,6 +909,8 @@
     ],
     "teamSize": 2,
     "crossCollege": true,
-    "mode": "offline"
+    "mode": "offline",
+    "city": "Delhi",
+    "sourceGroupId": null
   }
 ]

@@ -115,3 +115,31 @@ export function saveWaStatus(status) {
   ensureDataDir();
   writeFileSync(WA_STATUS_PATH, JSON.stringify(status, null, 2));
 }
+
+// ---- City-Groups Config ----
+
+const CITY_GROUPS_PATH = path.join(DATA_DIR, 'city-groups.json');
+
+export function getCityGroups() {
+  ensureDataDir();
+  if (!existsSync(CITY_GROUPS_PATH)) {
+    writeFileSync(CITY_GROUPS_PATH, JSON.stringify({ cities: {} }, null, 2));
+  }
+  return JSON.parse(readFileSync(CITY_GROUPS_PATH, 'utf-8'));
+}
+
+export function getCityList() {
+  const config = getCityGroups();
+  return Object.keys(config.cities);
+}
+
+export function getGroupCityMap() {
+  const config = getCityGroups();
+  const map = {};
+  for (const [city, { groups }] of Object.entries(config.cities)) {
+    for (const gid of groups) {
+      map[gid] = city;
+    }
+  }
+  return map;
+}

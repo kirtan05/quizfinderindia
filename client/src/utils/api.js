@@ -1,7 +1,14 @@
 const BASE = '';
 
+export async function fetchCities() {
+  const res = await fetch(`${BASE}/api/quizzes/cities`);
+  if (!res.ok) throw new Error('Failed to fetch cities');
+  return res.json();
+}
+
 export async function fetchQuizzes(params = {}) {
   const query = new URLSearchParams();
+  if (params.city) query.set('city', params.city);
   if (params.eligibility) query.set('eligibility', params.eligibility);
   if (params.org) query.set('org', params.org);
   if (params.upcoming !== undefined) query.set('upcoming', params.upcoming);

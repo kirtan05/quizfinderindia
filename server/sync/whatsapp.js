@@ -12,7 +12,7 @@ import pino from 'pino';
 import QRCode from 'qrcode';
 import { extractQuizFromMessage } from './extractor.js';
 import { isDuplicate, findSimilarQuiz } from './dedup.js';
-import { addQuiz, markMessageProcessed, getSyncState, getWaStatus, saveWaStatus } from '../store.js';
+import { addQuiz, markMessageProcessed, getSyncState, getWaStatus, saveWaStatus, getGroupCityMap } from '../store.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const AUTH_DIR = path.join(__dirname, '..', '..', 'auth_info_baileys');
@@ -28,7 +28,7 @@ export function getWhatsAppStatus() {
  * Process a single WhatsApp message through the extraction pipeline.
  * Returns the quiz object if successfully extracted, or null.
  */
-async function processMessage(msg, groupId, threshold, sock) {
+async function processMessage(msg, groupId, threshold, sock, city) {
   const messageId = msg.key.id;
   if (isDuplicate(messageId)) return null;
 
@@ -66,7 +66,7 @@ async function processMessage(msg, groupId, threshold, sock) {
     return null;
   }
 
-  const similar = findSimilarQuiz(extracted);
+  const similar = findSimilarQuiz(extracted, city);
   if (similar) {
     console.log(`  Skipping duplicate: "${extracted.name}" ~ "${similar.name}"`);
     markMessageProcessed(messageId);
@@ -93,6 +93,8 @@ async function processMessage(msg, groupId, threshold, sock) {
     teamSize: extracted.teamSize ?? null,
     crossCollege: extracted.crossCollege ?? null,
     mode: extracted.mode || 'offline',
+    city: city || null,
+    sourceGroupId: groupId,
     posterImage: imagePath ? `posters/${path.basename(imagePath)}` : null,
     sourceCaption: captionText || null,
     sourceMessageId: messageId,
@@ -110,18 +112,23 @@ async function processMessage(msg, groupId, threshold, sock) {
 }
 
 export async function syncWhatsApp() {
-  const groupId = process.env.WHATSAPP_GROUP_ID;
-  if (!groupId) throw new Error('WHATSAPP_GROUP_ID not set in .env');
+  const groupCityMap = getGroupCityMap();
+  const groupIds = Object.keys(groupCityMap);
+
+  // Fallback: use legacy env var if config has no groups
+  if (groupIds.length === 0) {
+    const legacyId = process.env.WHATSAPP_GROUP_ID;
+    if (!legacyId) throw new Error('No groups configured in city-groups.json and WHATSAPP_GROUP_ID not set');
+    groupCityMap[legacyId] = 'Delhi';
+    groupIds.push(legacyId);
+  }
 
   const waStatus = getWaStatus();
   if (waStatus.loggedOut) {
-    throw new Error(
-      'WhatsApp is logged out. Please re-scan the QR code via the admin panel.'
-    );
+    throw new Error('WhatsApp is logged out. Please re-scan the QR code via the admin panel.');
   }
 
   const threshold = parseFloat(process.env.CONFIDENCE_THRESHOLD) || 0.7;
-
   const { state, saveCreds } = await useMultiFileAuthState(AUTH_DIR);
 
   const sock = makeWASocket({
@@ -133,51 +140,48 @@ export async function syncWhatsApp() {
 
   return new Promise((resolve, reject) => {
     const processedInSession = [];
-    let timeout;
-    let historyReceived = false;
     let connected = false;
-    const pendingMessages = []; // Queue messages that arrive before we're ready
+    const pendingMessages = [];
+    const targetGroupSet = new Set(groupIds);
 
-    // Process all queued messages
-    async function processPending() {
-      const groupMsgs = pendingMessages
-        .filter(m => m.key?.remoteJid === groupId)
-        .sort((a, b) => Number(b.messageTimestamp || 0) - Number(a.messageTimestamp || 0));
-
-      console.log(`Processing ${groupMsgs.length} messages from group...`);
-
-      for (const msg of groupMsgs) {
-        try {
-          const quiz = await processMessage(msg, groupId, threshold, sock);
-          if (quiz) {
-            processedInSession.push(quiz);
-            console.log(`  Added quiz: "${quiz.name}" [${quiz.status}] (${Math.round(quiz.confidence * 100)}%)`);
-          }
-        } catch (err) {
-          console.error(`  Error processing message: ${err.message}`);
-        }
-      }
-    }
-
-    // Listen for real-time messages (works for regular groups)
-    sock.ev.on('messages.upsert', async ({ messages, type }) => {
+    sock.ev.on('messages.upsert', async ({ messages }) => {
       for (const msg of messages) {
-        if (msg.key?.remoteJid === groupId) {
-          console.log(`[messages.upsert] Got message from group (type=${type})`);
+        if (targetGroupSet.has(msg.key?.remoteJid)) {
           pendingMessages.push(msg);
         }
       }
     });
 
-    // Listen for history sync messages (works for community sub-groups)
-    sock.ev.on('messaging-history.set', ({ messages, syncType }) => {
-      const groupMsgs = messages.filter(m => m.key?.remoteJid === groupId);
-      if (groupMsgs.length > 0) {
-        console.log(`[messaging-history.set] Got ${groupMsgs.length} messages from group (syncType=${syncType})`);
-        pendingMessages.push(...groupMsgs);
-        historyReceived = true;
+    sock.ev.on('messaging-history.set', ({ messages }) => {
+      const relevant = messages.filter(m => targetGroupSet.has(m.key?.remoteJid));
+      if (relevant.length > 0) {
+        console.log(`[messaging-history.set] Got ${relevant.length} messages from configured groups`);
+        pendingMessages.push(...relevant);
       }
     });
+
+    async function processPending() {
+      for (const gid of groupIds) {
+        const city = groupCityMap[gid];
+        const groupMsgs = pendingMessages
+          .filter(m => m.key?.remoteJid === gid)
+          .sort((a, b) => Number(b.messageTimestamp || 0) - Number(a.messageTimestamp || 0));
+
+        console.log(`Processing ${groupMsgs.length} messages from ${city} group ${gid}...`);
+
+        for (const msg of groupMsgs) {
+          try {
+            const quiz = await processMessage(msg, gid, threshold, sock, city);
+            if (quiz) {
+              processedInSession.push(quiz);
+              console.log(`  [${city}] Added: "${quiz.name}" [${quiz.status}]`);
+            }
+          } catch (err) {
+            console.error(`  Error processing message: ${err.message}`);
+          }
+        }
+      }
+    }
 
     sock.ev.on('connection.update', async (update) => {
       const { connection, lastDisconnect, qr } = update;
@@ -190,68 +194,38 @@ export async function syncWhatsApp() {
       if (connection === 'close') {
         const statusCode = lastDisconnect?.error?.output?.statusCode;
         if (statusCode === DisconnectReason.loggedOut) {
-          console.log('WhatsApp logged out — QR re-scan required');
-          saveWaStatus({
-            connected: false,
-            loggedOut: true,
-            lastSync: waStatus.lastSync,
-            error: 'Logged out from WhatsApp. QR re-scan required.',
-          });
+          saveWaStatus({ connected: false, loggedOut: true, lastSync: waStatus.lastSync, error: 'Logged out.' });
         } else {
-          saveWaStatus({
-            connected: false,
-            loggedOut: false,
-            lastSync: waStatus.lastSync,
-            error: null,
-          });
+          saveWaStatus({ connected: false, loggedOut: false, lastSync: waStatus.lastSync, error: null });
         }
-        clearTimeout(timeout);
-
-        // Process whatever we have before resolving
-        if (connected) {
-          await processPending();
-        }
-        console.log(`Sync complete. Processed ${processedInSession.length} quizzes.`);
+        if (connected) await processPending();
+        console.log(`Sync complete. Processed ${processedInSession.length} quizzes across ${groupIds.length} groups.`);
         resolve(processedInSession);
       }
 
       if (connection === 'open' && !connected) {
         connected = true;
-        console.log('Connected to WhatsApp');
-        saveWaStatus({
-          connected: true,
-          loggedOut: false,
-          lastSync: new Date().toISOString(),
-          error: null,
-        });
+        console.log(`Connected. Syncing ${groupIds.length} groups across ${[...new Set(Object.values(groupCityMap))].join(', ')}...`);
+        saveWaStatus({ connected: true, loggedOut: false, lastSync: new Date().toISOString(), error: null });
 
-        // Wait for initial history sync events (5s), then try fetchMessageHistory
         console.log('Waiting 5s for initial history sync...');
         await new Promise(r => setTimeout(r, 5000));
 
-        if (pendingMessages.filter(m => m.key?.remoteJid === groupId).length === 0) {
-          console.log('No messages from initial sync, trying fetchMessageHistory...');
-          try {
-            await sock.fetchMessageHistory(
-              20,
-              { remoteJid: groupId, id: '', fromMe: false },
-              Math.floor(Date.now() / 1000)
-            );
-            // Wait for history response
-            console.log('Waiting 15s for fetchMessageHistory response...');
-            await new Promise(r => setTimeout(r, 15000));
-          } catch (err) {
-            console.log('fetchMessageHistory not available:', err.message);
+        // Try fetchMessageHistory for each group that has no messages yet
+        for (const gid of groupIds) {
+          if (pendingMessages.filter(m => m.key?.remoteJid === gid).length === 0) {
+            try {
+              console.log(`Fetching history for group ${gid}...`);
+              await sock.fetchMessageHistory(20, { remoteJid: gid, id: '', fromMe: false }, Math.floor(Date.now() / 1000));
+            } catch (err) {
+              console.log(`fetchMessageHistory not available for ${gid}: ${err.message}`);
+            }
           }
         }
 
-        // If still no messages, wait a bit more for any remaining sync
-        if (pendingMessages.filter(m => m.key?.remoteJid === groupId).length === 0) {
-          console.log('Waiting 10s more for any late sync events...');
-          await new Promise(r => setTimeout(r, 10000));
-        }
+        console.log('Waiting 15s for history responses...');
+        await new Promise(r => setTimeout(r, 15000));
 
-        // Process everything we have and disconnect
         await processPending();
         console.log(`Found ${processedInSession.length} quizzes. Disconnecting...`);
         sock.end(undefined);

@@ -95,6 +95,108 @@ img {
   margin: 0 auto;
 }
 
+/* ---- City Picker Modal ---- */
+.city-picker-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+.city-picker {
+  text-align: center;
+  padding: 2.5rem 2rem;
+  max-width: 420px;
+  width: 90%;
+}
+
+.city-picker__title {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.4rem;
+}
+
+.city-picker__subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 2rem;
+}
+
+.city-picker__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+}
+
+.city-picker__btn {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.8rem 1.8rem;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 2px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+
+.city-picker__btn:hover {
+  border-color: var(--accent-orange);
+  background: color-mix(in srgb, var(--accent-orange) 10%, var(--bg-surface));
+  transform: translateY(-2px);
+}
+
+.city-picker__btn:active {
+  transform: translateY(0);
+}
+
+/* ---- Disclaimer ---- */
+.disclaimer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 1.2rem;
+  background: color-mix(in srgb, var(--accent-gold) 12%, var(--bg-surface));
+  border-bottom: 1px solid color-mix(in srgb, var(--accent-gold) 30%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.disclaimer__text {
+  flex: 1;
+  margin: 0;
+}
+
+.disclaimer__btn {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.8rem;
+  background: color-mix(in srgb, var(--accent-gold) 20%, transparent);
+  color: var(--accent-gold);
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 40%, transparent);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.disclaimer__btn:hover {
+  background: color-mix(in srgb, var(--accent-gold) 35%, transparent);
+}
+
 /* ---- Header ---- */
 .app-header {
   height: var(--header-h);
@@ -129,6 +231,25 @@ img {
   font-size: 1.05rem;
   font-weight: 700;
   letter-spacing: -0.02em;
+}
+
+.app-header__city {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent-orange);
+  background: none;
+  border: none;
+  border-bottom: 2px dashed color-mix(in srgb, var(--accent-orange) 50%, transparent);
+  cursor: pointer;
+  padding: 0 0.15rem;
+  margin-left: 0.4rem;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.app-header__city:hover {
+  color: var(--accent-lime);
+  border-color: var(--accent-lime);
 }
 
 .app-header__nav {
@@ -521,6 +642,14 @@ img {
   text-overflow: ellipsis;
 }
 
+.quiz-card__qms {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .quiz-card__tags {
   display: flex;
   flex-wrap: wrap;
@@ -530,12 +659,16 @@ img {
 
 .quiz-card__actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.4rem;
   padding: 0.5rem 0.9rem 0.7rem;
   border-top: 1px solid var(--border-subtle);
 }
 
 .quiz-card__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
   font-family: var(--font-mono);
   font-size: 0.68rem;
   font-weight: 600;
@@ -545,6 +678,10 @@ img {
   border-radius: var(--radius-sm);
   text-decoration: none;
   transition: background 0.15s, color 0.15s;
+}
+
+.quiz-card__action svg {
+  flex-shrink: 0;
 }
 
 .quiz-card__action--wa {
@@ -575,6 +712,16 @@ img {
 
 .quiz-card__action--ig:hover {
   background: color-mix(in srgb, var(--accent-purple) 30%, transparent);
+}
+
+.quiz-card__action--cal {
+  background: color-mix(in srgb, var(--accent-electric) 18%, transparent);
+  color: var(--accent-electric);
+  border: 1px solid color-mix(in srgb, var(--accent-electric) 35%, transparent);
+}
+
+.quiz-card__action--cal:hover {
+  background: color-mix(in srgb, var(--accent-electric) 30%, transparent);
 }
 
 /* ---- Tags ---- */

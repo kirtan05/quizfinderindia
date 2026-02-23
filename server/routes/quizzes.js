@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import sanitizeHtml from 'sanitize-html';
-import { getQuizzes, getQuizById, addQuiz, updateQuiz, deleteQuiz } from '../store.js';
+import { getQuizzes, getQuizById, addQuiz, updateQuiz, deleteQuiz, getCityList } from '../store.js';
 import { requireAuth } from '../middleware/auth.js';
 import { QuizCreateSchema, QuizUpdateSchema } from '../schemas/quiz.js';
 import { normalizeEligibility } from '../utils/eligibility.js';
@@ -10,10 +10,18 @@ const router = Router();
 
 // --- Public routes ---
 
+router.get('/cities', (req, res) => {
+  res.json(getCityList());
+});
+
 router.get('/', (req, res) => {
   let quizzes = getQuizzes().filter(q => q.status === 'published');
 
-  const { eligibility, org, upcoming, search, mode } = req.query;
+  const { eligibility, org, upcoming, search, mode, city } = req.query;
+
+  if (city) {
+    quizzes = quizzes.filter(q => q.city === city);
+  }
 
   if (eligibility) {
     const filters = eligibility.split(',');

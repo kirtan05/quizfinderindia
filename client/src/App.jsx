@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchQuizzes } from './utils/api';
+import { fetchQuizzes, fetchCities } from './utils/api';
 import QuizGrid from './components/QuizGrid';
 import QuizDetail from './components/QuizDetail';
 import Filters from './components/Filters';
 import AdminLogin from './components/AdminLogin';
 import AdminPanel from './components/AdminPanel';
+import CityPicker from './components/CityPicker';
 import './App.css';
 
 /* ---- Hash Router ---- */
@@ -33,7 +34,54 @@ const DEFAULT_FILTERS = {
   upcoming: true,
 };
 
+function Disclaimer({ onDismiss }) {
+  return (
+    <div className="disclaimer">
+      <p className="disclaimer__text">
+        Data is aggregated from public WhatsApp groups and may be inaccurate.
+        Please verify dates, timings, venues and eligibility before attending any event.
+      </p>
+      <button className="disclaimer__btn" onClick={onDismiss}>Got it</button>
+    </div>
+  );
+}
+
 export default function App() {
+  // Disclaimer
+  const [showDisclaimer, setShowDisclaimer] = useState(
+    () => !sessionStorage.getItem('dqb_disclaimer_seen')
+  );
+
+  function dismissDisclaimer() {
+    sessionStorage.setItem('dqb_disclaimer_seen', '1');
+    setShowDisclaimer(false);
+  }
+
+  // City selection
+  const [cities, setCities] = useState([]);
+  const [selectedCity, setSelectedCity] = useState(
+    () => localStorage.getItem('qfb_city') || ''
+  );
+  const [showCityPicker, setShowCityPicker] = useState(false);
+
+  useEffect(() => {
+    fetchCities().then(list => {
+      setCities(list);
+      if (list.length === 1) {
+        setSelectedCity(list[0]);
+        localStorage.setItem('qfb_city', list[0]);
+      } else if (!localStorage.getItem('qfb_city')) {
+        setShowCityPicker(true);
+      }
+    }).catch(() => {});
+  }, []);
+
+  function handleCitySelect(city) {
+    setSelectedCity(city);
+    localStorage.setItem('qfb_city', city);
+    setShowCityPicker(false);
+  }
+
   // Routing
   const [routeState, setRouteState] = useState(parseHash);
 
@@ -55,13 +103,14 @@ export default function App() {
     () => !!localStorage.getItem('dqc_admin_token')
   );
 
-  // Fetch quizzes when filters change (only on home route, but we keep data warm)
+  // Fetch quizzes when filters or city change
   const loadQuizzes = useCallback(async () => {
     setLoading(true);
     try {
       const params = {
         upcoming: filters.upcoming,
       };
+      if (selectedCity) params.city = selectedCity;
       if (filters.search) params.search = filters.search;
       if (filters.org) params.org = filters.org;
       if (filters.mode) params.mode = filters.mode;
@@ -75,7 +124,7 @@ export default function App() {
     } finally {
       setLoading(false);
     }
-  }, [filters]);
+  }, [filters, selectedCity]);
 
   useEffect(() => {
     loadQuizzes();
@@ -139,10 +188,23 @@ export default function App() {
 
   return (
     <div className="app">
+      {showCityPicker && cities.length > 0 && (
+        <CityPicker cities={cities} onSelect={handleCitySelect} />
+      )}
+      {showDisclaimer && <Disclaimer onDismiss={dismissDisclaimer} />}
       <header className="app-header">
         <a href="#/" className="app-header__brand" onClick={() => navigate('/')}>
           <span className="app-header__logo" aria-hidden="true">[?]</span>
-          <span className="app-header__title">Delhi Quiz Board</span>
+          <span className="app-header__title">Quiz Finder</span>
+          {selectedCity && (
+            <button
+              className="app-header__city"
+              onClick={e => { e.preventDefault(); e.stopPropagation(); setShowCityPicker(true); }}
+              title="Change city"
+            >
+              {selectedCity}
+            </button>
+          )}
         </a>
         <nav className="app-header__nav">
           <a

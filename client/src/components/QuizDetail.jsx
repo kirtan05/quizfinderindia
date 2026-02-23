@@ -2,6 +2,12 @@ import { useState, useEffect } from 'react';
 import { fetchQuiz } from '../utils/api';
 import { getTagColor } from '../utils/tagColors';
 
+const IconCalendar = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: '-0.15em' }}>
+    <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /><text x="12" y="18" textAnchor="middle" fontSize="7" fill="currentColor" stroke="none" fontWeight="bold">G</text>
+  </svg>
+);
+
 /* Minimal markdown-ish renderer: bold, italic, bullet lists, line breaks.
    No library needed -- just a few regex passes and basic sanitization. */
 function renderMarkdown(text) {
@@ -56,9 +62,52 @@ function mapsUrl(venue) {
 }
 
 function waLink(number) {
-  // strip non-digits, ensure country code
   const clean = (number || '').replace(/[^0-9]/g, '');
   return `https://wa.me/${clean}`;
+}
+
+function parseTo24h(timeStr) {
+  if (!timeStr) return null;
+  const m = timeStr.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
+  if (!m) return null;
+  let h = Number(m[1]), min = Number(m[2]);
+  if (m[3]) {
+    const pm = m[3].toUpperCase() === 'PM';
+    if (pm && h < 12) h += 12;
+    if (!pm && h === 12) h = 0;
+  }
+  return String(h).padStart(2, '0') + ':' + String(min).padStart(2, '0');
+}
+
+function gcalLink(quiz) {
+  const p = new URLSearchParams();
+  p.set('action', 'TEMPLATE');
+  p.set('text', quiz.name || 'Quiz Event');
+  if (quiz.date) {
+    const d = quiz.date.replace(/-/g, '');
+    const t24 = parseTo24h(quiz.time);
+    if (t24) {
+      const startStr = `${d}T${t24.replace(':', '')}00`;
+      const endDate = new Date(`${quiz.date}T${t24}:00`);
+      if (!isNaN(endDate)) {
+        endDate.setHours(endDate.getHours() + 2);
+        const pad = n => String(n).padStart(2, '0');
+        const endStr = `${endDate.getFullYear()}${pad(endDate.getMonth() + 1)}${pad(endDate.getDate())}T${pad(endDate.getHours())}${pad(endDate.getMinutes())}00`;
+        p.set('dates', `${startStr}/${endStr}`);
+      } else {
+        p.set('dates', `${d}/${d}`);
+      }
+    } else {
+      p.set('dates', `${d}/${d}`);
+    }
+  }
+  if (quiz.venue) p.set('location', quiz.venue);
+  const details = [
+    quiz.hostingOrg ? `Hosted by ${quiz.hostingOrg}` : '',
+    quiz.regLink ? `Register: ${quiz.regLink}` : '',
+  ].filter(Boolean).join('\n');
+  if (details) p.set('details', details);
+  return `https://calendar.google.com/calendar/render?${p.toString()}`;
 }
 
 export default function QuizDetail({ quizId, onBack }) {
@@ -102,7 +151,8 @@ export default function QuizDetail({ quizId, onBack }) {
   }
 
   const { date, time } = formatDateTime(quiz.date, quiz.time);
-  const tags = (quiz.eligibility || []).filter(Boolean);
+  const raw = quiz.eligibilityCategories || quiz.eligibility || [];
+  const tags = (Array.isArray(raw) ? raw : [raw]).filter(Boolean);
   const quizMasters = (quiz.quizMasters || []).filter(Boolean);
   const poc = quiz.poc || {};
 
@@ -237,6 +287,16 @@ export default function QuizDetail({ quizId, onBack }) {
       )}
 
       <div className="quiz-detail__actions">
+        {quiz.date && (
+          <a
+            href={gcalLink(quiz)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn--secondary"
+          >
+            <IconCalendar /> Add to Calendar
+          </a>
+        )}
         {quiz.regLink && (
           <a
             href={quiz.regLink}

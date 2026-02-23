@@ -3,7 +3,7 @@ import { readFileSync } from 'fs';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-const SYSTEM_PROMPT = `You are a structured data extractor for quiz event announcements from Delhi quiz clubs.
+const SYSTEM_PROMPT = `You are a structured data extractor for quiz event announcements.
 
 Extract the following fields from the message and/or poster image. Return ONLY valid JSON, no commentary.
 

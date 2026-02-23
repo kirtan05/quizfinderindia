@@ -47,5 +47,5 @@ cron.schedule(`*/${interval} * * * *`, async () => {
 });
 
 app.listen(PORT, () => {
-  console.log(`DQC server running on http://localhost:${PORT}`);
+  console.log(`Quiz Finder server running on http://localhost:${PORT}`);
 });
