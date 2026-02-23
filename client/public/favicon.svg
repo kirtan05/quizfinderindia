@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Location pin shape -->
+  <path d="M32 2C19.3 2 9 12.3 9 25c0 17.2 20.4 34.6 21.3 35.4a2.5 2.5 0 0 0 3.4 0C34.6 59.6 55 42.2 55 25 55 12.3 44.7 2 32 2z" fill="#ff8c2e"/>
+  <!-- Question mark -->
+  <text x="32" y="35" text-anchor="middle" dominant-baseline="central" font-family="Georgia, serif" font-size="30" font-weight="bold" fill="white">?</text>
+</svg>
