@@ -58,7 +58,7 @@ Quiz announcements (text + poster images) are picked up from WhatsApp groups and
 
 Quiz Finder is open source. If you want to add a city, suggest a group to monitor, report a bug, or contribute code:
 
-1. [Open an issue](https://github.com/kirtan05/delhiquizboard/issues) -- suggestions, bug reports, group requests
+1. [Open an issue](https://github.com/kirtan05/quizfinderindia/issues) -- suggestions, bug reports, group requests
 2. Fork and submit a PR -- code contributions welcome
 
 ---
