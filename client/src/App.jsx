@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { fetchQuizzes, fetchCities } from './utils/api';
 import QuizGrid from './components/QuizGrid';
 import QuizDetail from './components/QuizDetail';
@@ -225,6 +226,7 @@ export default function App() {
       <div className="app-content">
         {page}
       </div>
+      <Analytics />
     </div>
   );
 }
