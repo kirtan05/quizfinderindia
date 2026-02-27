@@ -17,7 +17,8 @@ function ensureDataDir() {
   if (!existsSync(SYNC_STATE_PATH)) {
     writeFileSync(SYNC_STATE_PATH, JSON.stringify({
       lastSyncTimestamp: null,
-      processedMessageIds: []
+      processedSourceIds: [],
+      instagram: { lastFetchPerPage: {} }
     }));
   }
 }
@@ -63,7 +64,22 @@ export function deleteQuiz(id) {
 
 export function getSyncState() {
   ensureDataDir();
-  return JSON.parse(readFileSync(SYNC_STATE_PATH, 'utf-8'));
+  const state = JSON.parse(readFileSync(SYNC_STATE_PATH, 'utf-8'));
+
+  // Auto-migrate old format: processedMessageIds → processedSourceIds
+  if (state.processedMessageIds && !state.processedSourceIds) {
+    state.processedSourceIds = state.processedMessageIds.map(id => `whatsapp:${id}`);
+    delete state.processedMessageIds;
+    if (!state.instagram) state.instagram = { lastFetchPerPage: {} };
+    saveSyncState(state);
+  }
+
+  // Ensure instagram section exists even on partially-migrated files
+  if (!state.instagram) {
+    state.instagram = { lastFetchPerPage: {} };
+  }
+
+  return state;
 }
 
 export function saveSyncState(state) {
@@ -71,15 +87,43 @@ export function saveSyncState(state) {
   writeFileSync(SYNC_STATE_PATH, JSON.stringify(state, null, 2));
 }
 
-export function isMessageProcessed(messageId) {
+// ---- Source-agnostic ID tracking ----
+
+export function isSourceItemProcessed(sourceType, sourceId) {
   const state = getSyncState();
-  return state.processedMessageIds.includes(messageId);
+  const key = `${sourceType}:${sourceId}`;
+  return state.processedSourceIds.includes(key);
+}
+
+export function markSourceItemProcessed(sourceType, sourceId) {
+  const state = getSyncState();
+  const key = `${sourceType}:${sourceId}`;
+  if (!state.processedSourceIds.includes(key)) {
+    state.processedSourceIds.push(key);
+  }
+  state.lastSyncTimestamp = new Date().toISOString();
+  saveSyncState(state);
+}
+
+// Backward-compat aliases (delegate to source-agnostic functions)
+export function isMessageProcessed(messageId) {
+  return isSourceItemProcessed('whatsapp', messageId);
 }
 
 export function markMessageProcessed(messageId) {
+  markSourceItemProcessed('whatsapp', messageId);
+}
+
+// ---- Instagram fetch timestamps ----
+
+export function getInstagramLastFetch(username) {
   const state = getSyncState();
-  state.processedMessageIds.push(messageId);
-  state.lastSyncTimestamp = new Date().toISOString();
+  return state.instagram.lastFetchPerPage[username] || null;
+}
+
+export function setInstagramLastFetch(username, timestamp) {
+  const state = getSyncState();
+  state.instagram.lastFetchPerPage[username] = timestamp;
   saveSyncState(state);
 }
 
