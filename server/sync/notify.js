@@ -11,7 +11,7 @@ export async function sendNotifications(newQuizzes) {
   const vapidPrivate = process.env.VAPID_PRIVATE_KEY;
   const vapidSubject = process.env.VAPID_SUBJECT;
 
-  if (!vapidPublic || !vapidPrivate || !SYNC_API_KEY) {
+  if (!vapidPublic || !vapidPrivate || !vapidSubject || !SYNC_API_KEY) {
     console.log('Push notifications not configured (missing VAPID keys or SYNC_API_KEY). Skipping.');
     return;
   }
