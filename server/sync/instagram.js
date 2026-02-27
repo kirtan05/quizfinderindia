@@ -1,4 +1,4 @@
-import { execSync } from 'child_process';
+import { spawnSync } from 'child_process';
 import { existsSync, readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -18,8 +18,8 @@ const POSTERS_DIR = path.join(__dirname, '..', '..', 'data', 'posters');
  */
 function checkDependencies() {
   try {
-    execSync('python3 -c "import instaloader"', { stdio: 'pipe' });
-    return true;
+    const result = spawnSync('python3', ['-c', 'import instaloader'], { stdio: 'pipe' });
+    return result.status === 0;
   } catch {
     return false;
   }
@@ -29,22 +29,24 @@ function checkDependencies() {
  * Run the Python scraper and return parsed JSON output.
  */
 function runScraper(loginUsername) {
-  const args = [`python3`, `"${SCRAPER_PATH}"`, `--pages`, `"${PAGES_PATH}"`];
+  const args = [SCRAPER_PATH, '--pages', PAGES_PATH];
 
   if (loginUsername) {
     args.push('--login', loginUsername);
   }
 
-  const cmd = args.join(' ');
   console.log(`Running Instagram scraper...`);
 
-  const output = execSync(cmd, {
+  const result = spawnSync('python3', args, {
     encoding: 'utf-8',
     timeout: 600_000, // 10 minutes
     stdio: ['pipe', 'pipe', 'inherit'], // stderr goes to console
   });
 
-  return JSON.parse(output);
+  if (result.error) throw result.error;
+  if (result.status !== 0) throw new Error(`Scraper exited with code ${result.status}`);
+
+  return JSON.parse(result.stdout);
 }
 
 /**

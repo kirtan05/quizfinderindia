@@ -18,9 +18,6 @@ export default function NotificationBell({ cities }) {
   const [selectedEligibility, setSelectedEligibility] = useState([]);
   const [busy, setBusy] = useState(false);
 
-  // Don't render if VAPID key is not configured
-  if (!VAPID_PUBLIC_KEY) return null;
-
   // Check existing subscription on mount
   useEffect(() => {
     const saved = localStorage.getItem('qf_notif_prefs');
@@ -35,6 +32,9 @@ export default function NotificationBell({ cities }) {
       }
     }
   }, []);
+
+  // Don't render if VAPID key is not configured
+  if (!VAPID_PUBLIC_KEY) return null;
 
   function toggleCity(city) {
     setSelectedCities(prev =>
@@ -66,7 +66,7 @@ export default function NotificationBell({ cities }) {
       await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ subscription: sub.toJSON(), prefs }),
+        body: JSON.stringify({ subscription: sub.toJSON(), preferences: prefs }),
       });
 
       localStorage.setItem('qf_notif_prefs', JSON.stringify(prefs));
