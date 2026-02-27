@@ -1,30 +1,32 @@
 import 'dotenv/config';
 import { syncWhatsApp } from './whatsapp.js';
 
-const MAX_RETRIES = 3;
-const RETRY_DELAYS = [30_000, 60_000, 120_000]; // 30s, 60s, 2min
+async function main() {
+  try {
+    const results = await syncWhatsApp();
+    console.log(`Sync complete. ${results.length} new quizzes.`);
+    return;
+  } catch (err) {
+    if (err.message !== 'AUTH_EXPIRED' && err.message !== 'LOGGED_OUT') throw err;
+    console.log('\nSession expired. Clearing auth and waiting 30s before re-linking...\n');
+  }
 
-async function runWithRetry() {
-  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
-    try {
-      console.log(`Starting WhatsApp sync${attempt > 0 ? ` (retry ${attempt}/${MAX_RETRIES})` : ''}...`);
-      const results = await syncWhatsApp();
-      console.log(`Sync complete. Processed ${results.length} new quizzes.`);
-      return results;
-    } catch (err) {
-      const is405 = err.message.includes('405') || err.message.includes('Connection closed before connecting');
-      if (is405 && attempt < MAX_RETRIES) {
-        const delay = RETRY_DELAYS[attempt];
-        console.log(`Connection rejected (405). Retrying in ${delay / 1000}s...`);
-        await new Promise(r => setTimeout(r, delay));
-      } else {
-        throw err;
-      }
+  // Wait for rate limit to cool down, then retry with fresh auth + QR
+  await new Promise(r => setTimeout(r, 30_000));
+  try {
+    const results = await syncWhatsApp({ freshAuth: true });
+    console.log(`Sync complete. ${results.length} new quizzes.`);
+  } catch (err) {
+    if (err.message === 'AUTH_EXPIRED') {
+      console.error('\nWhatsApp is still blocking connections (rate limited).');
+      console.error('Wait 5-10 minutes and try again: npm run sync\n');
+    } else {
+      throw err;
     }
   }
 }
 
-runWithRetry()
+main()
   .then(() => process.exit(0))
   .catch((err) => {
     console.error('Sync failed:', err.message);

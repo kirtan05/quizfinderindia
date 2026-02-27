@@ -4,7 +4,7 @@ import makeWASocket, {
   getContentType,
   DisconnectReason,
 } from 'baileys';
-import { writeFileSync } from 'fs';
+import { writeFileSync, rmSync, existsSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,7 +12,7 @@ import pino from 'pino';
 import QRCode from 'qrcode';
 import { extractQuizFromMessage } from './extractor.js';
 import { isDuplicate, findSimilarQuiz } from './dedup.js';
-import { addQuiz, markMessageProcessed, getSyncState, getWaStatus, saveWaStatus, getGroupCityMap } from '../store.js';
+import { addQuiz, markMessageProcessed, getWaStatus, saveWaStatus, getGroupCityMap } from '../store.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const AUTH_DIR = path.join(__dirname, '..', '..', 'auth_info_baileys');
@@ -24,103 +24,78 @@ export function getWhatsAppStatus() {
   return getWaStatus();
 }
 
-/**
- * Merge consecutive messages from the same sender in the same group
- * within a time window. Combines image-only + text-only pairs into
- * a single virtual message for better extraction.
- */
+// ────────────────────────────────────────────────
+// Merge consecutive image + text from same sender
+// ────────────────────────────────────────────────
+
 function mergeConsecutiveMessages(messages) {
   if (messages.length <= 1) return messages;
 
-  // Sort by group, then timestamp
   const sorted = [...messages].sort((a, b) => {
     const gCmp = (a.key?.remoteJid || '').localeCompare(b.key?.remoteJid || '');
     if (gCmp !== 0) return gCmp;
     return Number(a.messageTimestamp || 0) - Number(b.messageTimestamp || 0);
   });
 
-  const MERGE_WINDOW_SEC = 120; // 2 minutes
+  const WINDOW = 120; // seconds
   const merged = [];
   let i = 0;
 
   while (i < sorted.length) {
-    const current = sorted[i];
-    const currentType = getContentType(current.message);
-    const currentJid = current.key?.remoteJid;
-    const currentSender = current.key?.participant || current.key?.remoteJid;
-    const currentTs = Number(current.messageTimestamp || 0);
+    const cur = sorted[i];
+    const curType = getContentType(cur.message);
+    const curSender = cur.key?.participant || cur.key?.remoteJid;
+    const curTs = Number(cur.messageTimestamp || 0);
 
-    // Look ahead for a merge candidate
-    let didMerge = false;
     if (i + 1 < sorted.length) {
-      const next = sorted[i + 1];
-      const nextType = getContentType(next.message);
-      const nextJid = next.key?.remoteJid;
-      const nextSender = next.key?.participant || next.key?.remoteJid;
-      const nextTs = Number(next.messageTimestamp || 0);
+      const nxt = sorted[i + 1];
+      const nxtType = getContentType(nxt.message);
+      const nxtSender = nxt.key?.participant || nxt.key?.remoteJid;
+      const nxtTs = Number(nxt.messageTimestamp || 0);
 
-      const sameGroup = currentJid === nextJid;
-      const sameSender = currentSender === nextSender;
-      const withinWindow = Math.abs(nextTs - currentTs) <= MERGE_WINDOW_SEC;
+      const canMerge =
+        cur.key?.remoteJid === nxt.key?.remoteJid &&
+        curSender === nxtSender &&
+        Math.abs(nxtTs - curTs) <= WINDOW;
 
-      if (sameGroup && sameSender && withinWindow) {
-        const isImageThenText =
-          currentType === 'imageMessage' && !current.message.imageMessage?.caption &&
-          (nextType === 'conversation' || nextType === 'extendedTextMessage');
+      if (canMerge) {
+        const isImgThenTxt =
+          curType === 'imageMessage' && !cur.message.imageMessage?.caption &&
+          (nxtType === 'conversation' || nxtType === 'extendedTextMessage');
+        const isTxtThenImg =
+          (curType === 'conversation' || curType === 'extendedTextMessage') &&
+          nxtType === 'imageMessage' && !nxt.message.imageMessage?.caption;
 
-        const isTextThenImage =
-          (currentType === 'conversation' || currentType === 'extendedTextMessage') &&
-          nextType === 'imageMessage' && !next.message.imageMessage?.caption;
-
-        if (isImageThenText) {
-          // Merge: inject text as caption on the image message
-          const textContent = nextType === 'conversation'
-            ? next.message.conversation
-            : next.message.extendedTextMessage?.text;
-          const clone = structuredClone(current);
-          clone.message.imageMessage.caption = textContent;
-          clone._mergedFrom = [current.key?.id, next.key?.id];
+        if (isImgThenTxt || isTxtThenImg) {
+          const imgMsg = isImgThenTxt ? cur : nxt;
+          const txtMsg = isImgThenTxt ? nxt : cur;
+          const text = txtMsg.message.conversation || txtMsg.message.extendedTextMessage?.text;
+          const clone = structuredClone(imgMsg);
+          clone.message.imageMessage.caption = text;
+          clone._mergedIds = [cur.key?.id, nxt.key?.id];
           merged.push(clone);
           i += 2;
-          didMerge = true;
-        } else if (isTextThenImage) {
-          // Merge: inject text as caption on the image message
-          const textContent = currentType === 'conversation'
-            ? current.message.conversation
-            : current.message.extendedTextMessage?.text;
-          const clone = structuredClone(next);
-          clone.message.imageMessage.caption = textContent;
-          clone._mergedFrom = [current.key?.id, next.key?.id];
-          merged.push(clone);
-          i += 2;
-          didMerge = true;
+          continue;
         }
       }
     }
-
-    if (!didMerge) {
-      merged.push(current);
-      i++;
-    }
+    merged.push(cur);
+    i++;
   }
 
-  const mergeCount = messages.length - merged.length;
-  if (mergeCount > 0) {
-    console.log(`Merged ${mergeCount} consecutive image+text message pairs.`);
-  }
+  const count = messages.length - merged.length;
+  if (count > 0) console.log(`Merged ${count} consecutive image+text pairs.`);
   return merged;
 }
 
-/**
- * Process a single WhatsApp message through the extraction pipeline.
- * Returns the quiz object if successfully extracted, or null.
- */
+// ────────────────────────────────────────────────
+// Process a single message through GPT-4o
+// ────────────────────────────────────────────────
+
 export async function processMessage(msg, groupId, threshold, sock, city) {
   const messageId = msg.key.id;
-
-  // For merged messages, check all source IDs
-  const sourceIds = msg._mergedFrom || [messageId];
-  if (sourceIds.every(id => isDuplicate(id))) return null;
+  const allIds = msg._mergedIds || [messageId];
+  if (allIds.every(id => isDuplicate(id))) return null;
 
   const contentType = getContentType(msg.message);
   let captionText = null;
@@ -132,7 +107,6 @@ export async function processMessage(msg, groupId, threshold, sock, city) {
     captionText = msg.message.extendedTextMessage?.text;
   } else if (contentType === 'imageMessage') {
     captionText = msg.message.imageMessage?.caption;
-
     try {
       const buffer = await downloadMediaMessage(msg, 'buffer', {}, {
         reuploadRequest: sock.updateMediaMessage,
@@ -147,25 +121,22 @@ export async function processMessage(msg, groupId, threshold, sock, city) {
 
   if (!captionText && !imagePath) return null;
 
-  console.log(`  Extracting from: "${(captionText || '').slice(0, 80)}..."${imagePath ? ' [+image]' : ''}`);
+  console.log(`  Extracting: "${(captionText || '').slice(0, 80)}..."${imagePath ? ' [+image]' : ''}`);
 
   const extracted = await extractQuizFromMessage(captionText, imagePath);
   if (!extracted || !extracted.name) {
-    sourceIds.forEach(id => markMessageProcessed(id));
+    allIds.forEach(id => markMessageProcessed(id));
     return null;
   }
 
   let quizCity = city || null;
-  if (extracted.city) {
-    quizCity = extracted.city;
-  } else if (extracted.mode === 'online') {
-    quizCity = 'Online';
-  }
+  if (extracted.city) quizCity = extracted.city;
+  else if (extracted.mode === 'online') quizCity = 'Online';
 
   const similar = findSimilarQuiz(extracted, quizCity);
   if (similar) {
-    console.log(`  Skipping duplicate: "${extracted.name}" ~ "${similar.name}"`);
-    sourceIds.forEach(id => markMessageProcessed(id));
+    console.log(`  Skip duplicate: "${extracted.name}" ~ "${similar.name}"`);
+    allIds.forEach(id => markMessageProcessed(id));
     return null;
   }
 
@@ -203,19 +174,29 @@ export async function processMessage(msg, groupId, threshold, sock, city) {
   };
 
   addQuiz(quiz);
-  sourceIds.forEach(id => markMessageProcessed(id));
+  allIds.forEach(id => markMessageProcessed(id));
   return quiz;
 }
 
-export async function syncWhatsApp() {
+// ────────────────────────────────────────────────
+// Main sync — connect, collect, extract, disconnect
+// ────────────────────────────────────────────────
+
+export async function syncWhatsApp({ freshAuth = false } = {}) {
   const groupCityMap = getGroupCityMap();
   const groupIds = Object.keys(groupCityMap);
 
   if (groupIds.length === 0) {
     const legacyId = process.env.WHATSAPP_GROUP_ID;
-    if (!legacyId) throw new Error('No groups configured in city-groups.json and WHATSAPP_GROUP_ID not set');
+    if (!legacyId) throw new Error('No groups configured');
     groupCityMap[legacyId] = 'Delhi';
     groupIds.push(legacyId);
+  }
+
+  // Clear auth if requested (forces QR re-scan)
+  if (freshAuth && existsSync(AUTH_DIR)) {
+    rmSync(AUTH_DIR, { recursive: true });
+    console.log('Cleared old auth. You will need to scan a QR code.');
   }
 
   const threshold = parseFloat(process.env.CONFIDENCE_THRESHOLD) || 0.7;
@@ -231,118 +212,106 @@ export async function syncWhatsApp() {
   sock.ev.on('creds.update', saveCreds);
 
   return new Promise((resolve, reject) => {
-    const processedInSession = [];
+    const results = [];
     let connected = false;
-    const collectedMessages = new Map(); // messageId -> msg (deduped)
-    const targetGroupSet = new Set(groupIds);
-    let historyBatches = 0;
-    let historyDone = false;
-    let lastMessageTime = 0;
+    const collected = new Map(); // msgId -> msg
+    const targetGroups = new Set(groupIds);
+    let lastActivity = Date.now();
 
-    function collectMessage(msg) {
-      if (!targetGroupSet.has(msg.key?.remoteJid)) return;
+    function collect(msg) {
+      if (!targetGroups.has(msg.key?.remoteJid)) return;
       const id = msg.key?.id;
-      if (id && !collectedMessages.has(id)) {
-        collectedMessages.set(id, msg);
-        lastMessageTime = Date.now();
+      if (id && !collected.has(id)) {
+        collected.set(id, msg);
+        lastActivity = Date.now();
       }
     }
 
-    // Collect from history sync (fires on first link, or for offline messages)
     sock.ev.on('messaging-history.set', ({ messages, isLatest, progress }) => {
-      historyBatches++;
-      let relevant = 0;
-      for (const m of messages) {
-        if (targetGroupSet.has(m.key?.remoteJid)) {
-          collectMessage(m);
-          relevant++;
-        }
-      }
-      console.log(`[history #${historyBatches}] ${messages.length} total, ${relevant} relevant (progress: ${progress ?? '?'}%)`);
-      if (isLatest) historyDone = true;
+      let n = 0;
+      for (const m of messages) { if (targetGroups.has(m.key?.remoteJid)) { collect(m); n++; } }
+      console.log(`[history] ${messages.length} total, ${n} relevant (${progress ?? '?'}%)`);
     });
 
-    // Collect from real-time messages
     sock.ev.on('messages.upsert', ({ messages }) => {
-      for (const msg of messages) collectMessage(msg);
+      for (const m of messages) collect(m);
     });
 
     sock.ev.on('connection.update', async (update) => {
       const { connection, lastDisconnect, qr } = update;
 
       if (qr) {
-        console.log('\nScan this QR code with WhatsApp:\n');
+        console.log('\n--- Scan this QR code with WhatsApp ---\n');
         console.log(await QRCode.toString(qr, { type: 'terminal', small: true }));
+        console.log('Waiting for scan...\n');
       }
 
       if (connection === 'close') {
-        const statusCode = lastDisconnect?.error?.output?.statusCode;
-        if (statusCode === DisconnectReason.loggedOut) {
-          saveWaStatus({ connected: false, loggedOut: true, lastSync: null, error: 'Logged out. Re-scan QR.' });
-          reject(new Error('WhatsApp logged out. Delete auth_info_baileys/ and re-link.'));
-        } else if (!connected) {
-          // Never connected — retry or fail
-          saveWaStatus({ connected: false, loggedOut: false, lastSync: null, error: 'Connection failed' });
-          reject(new Error(`Connection closed before connecting (status: ${statusCode})`));
+        const code = lastDisconnect?.error?.output?.statusCode;
+
+        if (code === DisconnectReason.loggedOut) {
+          saveWaStatus({ connected: false, loggedOut: true, lastSync: null, error: 'Logged out' });
+          reject(new Error('LOGGED_OUT'));
+          return;
         }
-        // If connected=true, we already resolved in the open handler
+
+        if (code === 405 && !connected) {
+          saveWaStatus({ connected: false, loggedOut: false, lastSync: null, error: '405' });
+          reject(new Error('AUTH_EXPIRED'));
+          return;
+        }
+
+        if (!connected) {
+          reject(new Error(`Connection failed (${code})`));
+          return;
+        }
+        // If we were connected, we already resolved below
       }
 
       if (connection === 'open' && !connected) {
         connected = true;
         const cities = [...new Set(Object.values(groupCityMap))].join(', ');
-        console.log(`Connected. Syncing ${groupIds.length} groups across ${cities}...`);
+        console.log(`Connected! Syncing ${groupIds.length} groups (${cities})`);
         saveWaStatus({ connected: true, loggedOut: false, lastSync: new Date().toISOString(), error: null });
 
         try {
-          // Phase 1: Wait for any automatic history sync (offline messages)
-          console.log('Waiting for history sync + offline messages...');
-          await waitForMessages(15_000);
+          // Wait for automatic offline messages
+          console.log('Collecting messages...');
+          await idle(12_000);
 
-          // Phase 2: Explicitly request history for each group
-          console.log('Requesting message history for each group...');
+          // Request history for each group
           for (const gid of groupIds) {
             try {
-              await sock.fetchMessageHistory(
-                50,
-                { remoteJid: gid, id: '', fromMe: false },
-                Math.floor(Date.now() / 1000)
-              );
-            } catch (err) {
-              console.log(`  fetchMessageHistory failed for ${groupCityMap[gid]}: ${err.message}`);
-            }
+              await sock.fetchMessageHistory(50, { remoteJid: gid, id: '', fromMe: false }, Math.floor(Date.now() / 1000));
+            } catch {}
           }
+          await idle(15_000);
 
-          // Phase 3: Wait for responses from fetchMessageHistory
-          await waitForMessages(20_000);
-
-          // Summary
-          console.log(`\nCollected ${collectedMessages.size} unique messages from ${historyBatches} history batches.`);
+          // Log what we got
+          console.log(`\nCollected ${collected.size} messages.`);
           for (const gid of groupIds) {
-            const count = [...collectedMessages.values()].filter(m => m.key?.remoteJid === gid).length;
-            console.log(`  ${groupCityMap[gid]}: ${count} messages`);
+            const n = [...collected.values()].filter(m => m.key?.remoteJid === gid).length;
+            console.log(`  ${groupCityMap[gid]}: ${n}`);
           }
 
-          // Phase 4: Merge consecutive image+text messages
-          const allMessages = [...collectedMessages.values()];
-          const mergedMessages = mergeConsecutiveMessages(allMessages);
+          // Merge consecutive image+text
+          const all = mergeConsecutiveMessages([...collected.values()]);
 
-          // Phase 5: Process through extraction pipeline
-          console.log(`\nProcessing ${mergedMessages.length} messages through extraction...`);
+          // Extract
+          console.log(`\nProcessing ${all.length} messages...\n`);
           for (const gid of groupIds) {
             const city = groupCityMap[gid];
-            const groupMsgs = mergedMessages
+            const msgs = all
               .filter(m => m.key?.remoteJid === gid)
               .sort((a, b) => Number(b.messageTimestamp || 0) - Number(a.messageTimestamp || 0));
+            if (!msgs.length) continue;
 
-            if (groupMsgs.length === 0) continue;
-            console.log(`\n[${city}] Processing ${groupMsgs.length} messages...`);
-
-            for (const msg of groupMsgs) {
+            console.log(`[${city}] ${msgs.length} messages`);
+            for (const msg of msgs) {
               try {
                 const quiz = await processMessage(msg, gid, threshold, sock, city);
                 if (quiz) {
-                  processedInSession.push(quiz);
+                  results.push(quiz);
                   console.log(`  + "${quiz.name}" [${quiz.status}]`);
                 }
               } catch (err) {
@@ -351,36 +320,26 @@ export async function syncWhatsApp() {
             }
           }
 
-          console.log(`\nSync complete. ${processedInSession.length} new quizzes found.`);
+          console.log(`\nDone. ${results.length} new quizzes.`);
           saveWaStatus({ connected: false, loggedOut: false, lastSync: new Date().toISOString(), error: null });
           sock.end(undefined);
-          resolve(processedInSession);
-
+          resolve(results);
         } catch (err) {
-          console.error('Sync error:', err.message);
-          saveWaStatus({ connected: false, loggedOut: false, lastSync: null, error: err.message });
           sock.end(undefined);
           reject(err);
         }
       }
     });
 
-    // Helper: wait until no new messages arrive for `quietMs`
-    function waitForMessages(quietMs) {
-      return new Promise(resolve => {
-        lastMessageTime = Date.now();
-        const maxWait = quietMs * 3; // absolute max
-        const start = Date.now();
-
-        const interval = setInterval(() => {
-          const elapsed = Date.now() - start;
-          const sinceLast = Date.now() - lastMessageTime;
-
-          if (sinceLast >= quietMs || elapsed >= maxWait) {
-            clearInterval(interval);
-            resolve();
-          }
+    // Wait until no new messages for `ms` milliseconds
+    function idle(ms) {
+      return new Promise(res => {
+        lastActivity = Date.now();
+        const check = setInterval(() => {
+          if (Date.now() - lastActivity >= ms) { clearInterval(check); res(); }
         }, 2000);
+        // Hard cap at 3x
+        setTimeout(() => { clearInterval(check); res(); }, ms * 3);
       });
     }
   });
