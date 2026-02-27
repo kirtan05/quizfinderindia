@@ -40,6 +40,7 @@ export async function sendNotifications(newQuizzes) {
 
   let sent = 0;
   let failed = 0;
+  const expiredEndpoints = [];
 
   for (const sub of subscribers) {
     const prefs = sub.preferences || {};
@@ -78,6 +79,23 @@ export async function sendNotifications(newQuizzes) {
       failed++;
       if (err.statusCode === 410) {
         console.log('  Expired subscription (410 Gone).');
+        if (sub.subscription?.endpoint) expiredEndpoints.push(sub.subscription.endpoint);
+      }
+    }
+  }
+
+  // Clean up expired subscriptions
+  if (expiredEndpoints.length > 0) {
+    console.log(`Cleaning up ${expiredEndpoints.length} expired subscription(s)...`);
+    for (const endpoint of expiredEndpoints) {
+      try {
+        await fetch(`${VERCEL_URL}/api/subscribe`, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ endpoint }),
+        });
+      } catch {
+        // best-effort cleanup
       }
     }
   }

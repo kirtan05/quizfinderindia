@@ -18,10 +18,10 @@ self.addEventListener('notificationclick', (event) => {
   event.notification.close();
   const url = event.notification.data?.url || '/';
   event.waitUntil(
-    clients.matchAll({ type: 'window' }).then((windowClients) => {
+    clients.matchAll({ type: 'window' }).then(async (windowClients) => {
       for (const client of windowClients) {
-        if (client.url.includes(self.location.origin) && 'focus' in client) {
-          client.navigate(url);
+        if (client.url.startsWith(self.location.origin) && 'navigate' in client) {
+          await client.navigate(url);
           return client.focus();
         }
       }

@@ -2,6 +2,12 @@
 // Vercel serverless function for managing push notification subscriptions.
 // Storage: Vercel KV (Redis). Requires KV_REST_API_URL and KV_REST_API_TOKEN env vars.
 
+import { createHash } from 'crypto';
+
+function subKey(endpoint) {
+  return `pushsub:${createHash('sha256').update(endpoint).digest('hex').slice(0, 32)}`;
+}
+
 export default async function handler(req, res) {
   // CORS headers — allow browser POST/DELETE from any origin, but GET is server-to-server (auth-protected)
   const origin = req.headers.origin || '*';
@@ -32,13 +38,14 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Missing subscription.endpoint' });
     }
 
-    const key = `pushsub:${Buffer.from(subscription.endpoint).toString('base64url').slice(0, 40)}`;
+    const key = subKey(subscription.endpoint);
     const now = new Date().toISOString();
 
+    const existing = await kv.get(key);
     await kv.set(key, {
       subscription,
       preferences: preferences || {},
-      createdAt: now,
+      createdAt: existing?.createdAt || now,
       updatedAt: now,
     });
 
@@ -73,7 +80,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Missing endpoint' });
     }
 
-    const key = `pushsub:${Buffer.from(endpoint).toString('base64url').slice(0, 40)}`;
+    const key = subKey(endpoint);
     await kv.del(key);
     return res.json({ success: true });
   }

@@ -27,6 +27,8 @@ export function findSimilarQuiz(extracted, city) {
   const quizzes = getQuizzes();
 
   return quizzes.find(q => {
+    if (!q.name) return false;
+
     // City gating: skip quizzes from a different city
     if (city && q.city && q.city !== city) return false;
 
