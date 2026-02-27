@@ -265,6 +265,13 @@ export async function syncWhatsApp({ freshAuth = false } = {}) {
           return;
         }
 
+        // 515 = restart required (normal after QR scan). Reconnect.
+        if (code === DisconnectReason.restartRequired || code === 515) {
+          console.log('Restart required — reconnecting...');
+          resolve(syncWhatsApp());
+          return;
+        }
+
         if (!connected) {
           reject(new Error(`Connection failed (${code})`));
           return;
