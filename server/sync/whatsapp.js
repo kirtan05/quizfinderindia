@@ -3,6 +3,8 @@ import makeWASocket, {
   downloadMediaMessage,
   getContentType,
   DisconnectReason,
+  Browsers,
+  fetchLatestBaileysVersion,
 } from 'baileys';
 import { writeFileSync, rmSync, existsSync } from 'fs';
 import path from 'path';
@@ -201,11 +203,13 @@ export async function syncWhatsApp({ freshAuth = false } = {}) {
 
   const threshold = parseFloat(process.env.CONFIDENCE_THRESHOLD) || 0.7;
   const { state, saveCreds } = await useMultiFileAuthState(AUTH_DIR);
+  const { version } = await fetchLatestBaileysVersion();
 
   const sock = makeWASocket({
     auth: state,
+    version,
     logger,
-    browser: ['Quiz Finder', 'Chrome', '10.0'],
+    browser: Browsers.ubuntu('Chrome'),
     syncFullHistory: true,
   });
 

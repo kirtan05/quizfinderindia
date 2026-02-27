@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { rmSync, existsSync, readFileSync, writeFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import makeWASocket, { useMultiFileAuthState, DisconnectReason } from 'baileys';
+import makeWASocket, { useMultiFileAuthState, DisconnectReason, Browsers, fetchLatestBaileysVersion } from 'baileys';
 import QRCode from 'qrcode';
 import pino from 'pino';
 import { requireAuth } from '../middleware/auth.js';
@@ -93,7 +93,8 @@ router.get('/connect', requireAuth, async (req, res) => {
 
   async function startSocket() {
     const { state, saveCreds } = await useMultiFileAuthState(AUTH_DIR);
-    const sock = makeWASocket({ auth: state, logger: pino({ level: 'warn' }), syncFullHistory: true });
+    const { version } = await fetchLatestBaileysVersion();
+    const sock = makeWASocket({ auth: state, version, logger: pino({ level: 'warn' }), browser: Browsers.ubuntu('Chrome'), syncFullHistory: true });
     currentSock = sock;
     activeConnection = sock;
 
