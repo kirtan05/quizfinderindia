@@ -12,6 +12,7 @@ import random
 import argparse
 import uuid
 import urllib.request
+import urllib.parse
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -75,13 +76,17 @@ def main():
                 # Download image
                 image_filename = None
                 if post.url:
-                    try:
-                        image_filename = f"{uuid.uuid4()}.jpg"
-                        image_path = posters_dir / image_filename
-                        urllib.request.urlretrieve(post.url, str(image_path))
-                    except Exception as e:
-                        print(f"  Failed to download image for {post.shortcode}: {e}", file=sys.stderr)
-                        image_filename = None
+                    parsed = urllib.parse.urlparse(post.url)
+                    if parsed.scheme not in ('http', 'https') or not parsed.netloc:
+                        print(f"  Skipping invalid image URL for {post.shortcode}: {post.url}", file=sys.stderr)
+                    else:
+                        try:
+                            image_filename = f"{uuid.uuid4()}.jpg"
+                            image_path = posters_dir / image_filename
+                            urllib.request.urlretrieve(post.url, str(image_path))
+                        except Exception as e:
+                            print(f"  Failed to download image for {post.shortcode}: {e}", file=sys.stderr)
+                            image_filename = None
 
                 results.append({
                     'username': username,

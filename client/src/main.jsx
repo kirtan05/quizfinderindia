@@ -11,5 +11,7 @@ createRoot(document.getElementById('root')).render(
 
 // Register service worker for push notifications
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/service-worker.js').catch(() => {});
+  navigator.serviceWorker.register('/service-worker.js').catch(err => {
+    console.warn('Service worker registration failed:', err);
+  });
 }

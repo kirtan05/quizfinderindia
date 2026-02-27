@@ -63,11 +63,13 @@ export default function NotificationBell({ cities }) {
         eligibility: selectedEligibility,
       };
 
-      await fetch('/api/subscribe', {
+      const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ subscription: sub.toJSON(), preferences: prefs }),
       });
+
+      if (!res.ok) throw new Error(`Server error: ${res.status}`);
 
       localStorage.setItem('qf_notif_prefs', JSON.stringify(prefs));
       setSubscribed(true);
@@ -85,11 +87,12 @@ export default function NotificationBell({ cities }) {
       const reg = await navigator.serviceWorker.ready;
       const sub = await reg.pushManager.getSubscription();
       if (sub) {
-        await fetch('/api/subscribe', {
+        const res = await fetch('/api/subscribe', {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ endpoint: sub.endpoint }),
         });
+        if (!res.ok) throw new Error(`Server error: ${res.status}`);
         await sub.unsubscribe();
       }
       localStorage.removeItem('qf_notif_prefs');
@@ -125,8 +128,8 @@ export default function NotificationBell({ cities }) {
 
       {showModal && (
         <div className="notif-modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="notif-modal" onClick={e => e.stopPropagation()}>
-            <h3 className="notif-modal__title">Quiz Notifications</h3>
+          <div className="notif-modal" role="dialog" aria-modal="true" aria-labelledby="notif-modal-title" onClick={e => e.stopPropagation()}>
+            <h3 id="notif-modal-title" className="notif-modal__title">Quiz Notifications</h3>
             <p className="notif-modal__desc">
               Get notified when new quizzes are posted for your cities.
             </p>

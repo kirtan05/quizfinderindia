@@ -50,13 +50,13 @@ function add(args) {
     process.exit(1);
   }
 
-  const username = args[0].replace(/^@/, '');
+  const username = args[0].replace(/^@/, '').toLowerCase();
   const city = args[1];
   const name = args.slice(2).join(' ');
 
   const pages = loadPages();
 
-  const existing = pages.find(p => p.username === username);
+  const existing = pages.find(p => p.username.toLowerCase() === username);
   if (existing) {
     console.error(`@${username} already tracked (${existing.city}: ${existing.name})`);
     process.exit(1);
@@ -75,10 +75,10 @@ function remove(args) {
     process.exit(1);
   }
 
-  const username = args[0].replace(/^@/, '');
+  const username = args[0].replace(/^@/, '').toLowerCase();
   const pages = loadPages();
 
-  const idx = pages.findIndex(p => p.username === username);
+  const idx = pages.findIndex(p => p.username.toLowerCase() === username);
   if (idx === -1) {
     console.error(`@${username} not found in tracked pages`);
     process.exit(1);

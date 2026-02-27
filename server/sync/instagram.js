@@ -105,9 +105,15 @@ export async function syncInstagram() {
       continue;
     }
 
-    const imagePath = post.image_file
-      ? path.join(POSTERS_DIR, post.image_file)
-      : null;
+    let imagePath = null;
+    if (post.image_file) {
+      const candidate = path.join(POSTERS_DIR, post.image_file);
+      if (existsSync(candidate)) {
+        imagePath = candidate;
+      } else {
+        console.log(`  Warning: image file missing for @${post.username}/${post.post_id}: ${post.image_file}`);
+      }
+    }
 
     // Only process if we have caption or image
     if (!post.caption && !imagePath) {

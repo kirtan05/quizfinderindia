@@ -122,14 +122,16 @@ function add(args) {
     console.log(`Created new city: ${city}`);
   }
 
-  const existing = config.cities[city].groups.find((g) => {
-    const gid = typeof g === 'string' ? g : g.id;
-    return gid === id;
-  });
-
-  if (existing) {
-    console.error(`Group ${id} already exists in ${city}`);
-    process.exit(1);
+  // Check all cities for this group ID (prevent cross-city duplicates)
+  for (const [existingCity, cityData] of Object.entries(config.cities)) {
+    const existing = (cityData.groups || []).find((g) => {
+      const gid = typeof g === 'string' ? g : g.id;
+      return gid === id;
+    });
+    if (existing) {
+      console.error(`Group ${id} already exists in ${existingCity}`);
+      process.exit(1);
+    }
   }
 
   config.cities[city].groups.push({ name, id });

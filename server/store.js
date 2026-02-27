@@ -79,6 +79,11 @@ export function getSyncState() {
     state.instagram = { lastFetchPerPage: {} };
   }
 
+  // Ensure processedSourceIds is always a valid array
+  if (!Array.isArray(state.processedSourceIds)) {
+    state.processedSourceIds = [];
+  }
+
   return state;
 }
 
