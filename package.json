@@ -9,8 +9,7 @@
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "build:client": "cd client && npx vite build",
     "start": "node server/index.js",
-    "sync": "node server/sync/run.js",
-    "deploy": "node server/sync/deploy.js"
+    "sync": "node server/sync/run.js"
   },
   "dependencies": {
     "@hapi/boom": "^10.0.1",
