@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@hapi/boom": "^10.0.1",
+    "@vercel/kv": "^3.0.0",
     "baileys": "^7.0.0-rc.9",
     "concurrently": "^9.2.1",
     "cors": "^2.8.6",
