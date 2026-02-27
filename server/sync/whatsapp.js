@@ -97,7 +97,7 @@ function mergeConsecutiveMessages(messages) {
 export async function processMessage(msg, groupId, threshold, sock, city) {
   const messageId = msg.key.id;
   const allIds = msg._mergedIds || [messageId];
-  if (allIds.every(id => isDuplicate(id))) return null;
+  if (allIds.every(id => isDuplicate('whatsapp', id))) return null;
 
   const contentType = getContentType(msg.message);
   let captionText = null;
@@ -163,6 +163,8 @@ export async function processMessage(msg, groupId, threshold, sock, city) {
     crossCollege: extracted.crossCollege ?? null,
     mode: extracted.mode || 'offline',
     city: quizCity,
+    source: 'whatsapp',
+    sourceId: `whatsapp:${messageId}`,
     sourceGroupId: groupId,
     posterImage: imagePath ? `posters/${path.basename(imagePath)}` : null,
     sourceCaption: captionText || null,

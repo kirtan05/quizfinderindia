@@ -1720,3 +1720,104 @@ img {
     width: 100%;
   }
 }
+
+/* ---- Notification Bell ---- */
+.notif-bell {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius);
+  transition: background 0.2s;
+  margin-left: auto;
+  margin-right: 8px;
+}
+.notif-bell:hover { background: var(--bg-elevated); }
+
+/* ---- Notification Modal ---- */
+.notif-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.notif-modal {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+}
+.notif-modal__title {
+  color: var(--text-primary);
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+.notif-modal__desc {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin: 0 0 16px;
+}
+.notif-modal__section { margin-bottom: 16px; }
+.notif-modal__label {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+.notif-modal__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.notif-chip {
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.notif-chip:hover {
+  border-color: var(--accent-orange);
+  color: var(--text-primary);
+}
+.notif-chip--selected {
+  background: var(--accent-orange);
+  border-color: var(--accent-orange);
+  color: #000;
+  font-weight: 600;
+}
+.notif-modal__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+.notif-modal__cancel {
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.notif-modal__subscribe {
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  border: none;
+  background: var(--accent-orange);
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+}
+.notif-modal__subscribe:hover { filter: brightness(1.1); }
