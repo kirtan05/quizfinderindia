@@ -10,7 +10,8 @@
     "build:client": "cd client && npx vite build",
     "start": "node server/index.js",
     "sync": "node server/sync/run.js",
-    "wa": "node server/scripts/wa-groups.js"
+    "wa": "node server/scripts/wa-groups.js",
+    "ig": "node server/scripts/ig-pages.js"
   },
   "dependencies": {
     "@hapi/boom": "^10.0.1",
