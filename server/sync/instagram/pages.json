@@ -2,15 +2,15 @@
   { "username": "iwtkquiz", "city": "Online", "name": "India Wants To Know Quiz" },
   { "username": "aceofpub", "city": "Online", "name": "Ace of Pubs" },
   { "username": "quiz.pro.quo", "city": "Online", "name": "Quiz Pro Quo" },
-  { "username": "quriosity_quizzing", "city": "Bangalore", "name": "Quriosity Knowledge Solutions" },
+  { "username": "tata_crucible", "city": "Online", "name": "Tata Crucible" },
 
   { "username": "delhiquizclub", "city": "Delhi", "name": "Delhi Quiz Club" },
   { "username": "quriositypubquiz", "city": "Delhi", "name": "Quriosity Pub Quiz Delhi" },
-  { "username": "iitdqc", "city": "Delhi", "name": "Quizzing Club, IIT Delhi" },
+  { "username": "iitdqc", "city": "Delhi", "name": "Quizzing Club - IIT Delhi" },
   { "username": "delhi42dtu", "city": "Delhi", "name": "Delhi 42 - DTU Quiz Club" },
   { "username": "qnightsramjas", "city": "Delhi", "name": "Qnights - Ramjas College" },
   { "username": "illuminatihrc", "city": "Delhi", "name": "Illuminati - Hansraj College" },
-  { "username": "quizsoc_srcc", "city": "Delhi", "name": "Quiz Society, SRCC" },
+  { "username": "quizsoc_srcc", "city": "Delhi", "name": "Quiz Society - SRCC" },
   { "username": "manthanquizsoc", "city": "Delhi", "name": "Manthan - Hindu College" },
   { "username": "quizclubssc", "city": "Delhi", "name": "The Quiz Club - St. Stephen's College" },
   { "username": "quizsocmh", "city": "Delhi", "name": "Quiz Society - Miranda House" },
@@ -20,6 +20,7 @@
 
   { "username": "kqaquizzes", "city": "Bangalore", "name": "Karnataka Quiz Association" },
   { "username": "4edgequizzing", "city": "Bangalore", "name": "4 Edge Quizzing" },
+  { "username": "quriosity_quizzing", "city": "Bangalore", "name": "Quriosity Knowledge Solutions" },
   { "username": "iq.iimb", "city": "Bangalore", "name": "iQ - Quizzing Club, IIM Bangalore" },
   { "username": "rvquizcorp", "city": "Bangalore", "name": "RV QuizCorp - RVCE" },
   { "username": "bmscequizclub", "city": "Bangalore", "name": "BMSCE Quiz Club" },
@@ -31,21 +32,26 @@
   { "username": "quizclubiitm", "city": "Chennai", "name": "Quiz Club - IIT Madras" },
   { "username": "vitcquizclub", "city": "Chennai", "name": "BBQC Quiz Club - VIT Chennai" },
   { "username": "srmquizclub", "city": "Chennai", "name": "SRM Quiz Club" },
+  { "username": "chennaiquizfactory", "city": "Chennai", "name": "Chennai Quiz Factory" },
 
   { "username": "bombayquizclub", "city": "Mumbai", "name": "Bombay Quiz Club" },
-
-  { "username": "interrobang.nalsar", "city": "Hyderabad", "name": "Interrobang - NALSAR Quiz Fest" },
-  { "username": "quizincnitdgp", "city": "Durgapur", "name": "QuizInc - NIT Durgapur" },
-  { "username": "ahduni_quizclub", "city": "Ahmedabad", "name": "Ahmedabad University Quiz Club" },
+  { "username": "literati_iitb", "city": "Mumbai", "name": "Literati - IIT Bombay" },
 
   { "username": "iimcalcuttaquizclub", "city": "Kolkata", "name": "IIM Calcutta Quiz Club (ICQC)" },
   { "username": "quizzersofiiserk", "city": "Kolkata", "name": "Quiz Club - IISER Kolkata" },
 
   { "username": "kcirclehyd", "city": "Hyderabad", "name": "K-Circle Quiz Club" },
+  { "username": "interrobang.nalsar", "city": "Hyderabad", "name": "Interrobang - NALSAR Quiz Fest" },
+  { "username": "quizclubbphc", "city": "Hyderabad", "name": "Quiz Club - BITS Pilani Hyderabad" },
+
   { "username": "gnluquizzingcircuit", "city": "Ahmedabad", "name": "GNLU Quizzing Circuit" },
+  { "username": "ahduni_quizclub", "city": "Ahmedabad", "name": "Ahmedabad University Quiz Club" },
+
   { "username": "coep_bcqc", "city": "Pune", "name": "Boat Club Quiz Club - COEP Pune" },
   { "username": "iiserpunequiz", "city": "Pune", "name": "IISER Pune Quiz Club" },
+
   { "username": "seqcgoa", "city": "Goa", "name": "Sunday Evening Quiz Club - Goa" },
+  { "username": "bitsgoaquizclub", "city": "Goa", "name": "Quiz Club - BITS Goa" },
 
   { "username": "quizclubiitism", "city": "Dhanbad", "name": "Quiz Club - IIT ISM Dhanbad" },
   { "username": "iitkgp.qc", "city": "Kharagpur", "name": "Quiz Club - IIT Kharagpur" },
@@ -59,13 +65,20 @@
   { "username": "qciitt", "city": "Tirupati", "name": "Quiz Club - IIT Tirupati" },
   { "username": "quizclub_iitpkd", "city": "Palakkad", "name": "Qriosity - IIT Palakkad" },
 
-  { "username": "quizclubbphc", "city": "Hyderabad", "name": "Quiz Club - BITS Pilani Hyderabad" },
-  { "username": "bitsgoaquizclub", "city": "Goa", "name": "Quiz Club - BITS Goa" },
-
   { "username": "quizclubvit", "city": "Vellore", "name": "DBQC - VIT Vellore Quiz Club" },
   { "username": "ldq_manipal", "city": "Manipal", "name": "LDQ - Manipal" },
   { "username": "qurekamuj", "city": "Jaipur", "name": "Qureka - Manipal University Jaipur" },
   { "username": "iiserb_quizclub", "city": "Bhopal", "name": "IBQC - IISER Bhopal Quiz Club" },
+
+  { "username": "quizclubiimi", "city": "Indore", "name": "Pounce - Quiz Club, IIM Indore" },
+  { "username": "thepiquiz", "city": "Indore", "name": "The Pi Quiz - IIM Indore IPM" },
+  { "username": "inquiziti_iimindore", "city": "Indore", "name": "Inquizit-I - IPM Quiz Club, IIM Indore" },
+  { "username": "qcommiiml", "city": "Lucknow", "name": "Quizzing Commoners - IIM Lucknow" },
+  { "username": "atharva.iimk", "city": "Kozhikode", "name": "Atharva - Quiz Club, IIM Kozhikode" },
+  { "username": "lsdnitk", "city": "Mangalore", "name": "LSD - NIT Surathkal" },
+  { "username": "quizincnitdgp", "city": "Durgapur", "name": "QuizInc - NIT Durgapur" },
+  { "username": "qunite_nitjsr", "city": "Jamshedpur", "name": "QUNITE - NIT Jamshedpur" },
+  { "username": "lsd.iima", "city": "Ahmedabad", "name": "Literary Symposium Desk - IIM Ahmedabad" },
 
   { "username": "enquire_nitc", "city": "Calicut", "name": "Enquire Quiz Club - NIT Calicut" },
   { "username": "quizzersclub", "city": "Bhopal", "name": "Quizzers' Club - NIT Bhopal" },
