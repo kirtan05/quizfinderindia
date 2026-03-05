@@ -7,6 +7,7 @@ import Filters from './components/Filters';
 import AdminLogin from './components/AdminLogin';
 import AdminPanel from './components/AdminPanel';
 import CityPicker from './components/CityPicker';
+import NotificationBell from './components/NotificationBell';
 import './App.css';
 
 /* ---- Hash Router ---- */
@@ -207,6 +208,7 @@ export default function App() {
             </button>
           )}
         </a>
+        <NotificationBell cities={cities} />
         <nav className="app-header__nav">
           <a
             href="#/"

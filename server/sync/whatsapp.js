@@ -97,7 +97,7 @@ function mergeConsecutiveMessages(messages) {
 export async function processMessage(msg, groupId, threshold, sock, city) {
   const messageId = msg.key.id;
   const allIds = msg._mergedIds || [messageId];
-  if (allIds.every(id => isDuplicate(id))) return null;
+  if (allIds.every(id => isDuplicate('whatsapp', id))) return null;
 
   const contentType = getContentType(msg.message);
   let captionText = null;
@@ -163,6 +163,8 @@ export async function processMessage(msg, groupId, threshold, sock, city) {
     crossCollege: extracted.crossCollege ?? null,
     mode: extracted.mode || 'offline',
     city: quizCity,
+    source: 'whatsapp',
+    sourceId: `whatsapp:${messageId}`,
     sourceGroupId: groupId,
     posterImage: imagePath ? `posters/${path.basename(imagePath)}` : null,
     sourceCaption: captionText || null,
@@ -303,6 +305,14 @@ export async function syncWhatsApp({ freshAuth = false } = {}) {
           for (const gid of groupIds) {
             const n = [...collected.values()].filter(m => m.key?.remoteJid === gid).length;
             console.log(`  ${groupCityMap[gid]}: ${n}`);
+          }
+
+          // If we connected but got nothing, sessions are likely corrupted
+          if (collected.size === 0 && !freshAuth) {
+            console.error('\nConnected but collected 0 messages — sessions may be corrupted.');
+            sock.end(undefined);
+            reject(new Error('SESSIONS_CORRUPTED'));
+            return;
           }
 
           // Merge consecutive image+text
