@@ -307,6 +307,14 @@ export async function syncWhatsApp({ freshAuth = false } = {}) {
             console.log(`  ${groupCityMap[gid]}: ${n}`);
           }
 
+          // If we connected but got nothing, sessions are likely corrupted
+          if (collected.size === 0 && !freshAuth) {
+            console.error('\nConnected but collected 0 messages — sessions may be corrupted.');
+            sock.end(undefined);
+            reject(new Error('SESSIONS_CORRUPTED'));
+            return;
+          }
+
           // Merge consecutive image+text
           const all = mergeConsecutiveMessages([...collected.values()]);
 

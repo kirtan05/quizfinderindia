@@ -30,30 +30,44 @@ function runQuiet(cmd) {
 }
 
 async function main() {
-  console.log('=== Quiz Finder: Sync ===\n');
+  const args = process.argv.slice(2);
+  const waOnly = args.includes('--wa');
+  const igOnly = args.includes('--ig');
+  const skipWa = igOnly && !waOnly;
+  const skipIg = waOnly && !igOnly;
+
+  const label = skipIg ? 'WhatsApp only' : skipWa ? 'Instagram only' : 'all sources';
+  console.log(`=== Quiz Finder: Sync (${label}) ===\n`);
 
   // 1. WhatsApp sync
   let waQuizzes = [];
-  try {
-    waQuizzes = await syncWhatsApp();
-  } catch (err) {
-    if (err.message === 'AUTH_EXPIRED' || err.message === 'LOGGED_OUT') {
-      console.log('\nSession expired. Re-linking...\n');
-      await new Promise(r => setTimeout(r, 5_000));
-      waQuizzes = await syncWhatsApp({ freshAuth: true });
-    } else {
-      console.error(`WhatsApp sync failed: ${err.message}`);
-      console.log('Continuing with other sources...\n');
+  if (!skipWa) {
+    try {
+      waQuizzes = await syncWhatsApp();
+    } catch (err) {
+      if (err.message === 'AUTH_EXPIRED' || err.message === 'LOGGED_OUT' || err.message === 'SESSIONS_CORRUPTED') {
+        const reason = err.message === 'SESSIONS_CORRUPTED'
+          ? 'Sessions corrupted (0 messages despite connection)'
+          : 'Session expired';
+        console.log(`\n${reason}. Clearing auth and re-linking...\n`);
+        await new Promise(r => setTimeout(r, 3_000));
+        waQuizzes = await syncWhatsApp({ freshAuth: true });
+      } else {
+        console.error(`WhatsApp sync failed: ${err.message}`);
+        console.log('Continuing with other sources...\n');
+      }
     }
   }
 
   // 2. Instagram sync
   let igQuizzes = [];
-  try {
-    igQuizzes = await syncInstagram();
-  } catch (err) {
-    console.error(`Instagram sync failed: ${err.message}`);
-    console.log('Continuing without Instagram results.\n');
+  if (!skipIg) {
+    try {
+      igQuizzes = await syncInstagram();
+    } catch (err) {
+      console.error(`Instagram sync failed: ${err.message}`);
+      console.log('Continuing without Instagram results.\n');
+    }
   }
 
   // 3. Summary
