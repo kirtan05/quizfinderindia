@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { extractQuizFromMessage } from './extractor.js';
 import { isDuplicate, findSimilarQuiz } from './dedup.js';
 import { addQuiz, markSourceItemProcessed, setInstagramLastFetch } from '../store.js';
+import { resolveCity } from '../utils/cities.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SCRAPER_PATH = path.join(__dirname, 'instagram', 'scraper.py');
@@ -123,9 +124,11 @@ export async function syncInstagram() {
 
     console.log(`  Extracting: @${post.username} — "${(post.caption || '').slice(0, 80)}..."${imagePath ? ' [+image]' : ''}`);
 
+    const sourceContext = { name: post.username, city: post.city, platform: 'instagram' };
+
     let extracted;
     try {
-      extracted = await extractQuizFromMessage(post.caption || null, imagePath);
+      extracted = await extractQuizFromMessage(post.caption || null, imagePath, sourceContext);
     } catch (err) {
       console.error(`  GPT extraction failed: ${err.message}`);
       markSourceItemProcessed('instagram', post.post_id);
@@ -137,13 +140,11 @@ export async function syncInstagram() {
       continue;
     }
 
-    // Determine city: extracted > post metadata > null
-    let quizCity = post.city || null;
-    if (extracted.city) quizCity = extracted.city;
-    else if (extracted.mode === 'online') quizCity = 'Online';
+    // Resolve city: GPT extraction > name detection > source page city
+    const quizCity = resolveCity(extracted.city, post.city, extracted.name, extracted.mode);
 
     // Fuzzy dedup against existing quizzes
-    const similar = findSimilarQuiz(extracted, quizCity);
+    const similar = findSimilarQuiz(extracted);
     if (similar) {
       console.log(`  Skip duplicate: "${extracted.name}" ~ "${similar.name}"`);
       markSourceItemProcessed('instagram', post.post_id);

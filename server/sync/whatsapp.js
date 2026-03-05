@@ -15,6 +15,7 @@ import QRCode from 'qrcode';
 import { extractQuizFromMessage } from './extractor.js';
 import { isDuplicate, findSimilarQuiz } from './dedup.js';
 import { addQuiz, markMessageProcessed, getWaStatus, saveWaStatus, getGroupCityMap } from '../store.js';
+import { resolveCity } from '../utils/cities.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const AUTH_DIR = path.join(__dirname, '..', '..', 'auth_info_baileys');
@@ -125,17 +126,17 @@ export async function processMessage(msg, groupId, threshold, sock, city) {
 
   console.log(`  Extracting: "${(captionText || '').slice(0, 80)}..."${imagePath ? ' [+image]' : ''}`);
 
-  const extracted = await extractQuizFromMessage(captionText, imagePath);
+  const sourceContext = { name: groupId, city, platform: 'whatsapp' };
+  const extracted = await extractQuizFromMessage(captionText, imagePath, sourceContext);
   if (!extracted || !extracted.name) {
     allIds.forEach(id => markMessageProcessed(id));
     return null;
   }
 
-  let quizCity = city || null;
-  if (extracted.city) quizCity = extracted.city;
-  else if (extracted.mode === 'online') quizCity = 'Online';
+  // Resolve city: GPT extraction > name detection > group city
+  const quizCity = resolveCity(extracted.city, city, extracted.name, extracted.mode);
 
-  const similar = findSimilarQuiz(extracted, quizCity);
+  const similar = findSimilarQuiz(extracted);
   if (similar) {
     console.log(`  Skip duplicate: "${extracted.name}" ~ "${similar.name}"`);
     allIds.forEach(id => markMessageProcessed(id));

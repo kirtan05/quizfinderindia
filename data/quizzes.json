@@ -771,7 +771,7 @@
     "teamSize": 3,
     "crossCollege": null,
     "mode": "offline",
-    "city": "Delhi",
+    "city": "Mumbai",
     "sourceGroupId": null
   },
   {
@@ -1120,59 +1120,6 @@
       "quizMasters",
       "poc",
       "regLink",
-      "city"
-    ]
-  },
-  {
-    "id": "517b2711-de7a-4fef-9ef1-3849fafe8984",
-    "status": "published",
-    "confidence": 0.9,
-    "name": "The Unmaad Quiz",
-    "description": "**General Open Quiz**\n\n- Hosted by Major Chandrakant Nair\n- Limited seats available! Register ASAP!\n- Early registration fee: ₹399 per team (3 members) on Unstop\n- Cash prize: ₹20K",
-    "date": "2026-02-28",
-    "time": "10:00",
-    "venue": null,
-    "venueMapLink": null,
-    "eligibility": [
-      "General Open Quiz"
-    ],
-    "eligibilityCategories": [
-      "Open"
-    ],
-    "hostingOrg": "IIMB",
-    "quizMasters": [
-      "Major Chandrakant Nair"
-    ],
-    "poc": {
-      "name": "Goutham",
-      "phone": "9497364885",
-      "whatsapp": "9497364885"
-    },
-    "regLink": null,
-    "instagramLink": null,
-    "teamSize": 3,
-    "crossCollege": null,
-    "mode": "offline",
-    "city": "Bangalore",
-    "sourceGroupId": "919902444486-1522038543@g.us",
-    "posterImage": "posters/12dccfdb-65e5-49d6-9d65-1f3f9b6e005d.jpg",
-    "sourceCaption": null,
-    "sourceMessageId": "AC15ABA17286180F52FDB6B6B1BF2967",
-    "sourceTimestamp": "2026-02-22T08:25:05.000Z",
-    "createdAt": "2026-02-23T20:27:43.758Z",
-    "updatedAt": "2026-02-23T20:27:43.758Z",
-    "extractedFields": [
-      "name",
-      "description",
-      "date",
-      "time",
-      "eligibility",
-      "eligibilityCategories",
-      "teamSize",
-      "mode",
-      "hostingOrg",
-      "quizMasters",
-      "poc",
       "city"
     ]
   },
@@ -1686,157 +1633,6 @@
       "eligibility",
       "eligibilityCategories",
       "mode",
-      "city"
-    ]
-  },
-  {
-    "id": "4450453c-a377-4f31-baad-478176e45ae0",
-    "status": "published",
-    "confidence": 0.9,
-    "name": "Powerplay Cricket Quiz League",
-    "description": "**8 weeks; over 600 questions**\n\nWe tell *fascinating cricket stories* through our online quizzes; great curation by experts and you get to compete with the best!\n\n- 60 quizzes; every day quizzes\n- Starting Feb 23rd till mid-April 2026\n- Wide range of questions from rules of the game, history, statistics, trivia across eras and formats",
-    "date": "2026-02-23",
-    "time": null,
-    "venue": null,
-    "venueMapLink": null,
-    "eligibility": "Open to all",
-    "eligibilityCategories": [
-      "Open"
-    ],
-    "hostingOrg": "Rapid Quiz League",
-    "quizMasters": [],
-    "poc": {
-      "name": "Ramesh Natarajan",
-      "phone": "73047 87225",
-      "whatsapp": "73047 87225"
-    },
-    "regLink": "https://rapidquizleague.com/powerplaySubscription",
-    "instagramLink": null,
-    "teamSize": null,
-    "crossCollege": null,
-    "mode": "online",
-    "city": "Online",
-    "sourceGroupId": "919902444486-1522038543@g.us",
-    "posterImage": "posters/eb405931-a144-4e29-a051-7f5bdba509ae.jpg",
-    "sourceCaption": "🏏 Presenting Powerplay – The Ultimate Cricket Quiz League!\n\nThink you really know the game? Test yourself against some of the sharpest cricket minds in the world - right from your couch.\n\nTravel across formats and eras as we bring alive the most beautiful stories in cricket through expertly crafted questions, rich backstories, and video snippets that complete the narrative.\n\nOver 600 questions across trials and league rounds.\nAll of it for just ₹799 for the full season. \n\nReady to play? Join the Powerplay now!https://rapidquizleague.com/powerplaySubscription\n\nRamesh Natarajan \nRapid Quiz League\nRamesh@rapidquizleague.com\nWhatsApp: 73047 87225",
-    "sourceMessageId": "ACF46AE582C381F0F08C2B82BE49EDDA",
-    "sourceTimestamp": "2026-02-19T12:41:06.000Z",
-    "createdAt": "2026-02-23T20:29:35.496Z",
-    "updatedAt": "2026-02-23T20:29:35.496Z",
-    "extractedFields": [
-      "name",
-      "description",
-      "date",
-      "eligibility",
-      "eligibilityCategories",
-      "mode",
-      "hostingOrg",
-      "poc",
-      "regLink"
-    ]
-  },
-  {
-    "id": "ae347798-53a2-44ac-a767-a64d03f68139",
-    "status": "published",
-    "confidence": 0.7,
-    "name": "MQF",
-    "description": "**MQF is back!**\n\n- High quality quizzes\n- Catered lunch\n- Iconic venue\n- Attractive prize money",
-    "date": "2026-03-14",
-    "time": null,
-    "venue": null,
-    "venueMapLink": null,
-    "eligibility": [],
-    "eligibilityCategories": [],
-    "hostingOrg": null,
-    "quizMasters": [],
-    "poc": {
-      "name": "Rajiv Rai",
-      "phone": "9819218415",
-      "whatsapp": "9819218415"
-    },
-    "regLink": null,
-    "instagramLink": null,
-    "teamSize": null,
-    "crossCollege": null,
-    "mode": "offline",
-    "city": "Bangalore",
-    "sourceGroupId": "919902444486-1522038543@g.us",
-    "posterImage": null,
-    "sourceCaption": "MQF is back! 14th and 15th March. Along with everything that the Fest is known for - high quality quizzes, catered lunch, iconic venue, attractive prize money. Hope you will be back, too! For more details and clarifications, contact Rajiv Rai 9819218415.",
-    "sourceMessageId": "AC3AA6A92531010EBAAE46B42F8A7644",
-    "sourceTimestamp": "2026-02-18T09:05:55.000Z",
-    "createdAt": "2026-02-23T20:29:38.364Z",
-    "updatedAt": "2026-02-23T20:29:38.364Z",
-    "extractedFields": [
-      "name",
-      "description",
-      "date",
-      "poc",
-      "mode"
-    ]
-  },
-  {
-    "id": "109033ed-f291-4086-8181-33a304b89c0e",
-    "status": "published",
-    "confidence": 0.9,
-    "name": "The 14th Mumbai Quiz Festival",
-    "description": "**The Bombay Quiz Club Presents**\n\n**Day 1: Saturday, March 14th, 2026**\n- **9:30 AM | Theroux Investigation**\n  A quiz on travel and lifestyle\n  Quizmasters: Prithwish Datta, Sachin Deshpande, Sania Narulkar\n- **1:15 PM | Afsos Quiz**\n  Sawaal ek, jawaab do (Written)\n  Quizmasters: Brajendu Bhaskar, Nikhil Sonde, Ranajeet Soman\n- **3:30 PM | Funtoosh**\n  A quiz on music, entertainment, literature, and arts\n  Quizmasters: Deepanjan Deb, Kunal Roy, Rajiv Rai\n\n**Day 2: Sunday, March 15th, 2026**\n- **9:30 AM | IndQuizition**\n  A quiz on all things India\n  Quizmasters: Ameya Samant, Devang Ghia, Dhananjay Shettigar\n- **1:15 PM | Ides of March**\n  A quiz on prophecies, betrayals, and assassinations (Written)\n  Quizmasters: Aabhaas Dasgupta, Nadeem Ansari, Pulkit Malhotra\n- **3:00 PM | The MQF Open**\n  The showpiece finale of the festival\n  Quizmasters: Abhinav Dasgupta, Aditya Gadre, Shubhankar Gokhale, Vibhendu Tewari\n\n**Teams of 3 for all quizzes**",
-    "date": "2026-03-14",
-    "time": null,
-    "venue": "Nehru Centre, Worli",
-    "venueMapLink": null,
-    "eligibility": "Teams of 3 for all quizzes",
-    "eligibilityCategories": [],
-    "hostingOrg": "The Bombay Quiz Club",
-    "quizMasters": [
-      "Prithwish Datta",
-      "Sachin Deshpande",
-      "Sania Narulkar",
-      "Brajendu Bhaskar",
-      "Nikhil Sonde",
-      "Ranajeet Soman",
-      "Deepanjan Deb",
-      "Kunal Roy",
-      "Rajiv Rai",
-      "Ameya Samant",
-      "Devang Ghia",
-      "Dhananjay Shettigar",
-      "Aabhaas Dasgupta",
-      "Nadeem Ansari",
-      "Pulkit Malhotra",
-      "Abhinav Dasgupta",
-      "Aditya Gadre",
-      "Shubhankar Gokhale",
-      "Vibhendu Tewari"
-    ],
-    "poc": {
-      "name": null,
-      "phone": null,
-      "whatsapp": null
-    },
-    "regLink": null,
-    "instagramLink": null,
-    "teamSize": 3,
-    "crossCollege": null,
-    "mode": "offline",
-    "city": "Mumbai",
-    "sourceGroupId": "919902444486-1522038543@g.us",
-    "posterImage": "posters/044dea9a-2735-4e38-b399-95489ff8b7bf.jpg",
-    "sourceCaption": null,
-    "sourceMessageId": "AC84D4FE6A6DEBB3917C7F15F5231074",
-    "sourceTimestamp": "2026-02-18T09:05:52.000Z",
-    "createdAt": "2026-02-23T20:30:03.360Z",
-    "updatedAt": "2026-02-23T20:30:03.360Z",
-    "extractedFields": [
-      "name",
-      "description",
-      "date",
-      "venue",
-      "eligibility",
-      "teamSize",
-      "mode",
-      "hostingOrg",
-      "quizMasters",
       "city"
     ]
   },
@@ -2442,46 +2238,6 @@
     ]
   },
   {
-    "id": "11a3a265-370a-42e6-a11d-8426b8ff45a4",
-    "status": "flagged",
-    "confidence": 0.65,
-    "name": "MQF",
-    "description": "**MQF is back!**\n\n- High quality quizzes\n- Catered lunch\n- Iconic venue\n- Attractive prize money",
-    "date": "2026-03-14",
-    "time": null,
-    "venue": null,
-    "venueMapLink": null,
-    "eligibility": [],
-    "eligibilityCategories": [],
-    "hostingOrg": null,
-    "quizMasters": [],
-    "poc": {
-      "name": "Rajiv Rai",
-      "phone": "9819218415",
-      "whatsapp": "9819218415"
-    },
-    "regLink": null,
-    "instagramLink": null,
-    "teamSize": null,
-    "crossCollege": null,
-    "mode": "offline",
-    "city": "Chennai",
-    "sourceGroupId": "918610809414-1533791094@g.us",
-    "posterImage": null,
-    "sourceCaption": "MQF is back! 14th and 15th March. Along with everything that the Fest is known for - high quality quizzes, catered lunch, iconic venue, attractive prize money. Hope you will be back, too! For more details and clarifications, contact Rajiv Rai 9819218415.",
-    "sourceMessageId": "2AA61BBEE7C01A0437A1",
-    "sourceTimestamp": "2026-02-18T08:00:11.000Z",
-    "createdAt": "2026-02-23T20:32:29.787Z",
-    "updatedAt": "2026-02-23T20:32:29.787Z",
-    "extractedFields": [
-      "name",
-      "description",
-      "date",
-      "poc",
-      "mode"
-    ]
-  },
-  {
     "id": "8cb24f7d-e186-44fb-85cb-3fa64b5d1674",
     "status": "published",
     "confidence": 0.85,
@@ -2579,50 +2335,6 @@
       "hostingOrg",
       "quizMasters",
       "regLink"
-    ]
-  },
-  {
-    "id": "36f5d23d-5e8e-4f85-989e-b92695eb0226",
-    "status": "published",
-    "confidence": 0.85,
-    "name": "Purple Riband Quiz",
-    "description": "**About women, for women, by women**",
-    "date": "2026-03-08",
-    "time": "15:00",
-    "venue": "Chennai",
-    "venueMapLink": null,
-    "eligibility": "About women, for women, by women",
-    "eligibilityCategories": [],
-    "hostingOrg": "QFI",
-    "quizMasters": [],
-    "poc": {
-      "name": null,
-      "phone": null,
-      "whatsapp": null
-    },
-    "regLink": null,
-    "instagramLink": null,
-    "teamSize": null,
-    "crossCollege": null,
-    "mode": "offline",
-    "city": "Chennai",
-    "sourceGroupId": "918610809414-1533791094@g.us",
-    "posterImage": "posters/8797bae6-7db1-4fa4-a73d-8dffb0b16147.jpg",
-    "sourceCaption": null,
-    "sourceMessageId": "AC2650DC16E4BD84C494DB599C97F9D9",
-    "sourceTimestamp": "2026-02-12T16:32:34.000Z",
-    "createdAt": "2026-02-23T20:33:44.539Z",
-    "updatedAt": "2026-02-23T20:33:44.539Z",
-    "extractedFields": [
-      "name",
-      "description",
-      "date",
-      "time",
-      "venue",
-      "eligibility",
-      "mode",
-      "hostingOrg",
-      "city"
     ]
   },
   {
@@ -2984,103 +2696,6 @@
       "poc",
       "regLink",
       "city"
-    ]
-  },
-  {
-    "id": "f25054d2-bdea-456a-83ec-298db8ac6741",
-    "status": "published",
-    "confidence": 0.9,
-    "name": "ICONIQ Quizverse Challenge",
-    "description": "**IT’S LIVE!**\n\nInter-College GK quizzing is back in India—bigger, smarter, nationwide, and visible worldwide. ICONIQ Quizverse Challenge is your all-digital, multi-platform arena: daily app play → global webisodes with virtual city preliminary rounds, on-ground quiz rounds — hosted at different stages by Joy Bhattacharjya, Col Vembu Shankar, Charu Sharma, and Siddhartha Basu!\n\n**How to enter:**\n- Play daily on QUIZZITOK web-app (8 MCQs • 10s each)\n- Rack up Points + a strong average score\n- Team up in twos from your college\n- Progress through City Prelims → Zonals → National Final\n\n**What’s at stake:**\n- Title & Trophy\n- ₹25,00,000 prize pool; including ₹10,00,000 at the National Final\n- Prestige for you—and your college!",
-    "date": null,
-    "time": null,
-    "venue": null,
-    "venueMapLink": null,
-    "eligibility": "No fee • English language • 18+ • Academic Year 2025–26",
-    "eligibilityCategories": [],
-    "hostingOrg": "Shiv Nadar Foundation",
-    "quizMasters": [
-      "Joy Bhattacharjya",
-      "Col Vembu Shankar",
-      "Charu Sharma",
-      "Siddhartha Basu"
-    ],
-    "poc": {
-      "name": null,
-      "phone": null,
-      "whatsapp": null
-    },
-    "regLink": "http://app.quizzitok.com",
-    "instagramLink": null,
-    "teamSize": 2,
-    "crossCollege": false,
-    "mode": "hybrid",
-    "city": "Chennai",
-    "sourceGroupId": "918610809414-1533791094@g.us",
-    "posterImage": "posters/976ca284-28eb-461f-ae05-537ae5fb6ea1.jpg",
-    "sourceCaption": "*IT’S LIVE!*\n\nInter-College GK quizzing is back in India—bigger, smarter, nationwide, and visible worldwide.\nICONIQ Quizverse Challenge is your all-digital, multi-platform arena: daily app play → global webisodes with virtual city preliminary rounds, on-ground quiz rounds — hosted at different stages by Joy Bhattacharjya, Col Vembu Shankar, Charu Sharma, and Siddhartha Basu!\n \n\n*How to enter:*\nPlay daily on QUIZZITOK web-app (8 MCQs • 10s each) Rack up Points + a strong average score \nTeam up in twos from your college\nProgress through City Prelims → Zonals → National Final\n\n*What’s at stake:*\nTitle & Trophy\n₹25,00,000 prize pool; including ₹10,00,000 at the National Final\nPrestige for you—and your college!\n\nRegister now: http://app.quizzitok.com (or scan the QR on the banner)\nFor any queries, email: contact@snficoniquiz.com\n\n(No fee • English language • 18+ • Academic Year 2025–26)",
-    "sourceMessageId": "AC60ED7FA6EC6F23964C81E02A52BFC6",
-    "sourceTimestamp": "2026-02-02T11:58:42.000Z",
-    "createdAt": "2026-02-23T20:35:54.854Z",
-    "updatedAt": "2026-02-23T20:35:54.854Z",
-    "extractedFields": [
-      "name",
-      "description",
-      "eligibility",
-      "teamSize",
-      "crossCollege",
-      "mode",
-      "hostingOrg",
-      "quizMasters",
-      "regLink"
-    ]
-  },
-  {
-    "id": "59394f8a-10b2-4e16-b23b-867d8a5a96da",
-    "status": "published",
-    "confidence": 0.9,
-    "name": "KQA Nexus Open",
-    "description": "**Team Nexus** is thrilled to invite you to our annual celebration — the Nexus Open. The quiz is part of the KQA calendar of events and is open to all.\n\n- **Entry is FREE**\n- **Teams of 2**\n- **Loads of prizes**; special prizes for the top school and college teams; lots of audience prizes.",
-    "date": "2026-02-22",
-    "time": "11:00",
-    "venue": null,
-    "venueMapLink": null,
-    "eligibility": "Open to all",
-    "eligibilityCategories": [
-      "Open"
-    ],
-    "hostingOrg": "KQA",
-    "quizMasters": [],
-    "poc": {
-      "name": "Abid",
-      "phone": "89394 41684",
-      "whatsapp": "89394 41684"
-    },
-    "regLink": "http://bit.ly/2026nexusopen",
-    "instagramLink": null,
-    "teamSize": 2,
-    "crossCollege": null,
-    "mode": "offline",
-    "city": "Chennai",
-    "sourceGroupId": "918610809414-1533791094@g.us",
-    "posterImage": "posters/82dda47f-d0e8-4934-a0c6-f036b5a65689.jpg",
-    "sourceCaption": "Team Nexus is thrilled to invite you to our annual celebration — the Nexus Open. The quiz is part of the KQA calendar of events and is open to all.\n\n📅 22 Feb 2026\n🎟 Entry is FREE\n👦🏽👧🏽 Teams of 2 \n\n🎟️ RSVP to help us plan for refreshments and seating: bit.ly/2026nexusopen 🎟️ \n\n🏆🎁🎊 Loads of prizes; special prizes for the top school and college teams; Lot of audience prizes. 🏆🎁🎊\n\nSee you on 22 Feb!\n\nFor queries, contact 89394 41684 (Abid)",
-    "sourceMessageId": "3EB0BF8C2B74D990D119D4",
-    "sourceTimestamp": "2026-01-30T08:25:26.000Z",
-    "createdAt": "2026-02-23T20:36:12.608Z",
-    "updatedAt": "2026-02-23T20:36:12.608Z",
-    "extractedFields": [
-      "name",
-      "description",
-      "date",
-      "time",
-      "eligibility",
-      "eligibilityCategories",
-      "teamSize",
-      "mode",
-      "hostingOrg",
-      "poc",
-      "regLink"
     ]
   },
   {
@@ -3497,43 +3112,6 @@
     ]
   },
   {
-    "id": "a33110ae-06e3-4a69-9465-06d3008a1549",
-    "status": "flagged",
-    "confidence": 0.4,
-    "name": "Unusual Suspects",
-    "description": "**Unusual Suspects** is a quiz event.",
-    "date": null,
-    "time": null,
-    "venue": null,
-    "venueMapLink": null,
-    "eligibility": [],
-    "eligibilityCategories": [],
-    "hostingOrg": null,
-    "quizMasters": [],
-    "poc": {
-      "name": null,
-      "phone": null,
-      "whatsapp": null
-    },
-    "regLink": null,
-    "instagramLink": null,
-    "teamSize": null,
-    "crossCollege": null,
-    "mode": "offline",
-    "city": "Chennai",
-    "sourceGroupId": "918610809414-1533791094@g.us",
-    "posterImage": null,
-    "sourceCaption": "Here's a question from the 2025 edition of Unusual Suspects.",
-    "sourceMessageId": "AC08B6C67F2468BF083F5C19808CF386",
-    "sourceTimestamp": "2026-01-23T12:14:38.000Z",
-    "createdAt": "2026-02-23T20:37:02.785Z",
-    "updatedAt": "2026-02-23T20:37:02.785Z",
-    "extractedFields": [
-      "name",
-      "description"
-    ]
-  },
-  {
     "id": "41a74b4d-6381-447a-9115-6fdf9bad7a3e",
     "status": "published",
     "confidence": 0.9,
@@ -3578,43 +3156,6 @@
       "hostingOrg",
       "regLink",
       "city"
-    ]
-  },
-  {
-    "id": "01d25211-0fcb-4953-a234-e1e1223b37f8",
-    "status": "flagged",
-    "confidence": 0.4,
-    "name": "Unusual Suspects",
-    "description": "**Unusual Suspects** is a quiz event.",
-    "date": null,
-    "time": null,
-    "venue": null,
-    "venueMapLink": null,
-    "eligibility": [],
-    "eligibilityCategories": [],
-    "hostingOrg": null,
-    "quizMasters": [],
-    "poc": {
-      "name": null,
-      "phone": null,
-      "whatsapp": null
-    },
-    "regLink": null,
-    "instagramLink": null,
-    "teamSize": null,
-    "crossCollege": null,
-    "mode": "offline",
-    "city": "Chennai",
-    "sourceGroupId": "918610809414-1533791094@g.us",
-    "posterImage": null,
-    "sourceCaption": "Here's a question from the 2025 edition of Unusual Suspects.",
-    "sourceMessageId": "ACF446C3CBB7E65035D7AE92CC32F568",
-    "sourceTimestamp": "2026-01-22T12:46:39.000Z",
-    "createdAt": "2026-02-23T20:37:14.579Z",
-    "updatedAt": "2026-02-23T20:37:14.579Z",
-    "extractedFields": [
-      "name",
-      "description"
     ]
   },
   {
@@ -3880,43 +3421,6 @@
     ]
   },
   {
-    "id": "6b1de61b-a895-49a1-801d-0b578cc4ef03",
-    "status": "flagged",
-    "confidence": 0.3,
-    "name": "Unusual Suspects",
-    "description": "**Unusual Suspects** is a quiz event.",
-    "date": null,
-    "time": null,
-    "venue": null,
-    "venueMapLink": null,
-    "eligibility": [],
-    "eligibilityCategories": [],
-    "hostingOrg": null,
-    "quizMasters": [],
-    "poc": {
-      "name": null,
-      "phone": null,
-      "whatsapp": null
-    },
-    "regLink": null,
-    "instagramLink": null,
-    "teamSize": null,
-    "crossCollege": null,
-    "mode": "offline",
-    "city": "Chennai",
-    "sourceGroupId": "918610809414-1533791094@g.us",
-    "posterImage": null,
-    "sourceCaption": "Here's a question from the 2025 edition of Unusual Suspects.",
-    "sourceMessageId": "ACE76E0B04125D3239D586957CAF2679",
-    "sourceTimestamp": "2026-01-16T12:15:44.000Z",
-    "createdAt": "2026-02-23T20:37:51.698Z",
-    "updatedAt": "2026-02-23T20:37:51.698Z",
-    "extractedFields": [
-      "name",
-      "description"
-    ]
-  },
-  {
     "id": "c7913814-a0f6-4a59-9b29-67b7e161cb74",
     "status": "flagged",
     "confidence": 0.5,
@@ -3940,7 +3444,7 @@
     "teamSize": null,
     "crossCollege": null,
     "mode": "offline",
-    "city": "Chennai",
+    "city": "Kolkata",
     "sourceGroupId": "918610809414-1533791094@g.us",
     "posterImage": null,
     "sourceCaption": "An announcement from QFI regarding events that transpired recently at the Kolkata International Quiz Festival 2026.",
@@ -4154,57 +3658,6 @@
     "sourceTimestamp": "2026-02-27T07:22:55.000Z",
     "createdAt": "2026-02-27T16:20:26.842Z",
     "updatedAt": "2026-02-27T16:20:26.842Z",
-    "extractedFields": [
-      "name",
-      "description",
-      "date",
-      "time",
-      "venue",
-      "venueMapLink",
-      "eligibility",
-      "eligibilityCategories",
-      "teamSize",
-      "mode",
-      "hostingOrg",
-      "poc",
-      "instagramLink",
-      "city"
-    ]
-  },
-  {
-    "id": "2b71eb4a-5ce2-4f60-93b1-3e121a0a4b21",
-    "status": "published",
-    "confidence": 0.95,
-    "name": "The Great Kaavu Quiz Off",
-    "description": "**PUB QUIZ @ KAAVU, WHITEFIELD**\n\nWe're back to Whitefield this Saturday for our pub quiz at Kaavu.\n\nCome by with your groups for this general quiz with a balance of accessible and challenging questions.\n\n**Theme:** General\n\n- Cover charge of Rs 250 per person is applicable, fully redeemable against food and beverages.\n- Teams of up to 6 people. Solo members are also welcome.\n- Please get a pen along\n- Prizes for top scoring teams",
-    "date": "2026-02-28",
-    "time": "16:00",
-    "venue": "Kaavu, Whitefield",
-    "venueMapLink": "https://maps.app.goo.gl/BzSdmV3gMuoxdXsy7",
-    "eligibility": "Solo members are also welcome.",
-    "eligibilityCategories": [
-      "Open"
-    ],
-    "hostingOrg": "Four Edge Quizzing Solutions",
-    "quizMasters": [],
-    "poc": {
-      "name": null,
-      "phone": "+919611957607",
-      "whatsapp": "+919611957607"
-    },
-    "regLink": null,
-    "instagramLink": "https://www.instagram.com/4edgequizzing",
-    "teamSize": 6,
-    "crossCollege": null,
-    "mode": "offline",
-    "city": "Bangalore",
-    "sourceGroupId": "120363417487420594@g.us",
-    "posterImage": "posters/c36a5043-a2da-4746-8e5c-a6381527fb7a.jpg",
-    "sourceCaption": "*PUB QUIZ @ KAAVU, WHITEFIELD*\n\nWe're back to Whitefield this Saturday for our pub quiz at Kaavu.\n\nCome by with your groups for this general quiz with a balance of accessible and challenging questions.\n\nTheme: General\n\n⏱️ February 28th,Saturday. 4 PM to 6 PM.\n📍 Kaavu, Whitefield - https://maps.app.goo.gl/BzSdmV3gMuoxdXsy7\n🎟️ Cover charge of Rs 250 per person is applicable, fully redeemable against food and beverages.\n🙋🏻‍♂️ Teams of upto 6 people. Solo members are also welcome. \n🖊️ Please get a pen along\n🏆 Prizes for top scoring teams\n\nFor queries contact: +919611957607 or DM https://www.instagram.com/4edgequizzing",
-    "sourceMessageId": "ACB9EAC6536870EFCCF5285FACECBADB",
-    "sourceTimestamp": "2026-02-27T07:22:46.000Z",
-    "createdAt": "2026-02-27T16:20:42.368Z",
-    "updatedAt": "2026-02-27T16:20:42.368Z",
     "extractedFields": [
       "name",
       "description",
@@ -5030,11 +4483,11 @@
     ]
   },
   {
-    "id": "50549765-3ffa-4346-b4a2-a15517cba5f7",
+    "id": "309c7174-ef6a-43ce-b4b6-b946485fd7bb",
     "status": "flagged",
-    "confidence": 0.4,
+    "confidence": 0.5,
     "name": "QuizProQuo",
-    "description": "**Did you know this tantalizing piece of trivia?**\n\nFor more such facts join us for the quiz this Sunday!",
+    "description": "**Did you know this tantalizing piece of trivia?**\n\nFor more such facts join us for the quiz...",
     "date": null,
     "time": null,
     "venue": null,
@@ -5049,19 +4502,19 @@
       "whatsapp": null
     },
     "regLink": null,
-    "instagramLink": "https://instagram.com/p/DVf8MCXkn37",
+    "instagramLink": "https://instagram.com/p/DVRAYIRCIY3",
     "teamSize": null,
     "crossCollege": null,
     "mode": "offline",
     "city": "Online",
     "source": "instagram",
-    "sourceId": "instagram:DVf8MCXkn37",
+    "sourceId": "instagram:DVRAYIRCIY3",
     "sourceUsername": "quiz.pro.quo",
-    "posterImage": "posters/91f6488f-2834-43d9-8638-9d4e99cef33b.jpg",
-    "sourceCaption": "Did you know this tantalizing piece of trivia? \n\nFor more such facts join us for the quiz this Sunday!\n\n#trivia #facts #funfacts #quiz #QuizProQuo",
-    "sourceTimestamp": "2026-03-05T10:16:22",
-    "createdAt": "2026-03-05T19:39:56.537Z",
-    "updatedAt": "2026-03-05T19:39:56.537Z",
+    "posterImage": "posters/7d48758f-7195-468b-9ed1-493c7327eeb9.jpg",
+    "sourceCaption": "Did you know this tantalizing piece of trivia? \n\nFor more such facts join us for the quiz... \n\n#trivia #facts #funfacts #quiz #QuizProQuo",
+    "sourceTimestamp": "2026-02-27T15:04:21",
+    "createdAt": "2026-03-05T19:40:07.673Z",
+    "updatedAt": "2026-03-05T19:40:07.673Z",
     "extractedFields": [
       "name",
       "description"
@@ -5158,44 +4611,6 @@
       "time",
       "quizMasters",
       "mode"
-    ]
-  },
-  {
-    "id": "309c7174-ef6a-43ce-b4b6-b946485fd7bb",
-    "status": "flagged",
-    "confidence": 0.5,
-    "name": "QuizProQuo",
-    "description": "**Did you know this tantalizing piece of trivia?**\n\nFor more such facts join us for the quiz...",
-    "date": null,
-    "time": null,
-    "venue": null,
-    "venueMapLink": null,
-    "eligibility": [],
-    "eligibilityCategories": [],
-    "hostingOrg": null,
-    "quizMasters": [],
-    "poc": {
-      "name": null,
-      "phone": null,
-      "whatsapp": null
-    },
-    "regLink": null,
-    "instagramLink": "https://instagram.com/p/DVRAYIRCIY3",
-    "teamSize": null,
-    "crossCollege": null,
-    "mode": "offline",
-    "city": "Online",
-    "source": "instagram",
-    "sourceId": "instagram:DVRAYIRCIY3",
-    "sourceUsername": "quiz.pro.quo",
-    "posterImage": "posters/7d48758f-7195-468b-9ed1-493c7327eeb9.jpg",
-    "sourceCaption": "Did you know this tantalizing piece of trivia? \n\nFor more such facts join us for the quiz... \n\n#trivia #facts #funfacts #quiz #QuizProQuo",
-    "sourceTimestamp": "2026-02-27T15:04:21",
-    "createdAt": "2026-03-05T19:40:07.673Z",
-    "updatedAt": "2026-03-05T19:40:07.673Z",
-    "extractedFields": [
-      "name",
-      "description"
     ]
   },
   {
@@ -5623,44 +5038,6 @@
       "hostingOrg",
       "quizMasters",
       "city"
-    ]
-  },
-  {
-    "id": "4f5c9d57-6432-4270-9949-ec0b56c574d3",
-    "status": "flagged",
-    "confidence": 0.2,
-    "name": "Quiz or CAT Exam",
-    "description": "**Is this a quiz or a CAT exam?**",
-    "date": null,
-    "time": null,
-    "venue": null,
-    "venueMapLink": null,
-    "eligibility": [],
-    "eligibilityCategories": [],
-    "hostingOrg": null,
-    "quizMasters": [],
-    "poc": {
-      "name": null,
-      "phone": null,
-      "whatsapp": null
-    },
-    "regLink": null,
-    "instagramLink": "https://instagram.com/p/DVTE2uKkcSI",
-    "teamSize": null,
-    "crossCollege": null,
-    "mode": "offline",
-    "city": "Bangalore",
-    "source": "instagram",
-    "sourceId": "instagram:DVTE2uKkcSI",
-    "sourceUsername": "kqaquizzes",
-    "posterImage": "posters/0b1f0e2d-3d55-4a69-8b1f-a2a61a0e9cc5.jpg",
-    "sourceCaption": "Is this a quiz or a CAT exam?",
-    "sourceTimestamp": "2026-02-28T10:22:00",
-    "createdAt": "2026-03-05T19:41:03.385Z",
-    "updatedAt": "2026-03-05T19:41:03.385Z",
-    "extractedFields": [
-      "name",
-      "description"
     ]
   },
   {
@@ -6294,44 +5671,6 @@
     ]
   },
   {
-    "id": "9c154fe3-33d7-4161-89ae-4f121f3214c3",
-    "status": "flagged",
-    "confidence": 0.6,
-    "name": "Kwizesta question #13",
-    "description": "**Dare to try? Step up and play,**\nThe quiz is here, fire away! ✴️\n\nDM your answers or comment them below.\n\nKeep Kwizzing! ⚡",
-    "eligibility": [
-      "Not specified"
-    ],
-    "eligibilityCategories": [],
-    "hostingOrg": "IIM Kozhikode",
-    "quizMasters": [],
-    "poc": {
-      "name": null,
-      "phone": null,
-      "whatsapp": null
-    },
-    "regLink": null,
-    "instagramLink": "https://instagram.com/p/DVVBYPcERqc",
-    "teamSize": null,
-    "crossCollege": null,
-    "mode": "online",
-    "city": "Online",
-    "source": "instagram",
-    "sourceId": "instagram:DVVBYPcERqc",
-    "sourceUsername": "atharva.iimk",
-    "posterImage": "posters/57ac0936-7721-4e27-9703-64f5026ddc50.jpg",
-    "sourceCaption": "Kwizesta question #13.\n\nDare to try? Step up and play,\nThe quiz is here, fire away! ✴️\n\nDM your answers or comment them below.\n\nKeep Kwizzing! ⚡\n\n#atharva #quizclub #Kwizesta #QuizTime BrainTeaser ChallengeYourMind quiz iimkozhikode keepkwizzing",
-    "sourceTimestamp": "2026-03-01T04:30:44",
-    "createdAt": "2026-03-05T19:42:05.965Z",
-    "updatedAt": "2026-03-05T19:42:05.965Z",
-    "extractedFields": [
-      "name",
-      "description",
-      "mode",
-      "hostingOrg"
-    ]
-  },
-  {
     "id": "286174ea-9889-4a49-86cb-993eef5f059d",
     "status": "flagged",
     "confidence": 0.6,
@@ -6474,38 +5813,6 @@
     "sourceTimestamp": "2026-03-04T06:47:26",
     "createdAt": "2026-03-05T19:42:19.233Z",
     "updatedAt": "2026-03-05T19:42:19.233Z",
-    "extractedFields": [
-      "name",
-      "description"
-    ]
-  },
-  {
-    "id": "73a23635-f86d-4306-ae2d-d5c3af00ff2c",
-    "status": "flagged",
-    "confidence": 0.5,
-    "name": "Quizzitch Cup",
-    "description": "**QuizInc’s crown jewel, the Quizzitch Cup**, has stood unchallenged as the ultimate crucible of knowledge.\n\nThis is not just a quiz fest. It is a battlefield where raw intellect meets unyielding adrenaline, and the sharpest minds collide in a war of wits and strategy. From sudden death buzzer rounds to high stakes finales, it remains the definitive proving ground for champions.\n\nAs we celebrate a decade and a half of unmatched legacy, the stage is set for our grandest edition yet. Witness a spectacle that transcends competition.\n\nThe clock is ticking. The ultimate quest for glory begins now.",
-    "eligibility": [],
-    "eligibilityCategories": [],
-    "quizMasters": [],
-    "poc": {
-      "name": null,
-      "phone": null,
-      "whatsapp": null
-    },
-    "instagramLink": "https://instagram.com/p/DVXtY_7CEvs",
-    "teamSize": null,
-    "crossCollege": null,
-    "mode": "offline",
-    "city": "Durgapur",
-    "source": "instagram",
-    "sourceId": "instagram:DVXtY_7CEvs",
-    "sourceUsername": "quizincnitdgp",
-    "posterImage": "posters/aa2f62cb-3d94-427e-9fc8-a563f6fa40d7.jpg",
-    "sourceCaption": "For 15 monumental years, QuizInc’s crown jewel, the Quizzitch Cup, has stood unchallenged as the ultimate crucible of knowledge.\n\nThis is not just a quiz fest. It is a battlefield where raw intellect meets unyielding adrenaline, and the sharpest minds collide in a war of wits and strategy. From sudden death buzzer rounds to high stakes finales, it remains the definitive proving ground for champions.\n\nAs we celebrate a decade and a half of unmatched legacy, the stage is set for our grandest edition yet. Witness a spectacle that transcends competition.\n\nThe clock is ticking. The ultimate quest for glory begins now.",
-    "sourceTimestamp": "2026-03-02T05:38:14",
-    "createdAt": "2026-03-05T19:42:22.292Z",
-    "updatedAt": "2026-03-05T19:42:22.292Z",
     "extractedFields": [
       "name",
       "description"

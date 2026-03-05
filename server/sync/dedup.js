@@ -19,21 +19,22 @@ export function isDuplicateMessage(messageId) {
 
 /**
  * Find an existing quiz that fuzzy-matches the extracted data.
- * Uses Dice coefficient on quiz name + exact date match + city gating.
+ * Uses Dice coefficient on quiz name + exact date match.
+ * No city gating — the same event posted by sources in different cities
+ * should still be caught as a duplicate.
  */
-export function findSimilarQuiz(extracted, city) {
-  if (!extracted.name || !extracted.date) return null;
+export function findSimilarQuiz(extracted) {
+  if (!extracted.name) return null;
 
   const quizzes = getQuizzes();
 
   return quizzes.find(q => {
     if (!q.name) return false;
 
-    // City gating: skip quizzes from a different city
-    if (city && q.city && q.city !== city) return false;
-
-    const dateMatch = q.date === extracted.date;
-    if (!dateMatch) return false;
+    // If both have dates, they must match
+    if (extracted.date && q.date && extracted.date !== q.date) return false;
+    // If one has a date and the other doesn't, not a match
+    if ((extracted.date == null) !== (q.date == null)) return false;
 
     const similarity = diceCoefficient(extracted.name, q.name);
     return similarity >= SIMILARITY_THRESHOLD;

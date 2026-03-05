@@ -28,7 +28,7 @@ Extract the following fields from the message and/or poster image. Return ONLY v
   },
   "regLink": "Registration link or null",
   "instagramLink": "Instagram link or null",
-  "city": "City where the quiz is happening. Infer from venue, organizer, or any location clues. Use one of: Delhi, Bangalore, Chennai, Mumbai, or null if online-only or unclear.",
+  "city": "City where the quiz is happening. Infer from venue, college/university, organizer, or any location clues. Return the commonly used English city name (e.g., Delhi, Bangalore, Kolkata, Pune, Hyderabad, Indore). You may return ANY Indian city. For Delhi NCR areas (Noida, Gurgaon, Gurugram), return 'Delhi'. For Bengaluru, return 'Bangalore'. Return null if online-only or if the city truly cannot be determined.",
   "confidence": 0.85,
   "extractedFields": ["list", "of", "fields", "that", "were", "actually", "found"]
 }
@@ -41,16 +41,25 @@ Rules:
 - teamSize: Extract from phrases like "team of 2", "lone wolf", "solo", "teams of 3", "1 to 3 members". Return the maximum allowed team size as a number.
 - crossCollege: Look for "cross-college", "inter-college", "cross institution", "open to all colleges".
 - mode: "offline" if there's a physical venue/college/room. "online" if Zoom/Meet/virtual/online-only. "hybrid" if both. Default to "offline" when a venue is present.
-- city: Infer the city from venue address, organizer name, or location clues. Known cities: Delhi (incl. NCR/Noida/Gurgaon/Gurugram), Bangalore (incl. Bengaluru), Chennai, Mumbai. If the quiz is online-only (Zoom/Meet/virtual), set city to null. If you can't determine the city, set to null.
+- city: Infer the city from venue address, college/university name, organizer name, or any location clues. Return the commonly used English name. Normalize: Delhi NCR (Noida/Gurgaon/Gurugram/Faridabad) → "Delhi", Bengaluru → "Bangalore", Bombay → "Mumbai", Madras → "Chennai", Calcutta → "Kolkata". You may return ANY Indian city. If online-only (Zoom/Meet/virtual), set city to null. If you truly cannot determine the city, set to null. Do NOT assume the city from the source — infer it from the content.
 - For dates, use the current year (2026) if only month/day mentioned.
 - Return ONLY the JSON object, nothing else.`;
 
-export async function extractQuizFromMessage(captionText, imagePath) {
+export async function extractQuizFromMessage(captionText, imagePath, sourceContext) {
   const messages = [
     { role: 'system', content: SYSTEM_PROMPT },
   ];
 
   const userContent = [];
+
+  // Source context helps GPT but should NOT bias city extraction
+  if (sourceContext) {
+    const src = sourceContext;
+    userContent.push({
+      type: 'text',
+      text: `Source: ${src.name}${src.city ? ` (${src.city})` : ''} on ${src.platform}. Note: the quiz may be about an event in a different city than the source.`,
+    });
+  }
 
   if (imagePath) {
     const imageBuffer = readFileSync(imagePath);

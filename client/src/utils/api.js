@@ -16,10 +16,16 @@ async function loadStaticQuizzes() {
 
 async function loadStaticCities() {
   if (_citiesCache) return _citiesCache;
-  const res = await fetch(`${BASE}/data/city-groups.json`);
-  if (!res.ok) return [];
-  const config = await res.json();
-  _citiesCache = Object.keys(config.cities || {});
+  const quizzes = await loadStaticQuizzes();
+  const citySet = new Set(
+    quizzes.filter(q => q.city && q.status === 'published').map(q => q.city)
+  );
+  // Sort alphabetically, but keep "Online" last
+  _citiesCache = [...citySet].sort((a, b) => {
+    if (a === 'Online') return 1;
+    if (b === 'Online') return -1;
+    return a.localeCompare(b);
+  });
   return _citiesCache;
 }
 
