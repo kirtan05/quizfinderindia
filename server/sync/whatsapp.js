@@ -134,7 +134,7 @@ export async function processMessage(msg, groupId, threshold, sock, city) {
   }
 
   // Resolve city: GPT extraction > name detection > group city
-  const quizCity = resolveCity(extracted.city, city, extracted.name, extracted.mode);
+  const quizCity = resolveCity(extracted.city, city, extracted.name, extracted.mode, extracted.venue);
 
   const similar = findSimilarQuiz(extracted);
   if (similar) {

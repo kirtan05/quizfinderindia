@@ -141,7 +141,7 @@ export async function syncInstagram() {
     }
 
     // Resolve city: GPT extraction > name detection > source page city
-    const quizCity = resolveCity(extracted.city, post.city, extracted.name, extracted.mode);
+    const quizCity = resolveCity(extracted.city, post.city, extracted.name, extracted.mode, extracted.venue);
 
     // Fuzzy dedup against existing quizzes
     const similar = findSimilarQuiz(extracted);

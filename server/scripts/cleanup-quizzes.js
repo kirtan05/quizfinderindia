@@ -22,11 +22,13 @@ for (const q of quizzes) {
   const original = q.city;
   const normalized = normalizeCity(q.city);
   const nameCity = detectCityInText(q.name);
+  const venueCity = detectCityInText(q.venue);
+  const detected = nameCity || venueCity;
 
-  // If name mentions a city and current assignment differs, fix it
-  if (nameCity && normalized !== nameCity) {
-    q.city = nameCity;
-    console.log(`  City fix: "${q.name}" — ${original} → ${nameCity}`);
+  // If name or venue mentions a city and current assignment differs, fix it
+  if (detected && normalized !== detected) {
+    q.city = detected;
+    console.log(`  City fix: "${q.name}" — ${original} → ${detected} (from ${nameCity ? 'name' : 'venue'})`);
     cityFixes++;
   } else if (normalized !== original) {
     q.city = normalized;
