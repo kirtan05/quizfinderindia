@@ -41,7 +41,7 @@ git clone https://github.com/kirtan05/quizfinderindia.git
 cd quizfinderindia
 npm install
 cp .env.example .env
-# Fill in your .env (at minimum: OPENAI_API_KEY, ADMIN_PASSWORD)
+# Fill in your .env (at minimum: ADMIN_PASSWORD). Extraction uses the Claude Code CLI, no API key.
 ```
 
 See the [README](README.md#self-hosting--setup) for full setup instructions.

@@ -137,7 +137,7 @@ The code is MIT-licensed. The quiz data is aggregated from public sources. Pleas
 
 ## For Developers
 
-Everything below is for people who want to self-host, contribute code, or understand the architecture.
+Everything below is for people who want to self-host, contribute code, or understand the architecture. The day-to-day runbook for the live site (watcher, deploys, secrets, troubleshooting) is in [docs/OPERATIONS.md](docs/OPERATIONS.md).
 
 ### Tech Stack
 
@@ -163,6 +163,8 @@ quiz-finder/
 │   │   │   ├── QuizCard.jsx    # Individual quiz card
 │   │   │   ├── QuizDetail.jsx  # Full quiz details page
 │   │   │   ├── Filters.jsx     # City, eligibility, mode filters
+│   │   │   ├── CityIndex.jsx   # "Where do you quiz?" city chooser
+│   │   │   ├── DateLeaf.jsx, Tally.jsx  # Date block, tally-mark counts
 │   │   │   ├── Icon.jsx
 │   │   │   ├── Link.jsx
 │   │   │   ├── NotificationBell.jsx  # Push subscription UI (masthead bell)
@@ -170,8 +172,10 @@ quiz-finder/
 │   │   └── utils/
 │   │       ├── api.js          # Data fetching (static JSON or API)
 │   │       └── quiz.js
+│   ├── functions/api/          # Pages Functions: subscribe.js, notify.js (web push)
+│   ├── wrangler.toml           # Pages project config and KV binding
 │   ├── scripts/
-│   │   └── postbuild.mjs       # Per-quiz pages, sitemap, robots.txt, poster thumbnails
+│   │   └── postbuild.mjs       # Per-quiz pages, sitemap, calendar feeds, thumbnails, data split
 │   └── public/
 │       ├── _headers            # Cloudflare Pages cache headers
 │       └── service-worker.js   # Push notification handler
@@ -198,6 +202,8 @@ quiz-finder/
 │   ├── posters/                # Downloaded poster images (git-ignored: only on the maintainer's machine and the deployed site)
 │   └── sync-state.json         # Processed message/post IDs
 │
+├── deploy/                     # systemd service + timer for the watcher
+├── docs/OPERATIONS.md          # Runbook: how the live site is kept running
 ├── .env.example                # Environment variable template
 ├── CONTRIBUTING.md             # Contribution guide
 └── LICENSE                     # MIT
@@ -239,7 +245,7 @@ The backend runs locally on the maintainer's machine for syncing:
  │                                     ▼                       │
  │       ┌──────────────┐    ┌────────────────┐                │
  │       │ Push Notify  │◄───│ quizzes.json   │                │
- │       │ (web-push)   │    │ + posters/     │                │
+ │       │ (/api/notify)│    │ + posters/     │                │
  │       └──────────────┘    └────────┬───────┘                │
  │                                    │                        │
  │                              git commit + push              │
