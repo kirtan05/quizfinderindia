@@ -76,7 +76,7 @@ Posters are not in git. They exist only in `data/posters/` on this machine and i
 
 ## Adding a source
 
-- WhatsApp group: join it from the linked account, find the jid with `wa groups <name>`, add it to `data/city-groups.json`. Add `"discussion": true` if it is a chat group rather than an announcements group.
+- WhatsApp group: join it from the linked account, find its id with `wa groups <name> --json`, add `{ "name", "id" }` under the city in `data/city-groups.json`. Add `"discussion": true` if it is a chat group rather than an announcements group.
 - Instagram page: add it to `server/sync/instagram/pages.json`.
 
 ## When something breaks
@@ -87,7 +87,7 @@ Posters are not in git. They exist only in `data/posters/` on this machine and i
 | Nothing new for days | `wa` daemon down or logged out | `systemctl --user status wa`, `wa check`. |
 | Extraction errors | Claude Code logged out, or `claude` not on the service's `PATH` | Run `claude` once interactively; check `PATH` in the service file. |
 | Instagram pass stops early | Anonymous scraping rate-limited | Nothing to do; it resumes from `igOffset` next time. |
-| Run exits at once with a lock message | Earlier run still going, or it crashed | If no `watch.js` process exists, delete `data/.watch.lock`. |
+| Run exits at once with a lock message | Earlier run still going | Wait for it. A lock left by a crashed run is ignored automatically. |
 | Deploy fails on auth | Wrangler login expired | `npx wrangler login` in `client/`. |
 
 ## Not yet verified
