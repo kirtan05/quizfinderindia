@@ -1,0 +1,10 @@
+[Unit]
+Description=Run the Quiz Finder watcher every 30 minutes
+
+[Timer]
+OnCalendar=*:07,37
+Persistent=true
+RandomizedDelaySec=120
+
+[Install]
+WantedBy=timers.target

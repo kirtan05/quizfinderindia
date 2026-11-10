@@ -1,0 +1,13 @@
+# Checks the wa message store for new quiz announcements and publishes them.
+# Install: cp deploy/quizfinder-watch.{service,timer} ~/.config/systemd/user/ && systemctl --user enable --now quizfinder-watch.timer
+# Logs:    journalctl --user -u quizfinder-watch
+[Unit]
+Description=Quiz Finder India: WhatsApp watcher
+After=network-online.target wa.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/Desktop/projects/quizfinderindia
+Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/bin/node server/sync/watch.js
+TimeoutStartSec=45min

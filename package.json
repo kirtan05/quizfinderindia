@@ -12,6 +12,7 @@
     "sync": "node server/sync/run.js",
     "sync:wa": "node server/sync/run.js --wa",
     "sync:ig": "node server/sync/run.js --ig",
+    "watch": "node server/sync/watch.js",
     "wa": "node server/scripts/wa-groups.js",
     "ig": "node server/scripts/ig-pages.js"
   },

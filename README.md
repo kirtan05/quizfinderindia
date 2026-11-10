@@ -20,7 +20,7 @@ Quiz announcements are scattered across dozens of WhatsApp groups and Instagram 
 
 Quiz announcements in India are spread across dozens of WhatsApp groups and Instagram pages. With so many sources and so many messages, it's easy to miss quizzes that are perfect for you.
 
-**Quiz Finder fixes this.** We monitor 5 WhatsApp groups and 75+ Instagram pages across India, extract quiz details using AI, and publish everything to a searchable, filterable feed — updated daily.
+**Quiz Finder fixes this.** We monitor 11 WhatsApp groups and 75+ Instagram pages across India, extract quiz details using AI, and publish everything to a searchable, filterable feed. WhatsApp announcements show up within about half an hour.
 
 ---
 
@@ -28,12 +28,12 @@ Quiz announcements in India are spread across dozens of WhatsApp groups and Inst
 
 ```
 WhatsApp Groups ──┐
-                   ├──> GPT-4o extracts details ──> Searchable Feed + Push Notifications
+                   ├──> Claude extracts details ──> Searchable Feed + Push Notifications
 Instagram Pages ──┘
 ```
 
 1. **Collect** — We monitor WhatsApp quiz groups and scrape Instagram pages from quiz clubs, college societies, and organizers across India
-2. **Extract** — GPT-4o reads both poster images and text captions, pulling out the quiz name, date, time, venue, eligibility, registration links, and more
+2. **Extract** — Claude reads both poster images and text captions, pulling out the quiz name, date, time, venue, eligibility, registration links, and more
 3. **Publish** — High-confidence extractions go live automatically. Ambiguous ones are flagged for manual review. Duplicates are caught by fuzzy matching
 4. **Notify** — Subscribed users get push notifications filtered by their city and eligibility preferences
 
@@ -63,7 +63,7 @@ We currently track sources across these cities:
 
 | City | WhatsApp Groups | Instagram Pages | Example Sources |
 |------|:-:|:-:|------|
-| **Delhi** | 1 | 13 | DQC Official, IIT Delhi QC, SRCC Quiz Soc, DTU Quiz Club |
+| **Delhi** | 7 | 13 | DQC Official, Bheja Fry QC, Qtopia, IIT Delhi QC, SRCC Quiz Soc, DTU Quiz Club |
 | **Bangalore** | 2 | 9 | KQA, 4 Edge Quizzing, IIM Bangalore iQ, PES Quotient |
 | **Chennai** | 1 | 5 | QFI, IIT Madras QC, SRM Quiz Club, Chennai Quiz Factory |
 | **Mumbai** | — | 2 | Bombay Quiz Club, IIT Bombay Literati |
@@ -73,7 +73,7 @@ We currently track sources across these cities:
 | **Online** | 1 | 4 | Quiz Pro Quo, IWTK Quiz, Tata Crucible, Ace of Pubs |
 | **25+ other cities** | — | 30+ | IIT/NIT/IIM quiz clubs across India |
 
-**Total: 5 WhatsApp groups + 75+ Instagram pages across 35+ cities**
+**Total: 11 WhatsApp groups + 75+ Instagram pages across 35+ cities**
 
 > Don't see your city or group? [Help us add it!](#report-a-new-group-or-page)
 
@@ -124,7 +124,7 @@ You'll receive a push notification whenever a new quiz matches your filters. Wor
 No. Quiz Finder is an independent, open-source project. We aggregate publicly shared announcements — we're not affiliated with any quiz club or organization.
 
 **How often is the data updated?**
-We sync daily. WhatsApp messages and Instagram posts from the past 7 days are processed in each sync.
+WhatsApp groups are checked every 30 minutes by an unattended watcher. Instagram pages are synced manually, less often.
 
 **Are the quiz details always accurate?**
 We use AI extraction, which is good but not perfect. Always verify details (especially dates and venues) from the original source. There's a disclaimer on the site for this reason.
@@ -152,7 +152,7 @@ Everything below is for people who want to self-host, contribute code, or unders
 | **Backend** | Node.js, Express 5 |
 | **WhatsApp** | Baileys 7 (WhatsApp Web automation) |
 | **Instagram** | Python 3, instaloader |
-| **AI Extraction** | OpenAI GPT-4o (vision + text) |
+| **AI Extraction** | Claude (vision + text) via the Claude Code CLI in headless mode |
 | **Push Notifications** | web-push (VAPID), Vercel KV (Redis) |
 | **Validation** | Zod 4 |
 | **Deployment** | Vercel (static frontend + serverless) |
@@ -180,7 +180,8 @@ quiz-finder/
 │   │   ├── run.js              # Sync orchestrator (WhatsApp + IG + notify)
 │   │   ├── whatsapp.js         # Baileys client, message fetching
 │   │   ├── instagram.js        # Instagram sync (calls Python scraper)
-│   │   ├── extractor.js        # GPT-4o extraction prompt + API
+│   │   ├── extractor.js        # Extraction prompt, runs `claude -p`
+│   │   ├── watch.js            # Unattended WhatsApp watcher (systemd timer)
 │   │   ├── dedup.js            # Source ID tracking + fuzzy matching
 │   │   ├── notify.js           # Web-push notification sender
 │   │   └── instagram/
@@ -213,7 +214,7 @@ The backend runs locally on the maintainer's machine for syncing:
  │                                                             │
  │  ┌──────────┐   ┌──────────┐   ┌───────────┐               │
  │  │ WhatsApp │   │Instagram │   │           │               │
- │  │ (Baileys)│   │(Python)  │   │  GPT-4o   │               │
+ │  │ (Baileys)│   │(Python)  │   │  Claude   │               │
  │  │          │   │          │   │ Extractor │               │
  │  └────┬─────┘   └────┬─────┘   └─────┬─────┘               │
  │       │              │               │                      │
@@ -246,7 +247,7 @@ The backend runs locally on the maintainer's machine for syncing:
 
 - Node.js 18+
 - Python 3.8+ (for Instagram scraping)
-- An OpenAI API key (GPT-4o access)
+- [Claude Code](https://claude.com/claude-code) installed and logged in (extraction runs `claude -p`, no API key)
 
 #### 1. Clone and install
 
@@ -267,7 +268,7 @@ Edit `.env` and fill in:
 
 | Variable | Required | Description |
 |----------|:--------:|-------------|
-| `OPENAI_API_KEY` | Yes | GPT-4o API key for quiz extraction |
+| `EXTRACT_MODEL` | No | Claude model alias for extraction, default `sonnet` |
 | `ADMIN_PASSWORD` | Yes | Password for the admin panel |
 | `CONFIDENCE_THRESHOLD` | No | Auto-publish threshold, default `0.7` |
 | `INSTAGRAM_USERNAME` | No | Instagram account for higher scrape rate limits |
@@ -319,10 +320,24 @@ npm run sync:ig
 
 The sync will:
 1. Fetch messages/posts from configured sources
-2. Extract quiz details using GPT-4o
+2. Extract quiz details using Claude
 3. Deduplicate against existing quizzes
 4. Save to `data/quizzes.json` and `data/posters/`
 5. Git commit and push (triggers Vercel deploy)
+
+#### 4b. Unattended WhatsApp watcher
+
+`npm run sync` opens its own WhatsApp session and needs someone at the terminal. `npm run watch` does not: it reads new messages from the local store of an always-connected `wa` CLI daemon (`~/.local/share/wa/store/wa.db`), extracts quizzes, and commits and pushes on its own.
+
+```bash
+npm run watch -- --dry-run --days 3   # print what it would add, write nothing
+npm run watch -- --no-push            # update data files, skip git
+cp deploy/quizfinder-watch.{service,timer} ~/.config/systemd/user/
+systemctl --user enable --now quizfinder-watch.timer   # every 30 minutes
+journalctl --user -u quizfinder-watch                   # logs
+```
+
+Groups marked `"discussion": true` in `data/city-groups.json` are chat groups rather than announcement groups: only long messages that look like announcements are sent for extraction. If a run fails, the watcher WhatsApps the linked account (at most once every 6 hours).
 
 #### 5. Development server
 
