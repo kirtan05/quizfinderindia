@@ -7265,5 +7265,59 @@
       "regLink",
       "city"
     ]
+  },
+  {
+    "id": "661cfc42-6dc3-45b7-a76f-6dbc300d69dc",
+    "status": "published",
+    "confidence": 0.85,
+    "name": "The Jolly Good Quiz - Diwali Week Special",
+    "description": "**Diwali week quiz** at Jolly Johnny's Bar, in trivia style!\n\n- Food, drinks and mind-bending questions\n- **Free entry**\n- Teams of 2-6, and solos are welcome\n- **Win free shots** for your team\n\n**Schedule:**\n- **Brookefield:** 11th November, 9 PM onwards\n- **Koramangala:** 12th November, 9 PM onwards\n\nThe poster lists the quiz as a regular Wednesday event at 8:30 PM. RSVP via the registration link.",
+    "date": "2026-11-11",
+    "time": "21:00",
+    "venue": "Jolly Johnny's Bar, Brookefield, Bangalore (also at Jolly Johnny's Bar, Koramangala on 12th November)",
+    "venueMapLink": null,
+    "eligibility": [
+      "Solos welcome",
+      "Teams of 2-6"
+    ],
+    "eligibilityCategories": [],
+    "hostingOrg": "Jolly Johnny's Bar",
+    "quizMasters": [],
+    "poc": {
+      "name": "Anurag",
+      "phone": "9370572182",
+      "whatsapp": "9370572182"
+    },
+    "regLink": "https://offlyn.life/h/Rabbittholes",
+    "instagramLink": null,
+    "entryFee": "Free",
+    "teamSize": 6,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Bangalore",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:ACDDBF556C407F828F0629E148DD82B0",
+    "sourceGroupId": "919902444486-1522038543@g.us",
+    "posterImage": "posters/628269a1-b331-4ffd-85ca-81c75e25d7b5.jpg",
+    "sourceCaption": "🚨 Diwali week quiz in Bangalore! 🚨\n\nCome celebrate Diwali with us - trivia styles!\nFood, drinks and some mind bending questions!\n\n📍 Jolly Johnny’s Bar, Brookefield and Kormangala \n🕑 Brookefield - 11th November, 9pm onwards\nKormangala - 12th November, 9pm onwards\n🎫 FREE ENTRY\n🏆Win free shots!\n\nFind all details and RSVP here - https://offlyn.life/h/Rabbittholes\n\nFor queries - Anurag 9370572182",
+    "sourceMessageId": "ACDDBF556C407F828F0629E148DD82B0",
+    "sourceTimestamp": "2026-11-10T16:14:48.000Z",
+    "createdAt": "2026-11-10T16:25:00.538Z",
+    "updatedAt": "2026-11-10T16:25:00.538Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "teamSize",
+      "entryFee",
+      "mode",
+      "hostingOrg",
+      "poc",
+      "regLink",
+      "city"
+    ]
   }
 ]
