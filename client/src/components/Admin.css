@@ -1,0 +1,668 @@
+/* ---- Loader ---- */
+.loader {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  align-items: flex-end;
+  height: 28px;
+}
+
+.loader__bar {
+  width: 5px;
+  background: var(--accent);
+  border-radius: 2px;
+  animation: loader-bounce 0.9s ease-in-out infinite;
+}
+
+.loader__bar:nth-child(1) { height: 10px; animation-delay: 0s; }
+.loader__bar:nth-child(2) { height: 18px; animation-delay: 0.1s; }
+.loader__bar:nth-child(3) { height: 14px; animation-delay: 0.2s; }
+.loader__bar:nth-child(4) { height: 22px; animation-delay: 0.3s; }
+.loader__bar:nth-child(5) { height: 12px; animation-delay: 0.4s; }
+
+@keyframes loader-bounce {
+  0%, 100% { transform: scaleY(1); opacity: 0.6; }
+  50% { transform: scaleY(1.8); opacity: 1; }
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--accent-electric);
+  border-color: var(--accent-electric);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: rgba(62, 168, 255, 0.1);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-secondary);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+}
+
+.btn--danger {
+  color: var(--accent-red);
+  border-color: var(--accent-red);
+  background: transparent;
+}
+
+.btn--danger:hover:not(:disabled) {
+  background: rgba(255, 77, 106, 0.12);
+}
+
+.btn--sm {
+  font-size: 0.8125rem;
+  padding: 0 0.7rem;
+}
+
+/* ---- Admin ---- */
+.quiz-grid__state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .admin-panel__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-panel__table {
+    font-size: 0.78rem;
+  }
+
+  .admin-panel__cell--name {
+    max-width: 140px;
+  }
+
+  .quiz-editor__row--half,
+  .quiz-editor__row--thirds {
+    flex-direction: column;
+  }
+}
+
+/* ---- Admin Login ---- */
+.admin-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+}
+
+.admin-login__box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  width: 100%;
+  max-width: 380px;
+}
+
+.admin-login__title {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+
+.admin-login__subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+}
+
+.admin-login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.admin-login__label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.admin-login__input {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  padding: 0.55rem 0.7rem;
+}
+
+.admin-login__input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--glow-orange);
+}
+
+.admin-login__error {
+  color: var(--accent-red);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+/* ---- Admin Panel ---- */
+.admin-panel {
+  padding-bottom: 2rem;
+}
+
+.admin-panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.admin-panel__title {
+  font-family: var(--font-mono);
+  font-size: 1.35rem;
+  color: var(--accent);
+}
+
+.admin-panel__actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.admin-panel__error {
+  color: var(--accent-red);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.admin-panel__empty {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 3rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+}
+
+.admin-panel__table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+}
+
+.admin-panel__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.admin-panel__table th {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  text-align: left;
+  padding: 0.75rem 1rem;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.admin-panel__table td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle;
+}
+
+.admin-panel__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-panel__table tbody tr {
+  background: var(--bg-surface);
+  transition: background 0.1s;
+}
+
+.admin-panel__table tbody tr:hover {
+  background: var(--bg-elevated);
+}
+
+.admin-panel__row--flagged {
+  background: rgba(245, 166, 35, 0.08) !important;
+  border-left: 3px solid var(--accent);
+}
+
+.admin-panel__cell--name {
+  font-weight: 600;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-panel__cell--conf {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.admin-panel__cell--actions {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+/* ---- WhatsApp Status Bar ---- */
+.admin-panel__wa-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 0.7rem 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+}
+
+.wa-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.wa-status__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.wa-status--connected .wa-status__dot {
+  background: var(--accent-lime);
+  box-shadow: 0 0 6px rgba(168, 224, 46, 0.5);
+}
+
+.wa-status--connected .wa-status__label {
+  color: var(--accent-lime);
+}
+
+.wa-status--disconnected .wa-status__dot {
+  background: var(--accent-red);
+  box-shadow: 0 0 6px rgba(255, 77, 106, 0.5);
+}
+
+.wa-status--disconnected .wa-status__label {
+  color: var(--accent-red);
+}
+
+.wa-status--unknown .wa-status__dot {
+  background: var(--accent-gold);
+  box-shadow: 0 0 6px rgba(255, 210, 51, 0.4);
+}
+
+.wa-status--unknown .wa-status__label {
+  color: var(--accent-gold);
+}
+
+.wa-status__last-sync {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.wa-status__error {
+  color: var(--accent-red);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.wa-status__group-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--accent-lime);
+  font-weight: 600;
+}
+
+.admin-panel__reconnect-msg {
+  background: rgba(62, 168, 255, 0.1);
+  border: 1px solid var(--accent-electric);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.85rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent-electric);
+}
+
+/* ---- WhatsApp Connect Modal ---- */
+.wa-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.wa-modal {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  width: 520px;
+  max-width: 94vw;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.wa-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.wa-modal__header h3 {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  color: var(--accent-lime);
+}
+
+.wa-modal__body {
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.wa-modal__qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.wa-modal__qr img {
+  border-radius: var(--radius);
+  border: 2px solid var(--accent-lime);
+}
+
+.wa-modal__hint {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.wa-modal__message {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin: 0;
+}
+
+.wa-modal__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.5rem 0;
+}
+
+.wa-modal__groups {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.wa-modal__search {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.wa-modal__search::placeholder {
+  color: var(--text-muted);
+}
+
+.wa-modal__search:focus {
+  border-color: var(--accent-electric);
+  box-shadow: 0 0 0 2px var(--glow-blue);
+}
+
+.wa-modal__group-count {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.wa-modal__group-list {
+  max-height: 340px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.wa-modal__group-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.wa-modal__group-item:hover {
+  border-color: var(--accent-electric);
+}
+
+.wa-modal__group-item--selected {
+  border-color: var(--accent-lime);
+  background: rgba(168, 224, 46, 0.06);
+}
+
+.wa-modal__group-item input[type="radio"] {
+  accent-color: var(--accent-lime);
+}
+
+.wa-modal__group-name {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.wa-modal__group-meta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.wa-modal__done {
+  padding: 1rem;
+}
+
+.wa-modal__check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(168, 224, 46, 0.15);
+  color: var(--accent-lime);
+  font-size: 2rem;
+}
+
+.wa-modal__error-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 77, 106, 0.15);
+  color: var(--accent-red);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* ---- Status Badges ---- */
+.status-badge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.12rem 0.5rem;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+.status-badge--published {
+  background: rgba(93, 212, 119, 0.15);
+  color: var(--accent-lime);
+}
+
+.status-badge--flagged {
+  background: rgba(245, 166, 35, 0.15);
+  color: var(--tag-age);
+}
+
+.status-badge--draft {
+  background: rgba(107, 114, 128, 0.15);
+  color: var(--tag-custom);
+}
+
+/* ---- Quiz Editor ---- */
+.quiz-editor {
+  max-width: 680px;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+.quiz-editor__title {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--accent);
+  margin-bottom: 1.25rem;
+}
+
+.quiz-editor__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.quiz-editor__row {
+  display: flex;
+  flex-direction: column;
+}
+
+.quiz-editor__row--half,
+.quiz-editor__row--thirds {
+  flex-direction: row;
+  gap: 0.75rem;
+}
+
+.quiz-editor__row--half > * {
+  flex: 1;
+}
+
+.quiz-editor__row--thirds > * {
+  flex: 1;
+}
+
+.quiz-editor__label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.quiz-editor__input,
+.quiz-editor__textarea {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  padding: 0.45rem 0.6rem;
+  transition: border-color 0.15s;
+}
+
+.quiz-editor__input:focus,
+.quiz-editor__textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--glow-orange);
+}
+
+.quiz-editor__textarea {
+  resize: vertical;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.quiz-editor__fieldset {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+}
+
+.quiz-editor__legend {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  padding: 0 0.3rem;
+}
+
+.quiz-editor__actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}

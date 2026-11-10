@@ -1,104 +1,36 @@
 // server/sync/notify.js
-import webpush from 'web-push';
-
-const VERCEL_URL = process.env.VERCEL_URL || 'https://quizfinderindia.vercel.app';
-const SYNC_API_KEY = process.env.SYNC_API_KEY;
+// Hands new quizzes to the site's /api/notify Function (client/functions/api/notify.js),
+// which matches them to subscribers and sends the pushes. Never throws.
 
 export async function sendNotifications(newQuizzes) {
   if (newQuizzes.length === 0) return;
+  try { process.loadEnvFile(new URL('../../.env', import.meta.url)); } catch { /* no .env */ }
 
-  const vapidPublic = process.env.VAPID_PUBLIC_KEY;
-  const vapidPrivate = process.env.VAPID_PRIVATE_KEY;
-  const vapidSubject = process.env.VAPID_SUBJECT;
-
-  if (!vapidPublic || !vapidPrivate || !vapidSubject || !SYNC_API_KEY) {
-    console.log('Push notifications not configured (missing VAPID keys or SYNC_API_KEY). Skipping.');
+  const secret = process.env.NOTIFY_SECRET;
+  if (!secret) {
+    console.log('Push notifications not configured (NOTIFY_SECRET not set). Skipping.');
     return;
   }
 
-  webpush.setVapidDetails(vapidSubject, vapidPublic, vapidPrivate);
-
-  // Fetch all subscriptions from Vercel API
-  let subscribers;
+  const site = process.env.SITE_URL || 'https://quizfinder.pages.dev';
+  const total = { sent: 0, failed: 0, removed: 0 };
   try {
-    const res = await fetch(`${VERCEL_URL}/api/subscribe`, {
-      headers: { Authorization: `Bearer ${SYNC_API_KEY}` },
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    subscribers = await res.json();
+    let cursor;
+    // The Function sends a small batch per call and returns the cursor to resume from (null when done).
+    for (let round = 0; round < 200; round++) {
+      const res = await fetch(`${site}/api/notify`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${secret}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ quizzes: newQuizzes, cursor }),
+        signal: AbortSignal.timeout(60_000),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const r = await res.json();
+      for (const k in total) total[k] += r[k];
+      if (!(cursor = r.cursor)) break;
+    }
+    console.log(`Notifications: ${total.sent} sent, ${total.failed} failed, ${total.removed} expired subscription(s) removed.`);
   } catch (err) {
-    console.log(`Failed to fetch subscribers: ${err.message}`);
-    return;
+    console.log(`Push notifications failed: ${err.message}`);
   }
-
-  if (!Array.isArray(subscribers) || subscribers.length === 0) {
-    console.log('No subscribers. Skipping notifications.');
-    return;
-  }
-
-  console.log(`\n=== Sending notifications (${subscribers.length} subscribers, ${newQuizzes.length} new quizzes) ===\n`);
-
-  let sent = 0;
-  let failed = 0;
-  const expiredEndpoints = [];
-
-  for (const sub of subscribers) {
-    const prefs = sub.preferences || {};
-
-    // Filter quizzes matching this subscriber's preferences
-    const matching = newQuizzes.filter(q => {
-      // City match (empty array = all cities)
-      if (prefs.cities?.length > 0 && !prefs.cities.includes(q.city)) return false;
-
-      // Eligibility match (empty array = all)
-      if (prefs.eligibility?.length > 0) {
-        const quizElig = q.eligibilityCategories || [];
-        if (!prefs.eligibility.some(e => quizElig.includes(e))) return false;
-      }
-
-      return true;
-    });
-
-    if (matching.length === 0) continue;
-
-    // Build notification payload
-    const quiz = matching[0];
-    const payload = JSON.stringify({
-      title: `Quiz Finder: ${matching.length} new quiz${matching.length > 1 ? 'zes' : ''}`,
-      body: matching.length === 1
-        ? `${quiz.name}${quiz.city ? ` (${quiz.city})` : ''}${quiz.date ? ` — ${quiz.date}` : ''}`
-        : matching.map(q => q.name).slice(0, 3).join(', ') + (matching.length > 3 ? '...' : ''),
-      url: matching.length === 1 ? `/#/quiz/${quiz.id}` : '/',
-      tag: `sync-${new Date().toISOString().split('T')[0]}`,
-    });
-
-    try {
-      await webpush.sendNotification(sub.subscription, payload);
-      sent++;
-    } catch (err) {
-      failed++;
-      if (err.statusCode === 410) {
-        console.log('  Expired subscription (410 Gone).');
-        if (sub.subscription?.endpoint) expiredEndpoints.push(sub.subscription.endpoint);
-      }
-    }
-  }
-
-  // Clean up expired subscriptions
-  if (expiredEndpoints.length > 0) {
-    console.log(`Cleaning up ${expiredEndpoints.length} expired subscription(s)...`);
-    for (const endpoint of expiredEndpoints) {
-      try {
-        await fetch(`${VERCEL_URL}/api/subscribe`, {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ endpoint }),
-        });
-      } catch {
-        // best-effort cleanup
-      }
-    }
-  }
-
-  console.log(`Notifications: ${sent} sent, ${failed} failed.\n`);
 }

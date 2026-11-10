@@ -4,9 +4,12 @@ client/node_modules/
 auth_info_baileys/
 auth_info_baileys.bak/
 client/dist/
+client/.cache/
+client/.wrangler/
 
 # Data files with sensitive/runtime content
-data/posters/.gitkeep
+data/posters/*
+!data/posters/.gitkeep
 data/wa-groups.json
 data/wa-status.json
 data/wa-all-groups.json

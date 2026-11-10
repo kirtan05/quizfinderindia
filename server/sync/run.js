@@ -8,7 +8,7 @@
  * 4. Extracts quiz details via GPT-4o
  * 5. Sends push notifications for new quizzes
  * 6. Commits quizzes.json + new posters
- * 7. Pushes to GitHub → Vercel auto-deploys
+ * 7. Pushes to GitHub (does not deploy; run `npm run deploy`)
  */
 import 'dotenv/config';
 import { execSync } from 'child_process';
@@ -84,14 +84,14 @@ async function main() {
   }
 
   // 5. Git commit + push
-  const status = runQuiet('git status --porcelain data/quizzes.json data/posters/');
+  const status = runQuiet('git status --porcelain data/quizzes.json');
   if (!status) {
     console.log('No changes to push.');
     return;
   }
   console.log('Changes:\n' + status + '\n');
 
-  run('git add data/quizzes.json data/posters/');
+  run('git add data/quizzes.json');
   const today = new Date().toISOString().split('T')[0];
   const n = allNewQuizzes.length;
   const sources = [...new Set(allNewQuizzes.map(q => q.source || 'whatsapp'))].join('+');
@@ -103,7 +103,7 @@ async function main() {
   const branch = runQuiet('git rev-parse --abbrev-ref HEAD');
   run(`git push origin ${branch}`);
 
-  console.log('\nDone! Vercel will auto-redeploy.');
+  console.log('\nDone! Run `npm run deploy` to put it on the site.');
 }
 
 main()

@@ -6,9 +6,9 @@
 
 Quiz announcements are scattered across dozens of WhatsApp groups and Instagram pages. Quiz Finder aggregates them all into one clean, searchable feed — powered by AI.
 
-[**Browse Quizzes**](https://quizfinderindia.vercel.app) · [**Report a Group**](https://github.com/kirtan05/quizfinderindia/issues/new?template=report-group.yml) · [**Request a City**](https://github.com/kirtan05/quizfinderindia/issues/new?template=request-city.yml)
+[**Browse Quizzes**](https://quizfinder.pages.dev) · [**Report a Group**](https://github.com/kirtan05/quizfinderindia/issues/new?template=report-group.yml) · [**Request a City**](https://github.com/kirtan05/quizfinderindia/issues/new?template=request-city.yml)
 
-[![Live Site](https://img.shields.io/badge/live-quizfinderindia.vercel.app-blue?style=flat-square)](https://quizfinderindia.vercel.app)
+[![Live Site](https://img.shields.io/badge/live-quizfinder.pages.dev-blue?style=flat-square)](https://quizfinder.pages.dev)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](CONTRIBUTING.md)
 
@@ -107,14 +107,9 @@ We review every submission. New Instagram pages are usually added within a day. 
 
 ## Push Notifications
 
-Get notified when new quizzes are posted — filtered to what matters to you.
+Push notifications are enabled. The bell in the masthead lets a visitor subscribe with a city and eligibility filter. Subscriptions live in Cloudflare KV, served by Pages Functions (`client/functions/api/subscribe.js`, `notify.js`). After a deploy that includes new quizzes, the watcher POSTs them to `/api/notify`, which pushes to matching subscribers (at most 45 per call, the free plan's 50-subrequest limit; the rest are reported as skipped). If the deploy is skipped or fails, that batch is not notified.
 
-1. Visit [quizfinderindia.vercel.app](https://quizfinderindia.vercel.app)
-2. Click the bell icon in the header
-3. Select your city and eligibility preferences
-4. Allow notifications when your browser asks
-
-You'll receive a push notification whenever a new quiz matches your filters. Works on desktop and mobile (Chrome, Edge, Firefox). You can unsubscribe anytime by clicking the bell icon again.
+`client/.env.production` holds the public VAPID key (`VITE_VAPID_PUBLIC_KEY`) and `client/wrangler.toml` the bindings (KV namespace, public key). Secrets are set on the Pages project with `npx wrangler pages secret put VAPID_PRIVATE_KEY` and `NOTIFY_SECRET`; put the same `NOTIFY_SECRET` in the root `.env`, and optionally `SITE_URL` to notify a different origin.
 
 ---
 
@@ -133,7 +128,7 @@ We use AI extraction, which is good but not perfect. Always verify details (espe
 [Open an issue](https://github.com/kirtan05/quizfinderindia/issues/new) with the correct details and we'll fix it.
 
 **Do you collect any personal data?**
-No. Push notification subscriptions are anonymous (just a browser endpoint + your chosen filters). No login, no tracking, no analytics beyond Vercel's anonymous page views.
+No. Push notification subscriptions are anonymous (just a browser endpoint + your chosen filters). No login, no tracking, no analytics.
 
 **Can I use this data for my own project?**
 The code is MIT-licensed. The quiz data is aggregated from public sources. Please attribute Quiz Finder India if you re-use the dataset.
@@ -153,9 +148,9 @@ Everything below is for people who want to self-host, contribute code, or unders
 | **WhatsApp** | Baileys 7 (WhatsApp Web automation) |
 | **Instagram** | Python 3, instaloader |
 | **AI Extraction** | Claude (vision + text) via the Claude Code CLI in headless mode |
-| **Push Notifications** | web-push (VAPID), Vercel KV (Redis) |
+| **Push Notifications** | Web Push (VAPID), Cloudflare Pages Functions + KV |
 | **Validation** | Zod 4 |
-| **Deployment** | Vercel (static frontend + serverless) |
+| **Deployment** | Cloudflare Pages (static site, uploaded with Wrangler) |
 
 ### Project Structure
 
@@ -165,14 +160,20 @@ quiz-finder/
 │   ├── src/
 │   │   ├── App.jsx             # Router, layout, city selection
 │   │   ├── components/
-│   │   │   ├── QuizGrid.jsx    # Filterable quiz feed
 │   │   │   ├── QuizCard.jsx    # Individual quiz card
 │   │   │   ├── QuizDetail.jsx  # Full quiz details page
 │   │   │   ├── Filters.jsx     # City, eligibility, mode filters
-│   │   │   └── NotificationBell.jsx  # Push subscription UI
+│   │   │   ├── Icon.jsx
+│   │   │   ├── Link.jsx
+│   │   │   ├── NotificationBell.jsx  # Push subscription UI (masthead bell)
+│   │   │   ├── AdminLogin.jsx, AdminPanel.jsx, QuizEditor.jsx
 │   │   └── utils/
-│   │       └── api.js          # Data fetching (static JSON or API)
+│   │       ├── api.js          # Data fetching (static JSON or API)
+│   │       └── quiz.js
+│   ├── scripts/
+│   │   └── postbuild.mjs       # Per-quiz pages, sitemap, robots.txt, poster thumbnails
 │   └── public/
+│       ├── _headers            # Cloudflare Pages cache headers
 │       └── service-worker.js   # Push notification handler
 │
 ├── server/                     # Express backend (sync + admin)
@@ -183,7 +184,7 @@ quiz-finder/
 │   │   ├── extractor.js        # Extraction prompt, runs `claude -p`
 │   │   ├── watch.js            # Unattended WhatsApp watcher (systemd timer)
 │   │   ├── dedup.js            # Source ID tracking + fuzzy matching
-│   │   ├── notify.js           # Web-push notification sender
+│   │   ├── notify.js           # Calls the site's /api/notify after a deploy
 │   │   └── instagram/
 │   │       ├── scraper.py      # Python instaloader script
 │   │       └── pages.json      # Tracked Instagram pages (75+)
@@ -192,9 +193,9 @@ quiz-finder/
 │   └── store.js                # File-based data layer
 │
 ├── data/
-│   ├── quizzes.json            # Quiz database (git-tracked, served statically)
+│   ├── quizzes.json            # Quiz database (git-tracked, served statically; quizzes may carry `entryFee`: text as announced, "Free", or null)
 │   ├── city-groups.json        # WhatsApp group config
-│   ├── posters/                # Downloaded poster images
+│   ├── posters/                # Downloaded poster images (git-ignored: only on the maintainer's machine and the deployed site)
 │   └── sync-state.json         # Processed message/post IDs
 │
 ├── .env.example                # Environment variable template
@@ -204,7 +205,15 @@ quiz-finder/
 
 ### Architecture
 
-The frontend is a static site — it reads `data/quizzes.json` directly, no backend required in production. Vercel serves the built React app and the JSON data file.
+The frontend is a static site — it reads `data/quizzes.json` directly, no backend required in production. Cloudflare Pages serves the built React app, the JSON data file and the posters.
+
+`npm run build` in `client/` runs Vite and then `scripts/postbuild.mjs`, which writes one `quiz/<id>/index.html` per published quiz (same app, but with that quiz's title, summary and poster in the Open Graph tags, so a shared link gets its own preview), `sitemap.xml`, `robots.txt`, calendar feeds, and 480px poster thumbnails under `posters/thumbs/` (needs the ImageMagick `magick` command; skipped with a warning if it is missing). It also splits the data: `data/quizzes.json` in the build holds only upcoming published quizzes (dated from yesterday on; undated ones posted in the last 14 days) and `data/past.json` the rest, which the client loads on demand. Flagged quizzes are in neither. The watcher then uploads `client/dist` with `wrangler pages deploy`. There is no build on Cloudflare's side.
+
+**Calendar feeds.** `https://quizfinder.pages.dev/cal/all.ics` lists every upcoming dated quiz, and `/cal/<city>.ics` (city lower-cased, non-alphanumerics replaced by `-`, e.g. `/cal/delhi.ics`) lists that city's quizzes plus the online ones (`Online` city or online mode). Subscribe to them from any calendar app. Quizzes with a clock time are 2-hour events in IST; others are all-day.
+
+**Posters** are no longer committed to git (`data/posters/` is ignored). They live only on the maintainer's machine and in the deployed site, so the sync commits just `data/quizzes.json`.
+
+**Old Vercel site.** The Vercel URL now temporarily (307) redirects every path to the same path on `quizfinder.pages.dev`.
 
 The backend runs locally on the maintainer's machine for syncing:
 
@@ -238,7 +247,8 @@ The backend runs locally on the maintainer's machine for syncing:
  └────────────────────────────────────┼────────────────────────┘
                                       │
                                       ▼
-                              Vercel auto-deploys
+                  client build + wrangler pages deploy
+                         (Cloudflare Pages)
 ```
 
 ### Self-Hosting / Setup
@@ -248,6 +258,8 @@ The backend runs locally on the maintainer's machine for syncing:
 - Node.js 18+
 - Python 3.8+ (for Instagram scraping)
 - [Claude Code](https://claude.com/claude-code) installed and logged in (extraction runs `claude -p`, no API key)
+- ImageMagick (`magick`) for poster thumbnails
+- A Cloudflare account with a Pages project (to publish the site)
 
 #### 1. Clone and install
 
@@ -255,7 +267,16 @@ The backend runs locally on the maintainer's machine for syncing:
 git clone https://github.com/kirtan05/quizfinderindia.git
 cd quizfinderindia
 npm install
+(cd client && npm install)
 pip install instaloader
+```
+
+To publish your own copy, log in to Cloudflare and create a direct-upload Pages project once. The project name (`quizfinder`) is set in `server/sync/watch.js` and the site URL in `client/scripts/postbuild.mjs` and `client/index.html`; change them to yours.
+
+```bash
+cd client
+npx wrangler login
+npx wrangler pages project create quizfinder --production-branch master
 ```
 
 #### 2. Configure environment
@@ -272,12 +293,8 @@ Edit `.env` and fill in:
 | `ADMIN_PASSWORD` | Yes | Password for the admin panel |
 | `CONFIDENCE_THRESHOLD` | No | Auto-publish threshold, default `0.7` |
 | `INSTAGRAM_USERNAME` | No | Instagram account for higher scrape rate limits |
-| `VAPID_PUBLIC_KEY` | No | For push notifications (generate with `npx web-push generate-vapid-keys`) |
-| `VAPID_PRIVATE_KEY` | No | For push notifications |
-| `VAPID_SUBJECT` | No | `mailto:` address for push notifications |
-| `VITE_VAPID_PUBLIC_KEY` | No | Same as `VAPID_PUBLIC_KEY`, exposed to client |
-| `KV_REST_API_URL` | No | Vercel KV URL for storing push subscriptions |
-| `KV_REST_API_TOKEN` | No | Vercel KV token |
+| `NOTIFY_SECRET` | For push | Shared secret for `/api/notify` (also set on the Pages project) |
+| `SITE_URL` | No | Site origin to notify, default `https://quizfinder.pages.dev` |
 
 #### 3. Configure groups and pages
 
@@ -323,15 +340,16 @@ The sync will:
 2. Extract quiz details using Claude
 3. Deduplicate against existing quizzes
 4. Save to `data/quizzes.json` and `data/posters/`
-5. Git commit and push (triggers Vercel deploy)
+5. Git commit and push `data/quizzes.json` (posters are not committed). This does not update the live site; run `npm run deploy` for that
 
 #### 4b. Unattended WhatsApp watcher
 
-`npm run sync` opens its own WhatsApp session and needs someone at the terminal. `npm run watch` does not: it reads new messages from the local store of an always-connected `wa` CLI daemon (`~/.local/share/wa/store/wa.db`), extracts quizzes, and commits and pushes on its own.
+`npm run sync` opens its own WhatsApp session and needs someone at the terminal. `npm run watch` does not: it reads new messages from the local store of an always-connected `wa` CLI daemon (`~/.local/share/wa/store/wa.db`), extracts quizzes, commits and pushes, then builds the client and deploys it to Cloudflare Pages. It deploys only when there is new data (or when the previous deploy failed).
 
 ```bash
 npm run watch -- --dry-run --days 3   # print what it would add, write nothing
-npm run watch -- --no-push            # update data files, skip git
+npm run watch -- --no-push            # update data files, skip git and the deploy
+npm run deploy                        # a watcher run that builds and deploys even with no new quizzes
 cp deploy/quizfinder-watch.{service,timer} ~/.config/systemd/user/
 systemctl --user enable --now quizfinder-watch.timer   # every 30 minutes
 journalctl --user -u quizfinder-watch                   # logs
@@ -356,7 +374,7 @@ npm run dev:server
 
 | Script | Description |
 |--------|-------------|
-| `npm run sync` | Full sync — WhatsApp + Instagram + notifications + git push |
+| `npm run sync` | Full sync — WhatsApp + Instagram + notifications + git push (no deploy; run `npm run deploy`) |
 | `npm run sync:wa` | WhatsApp-only sync |
 | `npm run sync:ig` | Instagram-only sync |
 | `npm run wa` | List WhatsApp groups (for discovering group IDs) |
@@ -364,7 +382,9 @@ npm run dev:server
 | `npm run dev` | Start dev server (React + Express, hot reload) |
 | `npm run dev:client` | Start React dev server only |
 | `npm run dev:server` | Start Express dev server only |
-| `npm run build:client` | Build React frontend for production |
+| `npm run watch` | Unattended watcher run — extract, git push, deploy to Cloudflare Pages |
+| `npm run deploy` | Same as `watch`, but always builds and deploys |
+| `npm run build:client` | Build the static site into `client/dist` |
 | `npm start` | Run Express server (production) |
 
 ---

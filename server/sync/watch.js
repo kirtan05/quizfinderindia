@@ -4,12 +4,14 @@
  *
  * Reads new messages for the groups in data/city-groups.json straight from the
  * `wa` CLI's message store (~/.local/share/wa/store/wa.db, kept current by the
- * always-on `wa` service), extracts quizzes, then commits and pushes
- * quizzes.json + posters so Vercel redeploys. Holds no WhatsApp session itself.
+ * always-on `wa` service), extracts quizzes, commits and pushes quizzes.json,
+ * then builds client/ and deploys it to Cloudflare Pages. Holds no
+ * WhatsApp session itself.
  *
  * Run by systemd (deploy/quizfinder-watch.timer). Flags:
  *   --dry-run     extract and print, write nothing
- *   --no-push     write data files but skip git commit/push
+ *   --no-push     write data files but skip git commit/push and the deploy
+ *   --deploy      build and deploy the site even if there is nothing new
  *   --days N      look back N days on this run (default: since last run, max 14)
  *   --ig          scrape Instagram on this run even if it is not due yet
  *   --no-ig       skip Instagram on this run
@@ -30,6 +32,7 @@ import {
   addQuiz, getQuizzes, markMessageProcessed, getCityGroups, getSyncState, saveSyncState,
 } from '../store.js';
 import { resolveCity } from '../utils/cities.js';
+import { sendNotifications } from './notify.js';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const POSTERS_DIR = path.join(ROOT, 'data', 'posters');
@@ -48,6 +51,7 @@ const NO_PUSH = DRY || args.includes('--no-push');
 const daysArg = args.includes('--days') ? Number(args[args.indexOf('--days') + 1]) : null;
 
 const log = (...a) => console.log(...a);
+const toNotify = []; // published quizzes added this run; notified only once a deploy has put their pages live
 
 // Baileys is only needed to decode stored messages and decrypt media, so borrow the
 // copy the wa CLI already has installed instead of installing a second one here.
@@ -187,6 +191,7 @@ async function processItem(item, group, B, threshold) {
     poc: extracted.poc || { name: null, phone: null, whatsapp: null },
     regLink: extracted.regLink,
     instagramLink: extracted.instagramLink,
+    entryFee: extracted.entryFee ?? null,
     teamSize: extracted.teamSize ?? null,
     crossCollege: extracted.crossCollege ?? null,
     mode: extracted.mode || 'offline',
@@ -212,8 +217,30 @@ function git(...a) {
   return execFileSync('git', a, { cwd: ROOT, encoding: 'utf-8' }).trim();
 }
 
+function setDeployPending(pending) {
+  const state = getSyncState();
+  state.watch = { ...state.watch, deployPending: pending };
+  saveSyncState(state);
+}
+
+/** Build the client and upload it to the Cloudflare Pages project. Output goes to the journal. */
+function deploy() {
+  const run = (cmd, a) => execFileSync(cmd, a, { cwd: path.join(ROOT, 'client'), stdio: 'inherit', timeout: 15 * 60_000 });
+  if (git('status', '--porcelain', '--', 'client')) {
+    log('Deploy pending: client/ has uncommitted changes, which must not go live.');
+    setDeployPending(true);
+    return false;
+  }
+  setDeployPending(true); // cleared only on success, so a failed deploy is retried on the next run
+  run('npm', ['run', 'build']);
+  run('npx', ['wrangler', 'pages', 'deploy', 'dist', '--project-name', 'quizfinder', '--branch', 'master']);
+  setDeployPending(false);
+  log('Deployed to Cloudflare Pages.');
+  return true;
+}
+
 function publish(newQuizzes) {
-  if (!git('status', '--porcelain', 'data/quizzes.json', 'data/posters/')) {
+  if (!git('status', '--porcelain', 'data/quizzes.json')) {
     log('No changes to push.');
     return;
   }
@@ -221,19 +248,20 @@ function publish(newQuizzes) {
   if (branch !== 'master') {
     throw new Error(`repo is on "${branch}", not master: data updated on disk but not committed`);
   }
-  git('add', 'data/quizzes.json', 'data/posters/');
+  git('add', 'data/quizzes.json');
   const today = new Date().toISOString().split('T')[0];
   const n = newQuizzes.length;
   const sources = [...new Set(newQuizzes.map(q => q.source))].sort().reverse().join('+') || 'whatsapp';
   git('commit', '-m', `data: sync ${today} — ${n} new quiz${n === 1 ? '' : 'zes'} (${sources})`,
     '--', 'data/quizzes.json', 'data/posters/');
+  setDeployPending(true);
   try {
     git('push', 'origin', 'master');
   } catch {
     git('pull', '--rebase', '--autostash', 'origin', 'master');
     git('push', 'origin', 'master');
   }
-  log('Pushed. Vercel will redeploy.');
+  log('Pushed.');
 }
 
 /** WhatsApp the owner (the linked account itself) when a run fails, at most once per 6 h. */
@@ -266,6 +294,20 @@ function takeLock() {
 
 async function main() {
   if (!DRY && !takeLock()) { log('Another watcher run is in progress; exiting.'); return; }
+  let failure;
+  try { await sync(); } catch (err) { failure = err; }
+  // Outside sync() so --deploy and a pending retry still work when WhatsApp is unavailable.
+  let deployed = false;
+  try {
+    if (!NO_PUSH && (args.includes('--deploy') || getSyncState().watch?.deployPending)) deployed = deploy();
+  } finally {
+    if (toNotify.length && deployed) await sendNotifications(toNotify);
+    else if (toNotify.length) log(`Notification for ${toNotify.length} new quiz(zes) dropped: no successful deploy this run.`);
+  }
+  if (failure) throw failure;
+}
+
+async function sync() {
   const groups = groupConfig();
   if (groups.size === 0) throw new Error('No groups configured in data/city-groups.json');
   if (!existsSync(WA_DB)) throw new Error(`wa store not found at ${WA_DB}`);
@@ -334,14 +376,10 @@ async function main() {
     saveSyncState(fresh);
   }
 
-  if (added.length && !DRY) {
-    // Loaded lazily: web-push is an npm dependency the rest of the watcher does not need.
-    try {
-      const { sendNotifications } = await import('./notify.js');
-      await sendNotifications(added.filter(q => q.status === 'published'));
-    } catch (err) { console.error(`Push notifications skipped: ${err.message}`); }
+  if (!DRY) toNotify.push(...added.filter(q => q.status === 'published'));
+  if (!NO_PUSH) {
+    publish(added);
   }
-  if (!NO_PUSH) publish(added);
 
   if (failed && failed === attempted) throw new Error(`all ${failed} extraction calls failed`);
   if (igProblem) throw new Error(igProblem);

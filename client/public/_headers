@@ -1,0 +1,15 @@
+# Cloudflare Pages response headers. Posters and built assets have unique file names.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Matching is by URL, not content type, so a missing poster that falls back to index.html
+# would get these headers too. Keep it short rather than immutable.
+/posters/*
+  Cache-Control: public, max-age=86400
+
+/data/*
+  Cache-Control: public, max-age=300
+
+/cal/*
+  Content-Type: text/calendar; charset=utf-8
+  Cache-Control: public, max-age=300

@@ -23,6 +23,7 @@ Extract the following fields from the message and/or poster image. Return ONLY v
   "eligibility": ["Human-readable eligibility as mentioned, e.g. 'Open to all', 'Under 23', 'UG Students only'"],
   "eligibilityCategories": ["Normalized categories from ONLY this fixed set: 'Open', 'U18', 'U23', 'U25', 'U30', 'UG', 'PG', 'Research', 'DU Only'. Pick all that apply. Empty array if unclear."],
   "teamSize": "Maximum team size as a number (1 for solo-only, 2 for pairs, 3 for trios). null if not mentioned.",
+  "entryFee": "Entry fee as stated, e.g. '₹100 per team'. Exactly 'Free' if the announcement says entry is free. null if not mentioned.",
   "crossCollege": "true if cross-college/cross-institution teams are explicitly allowed, false if restricted to one college, null if not mentioned",
   "mode": "One of: 'offline' (physical venue), 'online' (Zoom/Meet/virtual), 'hybrid' (both online and offline components). Default to 'offline' if a physical venue is mentioned.",
   "hostingOrg": "Organization hosting the quiz or null",
@@ -112,8 +113,32 @@ export async function extractQuizFromMessage(captionText, imagePath, sourceConte
   const end = reply.lastIndexOf('}');
   if (start === -1 || end <= start) throw new Error(`No JSON in extractor reply: ${reply.slice(0, 120)}`);
   try {
-    return JSON.parse(reply.slice(start, end + 1));
+    return sanitize(JSON.parse(reply.slice(start, end + 1)));
   } catch (parseErr) {
     throw new Error(`Failed to parse extractor reply as JSON: ${parseErr.message}`);
   }
+}
+
+// The reply is LLM output derived from untrusted messages: force every field to its expected type.
+const str = v => (typeof v === 'string' ? v : null);
+const realDate = d => typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d) && new Date(`${d}T00:00Z`).toJSON() === `${d}T00:00:00.000Z`;
+const strs = v => (Array.isArray(v) ? v.filter(x => typeof x === 'string') : []);
+
+export function sanitize(o) {
+  if (!o || typeof o !== 'object' || Array.isArray(o)) throw new Error('extractor reply is not an object');
+  const poc = o.poc && typeof o.poc === 'object' ? o.poc : {};
+  return {
+    ...Object.fromEntries(['name', 'description', 'time', 'entryFee', 'venue', 'venueMapLink', 'hostingOrg', 'regLink', 'instagramLink', 'city']
+      .map(k => [k, str(o[k])])),
+    date: realDate(o.date) ? o.date : null,
+    mode: ['offline', 'online', 'hybrid'].includes(o.mode) ? o.mode : null,
+    eligibility: strs(o.eligibility),
+    eligibilityCategories: strs(o.eligibilityCategories),
+    quizMasters: strs(o.quizMasters),
+    extractedFields: strs(o.extractedFields),
+    teamSize: Number.isFinite(o.teamSize) ? o.teamSize : null,
+    crossCollege: typeof o.crossCollege === 'boolean' ? o.crossCollege : null,
+    confidence: Number.isFinite(o.confidence) ? Math.min(1, Math.max(0, o.confidence)) : 0,
+    poc: { name: str(poc.name), phone: str(poc.phone), whatsapp: str(poc.whatsapp) },
+  };
 }

@@ -14,6 +14,7 @@ import {
   AuthError,
 } from '../utils/api';
 import QuizEditor from './QuizEditor';
+import './Admin.css';
 
 function statusBadge(quiz) {
   if (quiz.status === 'flagged') return 'flagged';

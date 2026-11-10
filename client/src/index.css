@@ -1,5 +1,6 @@
-/* DQC Quiz Board -- index.css
-   Minimal global reset. All theming lives in App.css. */
+/* Eczar for names, headings and numerals, IBM Plex Sans for details, Kalam for what is
+   written on the sheet by hand. Eczar and Kalam both carry Devanagari. */
+@import url('https://fonts.googleapis.com/css2?family=Eczar:wght@500;700&family=IBM+Plex+Sans:wght@400;600&family=Kalam&display=swap');
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -10,12 +11,4 @@
 html {
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
-}
-
-body {
-  min-height: 100vh;
-}
-
-#root {
-  min-height: 100vh;
 }

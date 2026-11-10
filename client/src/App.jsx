@@ -1,234 +1,219 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Analytics } from '@vercel/analytics/react';
-import { fetchQuizzes, fetchCities } from './utils/api';
-import QuizGrid from './components/QuizGrid';
+import { useState, useEffect, lazy, Suspense } from 'react';
+import { fetchQuizzes, fetchPast, fetchGroupNames, isUpcoming, SITE_ORIGIN } from './utils/api';
+import { groupByWhen, isOnline, matchesFilters, timeAgo } from './utils/quiz';
+import QuizCard from './components/QuizCard';
 import QuizDetail from './components/QuizDetail';
 import Filters from './components/Filters';
-import AdminLogin from './components/AdminLogin';
-import AdminPanel from './components/AdminPanel';
-import CityPicker from './components/CityPicker';
+import CityIndex from './components/CityIndex';
+import Tally from './components/Tally';
+import Icon from './components/Icon';
+import Link from './components/Link';
+import { store, useBackClose } from './utils/browser';
 import NotificationBell from './components/NotificationBell';
 import './App.css';
 
-/* ---- Hash Router ---- */
-function parseHash() {
-  const hash = window.location.hash || '#/';
-  if (hash.startsWith('#/quiz/')) {
-    const id = hash.slice(7);
-    return { route: 'detail', id };
-  }
-  if (hash.startsWith('#/admin')) {
-    return { route: 'admin' };
-  }
+// The admin screens need the local backend, so they are not part of the built site
+const AdminRoute = import.meta.env.DEV ? lazy(() => import('./components/AdminRoute')) : null;
+
+// Old links used hash routes (#/quiz/<id>, #/admin); move them to real paths
+if (/^#\/(quiz\/|admin)/.test(window.location.hash)) {
+  window.history.replaceState(null, '', window.location.hash.slice(1));
+}
+
+function parsePath() {
+  const path = window.location.pathname;
+  if (path.startsWith('/quiz/')) return { route: 'detail', id: decodeURIComponent(path.slice(6).replace(/\/$/, '')) };
+  if (AdminRoute && path.startsWith('/admin')) return { route: 'admin' };
   return { route: 'home' };
 }
 
-function navigate(path) {
-  window.location.hash = path;
-}
+const ALL = 'all'; // the remembered "city" for the whole country
+const DEFAULT_FILTERS = { search: '', when: '', eligibility: [], team: '', free: false, past: false };
+const SUBMIT_URL = `https://github.com/kirtan05/quizfinderindia/issues/new?title=${encodeURIComponent('Quiz submission')}`;
+const plural = n => `${n} ${n === 1 ? 'quiz' : 'quizzes'}`;
 
-/* ---- Default filters ---- */
-const DEFAULT_FILTERS = {
-  search: '',
-  org: '',
-  mode: '',
-  eligibility: [],
-  upcoming: true,
-};
-
-function Disclaimer({ onDismiss }) {
+// One subscription that keeps itself up to date, instead of adding quizzes one by one
+function CalendarFeed({ city }) {
+  const slug = city === ALL ? ALL : city.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  const feed = `${SITE_ORIGIN.replace('https', 'webcal')}/cal/${slug}.ics`;
   return (
-    <div className="disclaimer">
-      <p className="disclaimer__text">
-        Data is aggregated from public WhatsApp groups and may be inaccurate.
-        Please verify dates, timings, venues and eligibility before attending any event.
-      </p>
-      <button className="disclaimer__btn" onClick={onDismiss}>Got it</button>
-    </div>
+    <details className="feed">
+      <summary><Icon name="calendar" />Add all {city !== ALL && `${city} `}quizzes to my calendar</summary>
+      <p>Subscribe once and new quizzes turn up in your calendar as they are announced.</p>
+      <a className="btn" href={feed}>Apple, Outlook or phone calendar</a>
+      <a className="btn" href={`https://calendar.google.com/calendar/r?cid=${encodeURIComponent(feed)}`}
+        target="_blank" rel="noopener noreferrer">Google Calendar</a>
+    </details>
   );
 }
 
 export default function App() {
-  // Disclaimer
-  const [showDisclaimer, setShowDisclaimer] = useState(
-    () => !sessionStorage.getItem('dqb_disclaimer_seen')
-  );
-
-  function dismissDisclaimer() {
-    sessionStorage.setItem('dqb_disclaimer_seen', '1');
-    setShowDisclaimer(false);
-  }
-
-  // City selection
-  const [cities, setCities] = useState([]);
-  const [selectedCity, setSelectedCity] = useState(
-    () => localStorage.getItem('qfb_city') || ''
-  );
-  const [showCityPicker, setShowCityPicker] = useState(false);
-
+  const [routeState, setRouteState] = useState(parsePath);
   useEffect(() => {
-    fetchCities().then(list => {
-      setCities(list);
-      if (list.length === 1) {
-        setSelectedCity(list[0]);
-        localStorage.setItem('qfb_city', list[0]);
-      } else if (!localStorage.getItem('qfb_city')) {
-        setShowCityPicker(true);
-      }
-    }).catch(() => {});
+    const onPopState = () => setRouteState(parsePath());
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
-  function handleCitySelect(city) {
-    setSelectedCity(city);
-    localStorage.setItem('qfb_city', city);
-    setShowCityPicker(false);
-  }
-
-  // Routing
-  const [routeState, setRouteState] = useState(parseHash);
-
+  const [quizzes, setQuizzes] = useState(null); // null while loading
+  const [failed, setFailed] = useState(false);
+  const [past, setPast] = useState(null); // null until someone asks for past quizzes
+  const [groupNames, setGroupNames] = useState({});
   useEffect(() => {
-    function onHashChange() {
-      setRouteState(parseHash());
-    }
-    window.addEventListener('hashchange', onHashChange);
-    return () => window.removeEventListener('hashchange', onHashChange);
+    fetchGroupNames().then(setGroupNames).catch(() => {});
   }, []);
-
-  // Quiz list state
-  const [quizzes, setQuizzes] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [filters, setFilters] = useState({ ...DEFAULT_FILTERS });
-
-  // Admin auth
-  const [adminAuthed, setAdminAuthed] = useState(
-    () => !!localStorage.getItem('dqc_admin_token')
-  );
-
-  // Fetch quizzes when filters or city change
-  const loadQuizzes = useCallback(async () => {
-    setLoading(true);
-    try {
-      const params = {
-        upcoming: filters.upcoming,
-      };
-      if (selectedCity) params.city = selectedCity;
-      if (filters.search) params.search = filters.search;
-      if (filters.org) params.org = filters.org;
-      if (filters.mode) params.mode = filters.mode;
-      if (filters.eligibility.length > 0) {
-        params.eligibility = filters.eligibility.join(',');
-      }
-      const data = await fetchQuizzes(params);
-      setQuizzes(data);
-    } catch {
-      setQuizzes([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [filters, selectedCity]);
-
   useEffect(() => {
-    loadQuizzes();
-  }, [loadQuizzes]);
+    if (!failed) fetchQuizzes().then(setQuizzes).catch(() => setFailed(true));
+  }, [failed]);
 
-  function handleSelectQuiz(id) {
-    navigate(`/quiz/${id}`);
+  const [filters, setFilters] = useState(DEFAULT_FILTERS);
+  // '' until the visitor has chosen; an earlier version of the site could store 'Online'
+  const [city, setCity] = useState(() => (store.get('qfb_city') || '').replace(/^Online$/, ''));
+  const [choosing, setChoosing] = useState(false);
+  useBackClose(choosing, () => setChoosing(false));
+
+  const { route, id } = routeState;
+  const wantPast = !!quizzes && !past && (filters.past || (route === 'detail' && !quizzes.some(q => q.id === id)));
+  useEffect(() => {
+    if (wantPast) fetchPast().then(setPast);
+  }, [wantPast]);
+
+  function chooseCity(value) {
+    setCity(value);
+    setChoosing(false);
+    store.set('qfb_city', value);
+    window.scrollTo(0, 0);
   }
 
-  function handleBackToGrid() {
-    navigate('/');
-  }
+  const all = [...(quizzes || []), ...(past || [])];
+  const upcoming = all.filter(isUpcoming);
+  const online = upcoming.filter(isOnline).length;
 
-  function handleFilterChange(next) {
-    setFilters(next);
-  }
+  // Only cities with something upcoming, busiest first. Online-only quizzes have no city of their own.
+  const counts = {};
+  for (const q of upcoming) if (q.city && q.city !== 'Online') counts[q.city] = (counts[q.city] || 0) + 1;
+  const cities = Object.entries(counts).sort(([a, x], [b, y]) => y - x || a.localeCompare(b));
+  const cityIndex = <CityIndex cities={cities} total={upcoming.length} current={city} onPick={chooseCity} />;
 
-  function handleClearFilters() {
-    setFilters({ ...DEFAULT_FILTERS });
-  }
-
-  function handleAdminLogin() {
-    setAdminAuthed(true);
-  }
-
-  function handleAdminLogout() {
-    localStorage.removeItem('dqc_admin_token');
-    setAdminAuthed(false);
-  }
-
-  // Render page based on route
   let page;
-  if (routeState.route === 'detail') {
+  if (failed) {
     page = (
-      <QuizDetail quizId={routeState.id} onBack={handleBackToGrid} />
+      <main className="state">
+        <p>The quizzes could not be loaded. Check your connection and try again.</p>
+        <button type="button" className="btn" onClick={() => setFailed(false)}>Retry</button>
+      </main>
     );
-  } else if (routeState.route === 'admin') {
-    page = adminAuthed ? (
-      <AdminPanel onLogout={handleAdminLogout} />
-    ) : (
-      <AdminLogin onLogin={handleAdminLogin} />
+  } else if (route === 'detail') {
+    page = (
+      <QuizDetail
+        quiz={all.find(q => q.id === id)}
+        loading={!quizzes || wantPast}
+        groupNames={groupNames}
+        home={city && city !== ALL ? `Quizzes in ${city}` : 'All quizzes'}
+      />
+    );
+  } else if (route === 'admin') {
+    page = <Suspense fallback={null}><AdminRoute /></Suspense>;
+  } else if (!quizzes) {
+    page = <main className="state"><p>Loading quizzes…</p></main>;
+  } else if (!city || choosing) {
+    page = (
+      <main className="opening">
+        <div>
+          <h1>Where do you quiz?</h1>
+          <p className="opening__lede">
+            {plural(upcoming.length)} coming up, gathered from the WhatsApp groups and Instagram pages of quiz clubs,
+            colleges and pub quiz hosts across India. Pick your city to see what is on.
+          </p>
+        </div>
+        <div>
+          {cityIndex}
+          <p className="hand">No negatives for a wrong answer: you can change city whenever you like.</p>
+          {online > 0 && <p className="opening__note">The {plural(online)} played online {online === 1 ? 'is' : 'are'} listed under every city.</p>}
+        </div>
+      </main>
     );
   } else {
+    // Online quizzes are open to everyone, so every city's list carries them
+    const inCity = all.filter(q => (city === ALL || q.city === city || isOnline(q)) && (filters.past || isUpcoming(q)));
+    const shown = inCity.filter(q => matchesFilters(q, filters));
+    const nothingHere = city !== ALL && !counts[city];
+    const updated = all.reduce((max, q) => (q.createdAt > max ? q.createdAt : max), '');
     page = (
-      <div className="home-layout">
-        <Filters
-          filters={filters}
-          onFilterChange={handleFilterChange}
-          onClear={handleClearFilters}
-        />
-        <main className="home-layout__main">
-          <QuizGrid
-            quizzes={quizzes}
-            loading={loading}
-            onSelectQuiz={handleSelectQuiz}
-          />
-        </main>
-      </div>
+      <main>
+        <div className="list-head">
+          <h1>
+            Quizzes {city === ALL ? 'across' : 'in'}{' '}
+            <button type="button" className="city-switch" onClick={() => setChoosing(true)}>
+              {city === ALL ? 'India' : city}<span>Change</span>
+            </button>
+          </h1>
+          <Filters filters={filters} defaults={DEFAULT_FILTERS} onChange={setFilters} quizzes={inCity} count={shown.length} />
+        </div>
+
+        {upcoming.some(q => q.date && (city === ALL || q.city === city)) && <CalendarFeed city={city} />}
+
+        {nothingHere && (
+          <div className="notice">
+            <p>
+              Nothing has been announced in {city} yet.
+              {online > 0 ? ' The online quizzes below are open to you, or try another city.' : ' Try another city.'}
+            </p>
+            {cityIndex}
+          </div>
+        )}
+        {shown.length === 0 && !nothingHere && (
+          <div className="state">
+            <p className="hand">A dry round.</p>
+            <p>No quizzes match what you asked for.</p>
+            <button type="button" className="btn" onClick={() => setFilters(DEFAULT_FILTERS)}>Clear search and filters</button>
+          </div>
+        )}
+
+        {shown.length > 0 && (
+          <div className="columns" aria-hidden="true">
+            <span>Date</span><span>Quiz</span><span>Starts</span><span>Who can play</span><span>Where</span>
+          </div>
+        )}
+        {groupByWhen(shown).map(([heading, group]) => (
+          <section key={heading}>
+            <h2 className={`group-heading${['Today', 'Tomorrow'].includes(heading) ? ' group-heading--soon' : ''}`}><span>{heading}</span> <Tally n={group.length} /></h2>
+            <ul className="entries">
+              {group.map((quiz, i) => (
+                <QuizCard key={quiz.id} quiz={quiz} showCity={city === ALL}
+                  sameDay={i > 0 && !!quiz.date && quiz.date === group[i - 1].date} />
+              ))}
+            </ul>
+          </section>
+        ))}
+
+        <p className="list-foot">
+          Know a quiz we missed? <a href={SUBMIT_URL} target="_blank" rel="noopener noreferrer">Tell us</a>
+          {updated && <span>Last updated {timeAgo(updated)}</span>}
+        </p>
+      </main>
     );
   }
 
   return (
     <div className="app">
-      {showCityPicker && cities.length > 0 && (
-        <CityPicker cities={cities} onSelect={handleCitySelect} />
-      )}
-      {showDisclaimer && <Disclaimer onDismiss={dismissDisclaimer} />}
-      <header className="app-header">
-        <a href="#/" className="app-header__brand" onClick={() => navigate('/')}>
-          <span className="app-header__logo" aria-hidden="true">[?]</span>
-          <span className="app-header__title">Quiz Finder</span>
-          {selectedCity && (
-            <button
-              className="app-header__city"
-              onClick={e => { e.preventDefault(); e.stopPropagation(); setShowCityPicker(true); }}
-              title="Change city"
-            >
-              {selectedCity}
-            </button>
-          )}
-        </a>
-        <NotificationBell cities={cities} />
-        <nav className="app-header__nav">
-          <a
-            href="#/"
-            className={`app-header__link ${routeState.route === 'home' ? 'app-header__link--active' : ''}`}
-          >
-            Quizzes
-          </a>
-          <a
-            href="#/admin"
-            className={`app-header__link ${routeState.route === 'admin' ? 'app-header__link--active' : ''}`}
-          >
-            Admin
-          </a>
-        </nav>
+      <header className="masthead">
+        <div className="masthead__plate">
+          <Link href="/" className="masthead__brand">Quiz Finder India</Link>
+          <NotificationBell cities={cities.map(([name]) => name)} />
+        </div>
+        <p className="masthead__dateline">
+          <span>{new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</span>
+          {quizzes && <span>{plural(upcoming.length)} ahead in {cities.length} {cities.length === 1 ? 'city' : 'cities'}</span>}
+        </p>
       </header>
 
-      <div className="app-content">
-        {page}
-      </div>
-      <Analytics />
+      {page}
+
+      <footer className="colophon">
+        Details are collected automatically from quiz club WhatsApp groups and Instagram pages and can be wrong.
+        Verify with the organiser before you go.
+      </footer>
     </div>
   );
 }

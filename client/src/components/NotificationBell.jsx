@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import Icon from './Icon';
+import { ELIGIBILITY } from '../utils/quiz';
+import { store, useBackClose } from '../utils/browser';
 
 const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY;
-
-const ELIGIBILITY_OPTIONS = ['Open', 'U18', 'U23', 'U25', 'U30', 'UG', 'PG'];
+// iPhone Safari has no push outside an installed web app
+const SUPPORTED = VAPID_PUBLIC_KEY && 'serviceWorker' in navigator && 'PushManager' in window;
 
 function urlBase64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
@@ -12,15 +15,22 @@ function urlBase64ToUint8Array(base64String) {
 }
 
 export default function NotificationBell({ cities }) {
+  const dialog = useRef(null);
+  const [open, setOpen] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [selectedCities, setSelectedCities] = useState([]);
   const [selectedEligibility, setSelectedEligibility] = useState([]);
   const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    if (open && !dialog.current.open) dialog.current.showModal();
+  }, [open]);
+  useBackClose(open, () => dialog.current.close());
 
   // Check existing subscription on mount
   useEffect(() => {
-    const saved = localStorage.getItem('qf_notif_prefs');
+    const saved = store.get('qf_notif_prefs');
     if (saved) {
       try {
         const prefs = JSON.parse(saved);
@@ -33,152 +43,118 @@ export default function NotificationBell({ cities }) {
     }
   }, []);
 
-  // Don't render if VAPID key is not configured
-  if (!VAPID_PUBLIC_KEY) return null;
+  if (!SUPPORTED) return null;
 
-  function toggleCity(city) {
-    setSelectedCities(prev =>
-      prev.includes(city) ? prev.filter(c => c !== city) : [...prev, city]
-    );
-  }
+  const toggle = (setter, value) =>
+    setter(prev => (prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]));
 
-  function toggleEligibility(tag) {
-    setSelectedEligibility(prev =>
-      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
-    );
-  }
-
-  async function handleSubscribe() {
-    if (selectedCities.length === 0) return;
+  async function run(action) {
     setBusy(true);
+    setMessage('');
     try {
-      const reg = await navigator.serviceWorker.ready;
-      const sub = await reg.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
-      });
+      await action();
+      dialog.current.close();
+    } catch (err) {
+      setMessage(Notification.permission === 'denied'
+        ? 'Notifications are blocked for this site. Allow them in your browser settings, then try again.'
+        : 'That did not work. Please try again in a moment.');
+      console.error('Notification change failed:', err);
+    } finally {
+      setBusy(false);
+    }
+  }
 
-      const prefs = {
-        cities: selectedCities,
-        eligibility: selectedEligibility,
-      };
+  const subscribe = () => run(async () => {
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+    });
 
+    const prefs = {
+      cities: selectedCities,
+      eligibility: selectedEligibility,
+    };
+
+    const res = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ subscription: sub.toJSON(), preferences: prefs }),
+    });
+
+    if (!res.ok) throw new Error(`Server error: ${res.status}`);
+
+    store.set('qf_notif_prefs', JSON.stringify(prefs));
+    setSubscribed(true);
+  });
+
+  const unsubscribe = () => run(async () => {
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.getSubscription();
+    if (sub) {
       const res = await fetch('/api/subscribe', {
-        method: 'POST',
+        method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ subscription: sub.toJSON(), preferences: prefs }),
+        body: JSON.stringify({ endpoint: sub.endpoint }),
       });
-
       if (!res.ok) throw new Error(`Server error: ${res.status}`);
-
-      localStorage.setItem('qf_notif_prefs', JSON.stringify(prefs));
-      setSubscribed(true);
-      setShowModal(false);
-    } catch (err) {
-      console.error('Push subscription failed:', err);
-    } finally {
-      setBusy(false);
+      await sub.unsubscribe();
     }
-  }
-
-  async function handleUnsubscribe() {
-    setBusy(true);
-    try {
-      const reg = await navigator.serviceWorker.ready;
-      const sub = await reg.pushManager.getSubscription();
-      if (sub) {
-        const res = await fetch('/api/subscribe', {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ endpoint: sub.endpoint }),
-        });
-        if (!res.ok) throw new Error(`Server error: ${res.status}`);
-        await sub.unsubscribe();
-      }
-      localStorage.removeItem('qf_notif_prefs');
-      setSubscribed(false);
-      setSelectedCities([]);
-      setSelectedEligibility([]);
-    } catch (err) {
-      console.error('Unsubscribe failed:', err);
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  function handleBellClick() {
-    if (subscribed) {
-      handleUnsubscribe();
-    } else {
-      setShowModal(true);
-    }
-  }
+    store.set('qf_notif_prefs', null);
+    setSubscribed(false);
+    setSelectedCities([]);
+    setSelectedEligibility([]);
+  });
 
   return (
     <>
       <button
-        className="notif-bell"
-        onClick={handleBellClick}
-        disabled={busy}
-        title={subscribed ? 'Unsubscribe from notifications' : 'Subscribe to notifications'}
-        aria-label={subscribed ? 'Unsubscribe from notifications' : 'Subscribe to notifications'}
+        type="button"
+        className="bell"
+        onClick={() => { setMessage(''); setOpen(true); }}
+        aria-pressed={subscribed}
+        title="Notifications"
+        aria-label="Notifications"
       >
-        {subscribed ? '\uD83D\uDD14' : '\uD83D\uDD15'}
+        <Icon name="bell" />
       </button>
 
-      {showModal && (
-        <div className="notif-modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="notif-modal" role="dialog" aria-modal="true" aria-labelledby="notif-modal-title" onClick={e => e.stopPropagation()}>
-            <h3 id="notif-modal-title" className="notif-modal__title">Quiz Notifications</h3>
-            <p className="notif-modal__desc">
-              Get notified when new quizzes are posted for your cities.
-            </p>
+      <dialog ref={dialog} className="sheet" aria-labelledby="notif-title" onClose={() => setOpen(false)}
+        onClick={e => e.target === dialog.current && dialog.current.close()}>
+        <form method="dialog">
+          <h2 id="notif-title" tabIndex={-1}>Tell me about new quizzes</h2>
+          <p>A notification on this device when a quiz is announced in your cities.</p>
 
-            <div className="notif-modal__section">
-              <span className="notif-modal__label">Cities</span>
-              <div className="notif-modal__chips">
-                {(cities || []).map(city => (
-                  <button
-                    key={city}
-                    className={`notif-chip${selectedCities.includes(city) ? ' notif-chip--selected' : ''}`}
-                    onClick={() => toggleCity(city)}
-                  >
-                    {city}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="notif-modal__section">
-              <span className="notif-modal__label">Eligibility</span>
-              <div className="notif-modal__chips">
-                {ELIGIBILITY_OPTIONS.map(tag => (
-                  <button
-                    key={tag}
-                    className={`notif-chip${selectedEligibility.includes(tag) ? ' notif-chip--selected' : ''}`}
-                    onClick={() => toggleEligibility(tag)}
-                  >
-                    {tag}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="notif-modal__actions">
-              <button className="notif-modal__cancel" onClick={() => setShowModal(false)}>
-                Cancel
+          <fieldset>
+            <legend>Cities</legend>
+            {(cities || []).map(city => (
+              <button type="button" key={city} className="chip" aria-pressed={selectedCities.includes(city)} onClick={() => toggle(setSelectedCities, city)}>
+                {city}
               </button>
-              <button
-                className="notif-modal__subscribe"
-                onClick={handleSubscribe}
-                disabled={busy || selectedCities.length === 0}
-              >
-                {busy ? 'Subscribing...' : 'Subscribe'}
+            ))}
+          </fieldset>
+
+          <fieldset>
+            <legend>Who can play (optional)</legend>
+            {ELIGIBILITY.map(tag => (
+              <button type="button" key={tag} className="chip" aria-pressed={selectedEligibility.includes(tag)} onClick={() => toggle(setSelectedEligibility, tag)}>
+                {tag}
               </button>
-            </div>
+            ))}
+          </fieldset>
+
+          {message && <p className="hand" role="alert">{message}</p>}
+
+          <div className="sheet__actions">
+            {subscribed
+              ? <button type="button" className="btn" onClick={unsubscribe} disabled={busy}>Turn off notifications</button>
+              : <button className="btn">Cancel</button>}
+            <button type="button" className="btn btn--primary" onClick={subscribe} disabled={busy || selectedCities.length === 0}>
+              {busy ? 'Saving…' : subscribed ? 'Update' : 'Subscribe'}
+            </button>
           </div>
-        </div>
-      )}
+        </form>
+      </dialog>
     </>
   );
 }

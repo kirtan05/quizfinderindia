@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { fetchAllQuizzes } from '../utils/api';
+import { store } from '../utils/browser';
+import './Admin.css';
 
 export default function AdminLogin({ onLogin }) {
   const [token, setToken] = useState('');
@@ -16,13 +18,13 @@ export default function AdminLogin({ onLogin }) {
     setError('');
 
     // Store token first so authHeaders() picks it up
-    localStorage.setItem('dqc_admin_token', token.trim());
+    store.set('dqc_admin_token', token.trim());
 
     try {
       await fetchAllQuizzes();
       onLogin();
     } catch {
-      localStorage.removeItem('dqc_admin_token');
+      store.set('dqc_admin_token', null);
       setError('Invalid token. Access denied.');
     } finally {
       setChecking(false);

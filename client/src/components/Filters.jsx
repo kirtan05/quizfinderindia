@@ -1,147 +1,100 @@
-import { useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import Icon from './Icon';
+import { ELIGIBILITY } from '../utils/quiz';
+import { useBackClose } from '../utils/browser';
 
-const ELIGIBILITY_GROUPS = {
-  'Age-based': ['U18', 'U23', 'U25', 'U30'],
-  'Open': ['Open'],
-  'University': ['DU Only'],
-  'Degree': ['UG', 'PG', 'Research'],
-};
+const WHEN = [['', 'Any time'], ['week', 'This week'], ['weekend', 'This weekend']];
+const TEAM = [['solo', 'Solo'], ['team', 'Teams']];
 
-export default function Filters({ filters, onFilterChange, onClear }) {
-  const [expanded, setExpanded] = useState(false);
+function Chip({ on, onClick, children }) {
+  return <button type="button" className="chip" aria-pressed={on} onClick={onClick}>{children}</button>;
+}
 
-  function handleSearch(e) {
-    onFilterChange({ ...filters, search: e.target.value });
-  }
-
-  function handleOrg(e) {
-    onFilterChange({ ...filters, org: e.target.value });
-  }
-
-  function handleUpcoming(e) {
-    onFilterChange({ ...filters, upcoming: e.target.checked });
-  }
-
-  function handleMode(e) {
-    onFilterChange({ ...filters, mode: e.target.value || '' });
-  }
-
-  function handleEligibility(tag, checked) {
-    const current = filters.eligibility || [];
-    const next = checked
-      ? [...current, tag]
-      : current.filter(t => t !== tag);
-    onFilterChange({ ...filters, eligibility: next });
-  }
-
-  const activeCount = [
-    filters.search,
-    filters.org,
-    filters.mode,
-    (filters.eligibility || []).length > 0,
-    !filters.upcoming,
-  ].filter(Boolean).length;
+// One row above the list: when, and a button that opens everything else.
+// `quizzes` is what the filters would apply to (they only offer choices that exist there);
+// `count` is how many are showing now.
+export default function Filters({ filters, defaults, onChange, quizzes, count }) {
+  const dialog = useRef(null);
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (open && !dialog.current.open) dialog.current.showModal();
+  }, [open]);
+  useBackClose(open, () => dialog.current.close());
+  const set = patch => onChange({ ...filters, ...patch });
+  const toggleEligibility = tag => set({
+    eligibility: filters.eligibility.includes(tag)
+      ? filters.eligibility.filter(t => t !== tag)
+      : [...filters.eligibility, tag],
+  });
+  const active = filters.eligibility.length + !!filters.search + !!filters.team + filters.free + filters.past;
+  const eligibility = ELIGIBILITY.filter(tag => quizzes.some(q => q.eligibilityCategories?.includes(tag)));
 
   return (
-    <aside className="filters">
-      <button
-        className="filters__toggle"
-        onClick={() => setExpanded(!expanded)}
-        aria-expanded={expanded}
-        aria-controls="filters-panel"
-      >
-        <span className="filters__toggle-icon">{expanded ? '[-]' : '[+]'}</span>
-        <span>Filters</span>
-        {activeCount > 0 && (
-          <span className="filters__badge">{activeCount}</span>
-        )}
+    <div className="controls">
+      <div className="when" role="group" aria-label="When">
+        {WHEN.map(([value, text]) => (
+          <button key={value} type="button" aria-pressed={filters.when === value} onClick={() => set({ when: value })}>
+            {text}
+          </button>
+        ))}
+      </div>
+      <button type="button" className="controls__more" onClick={() => setOpen(true)}>
+        <Icon name="filter" />Filters{active > 0 && <span className="controls__active">{active}</span>}
       </button>
 
-      <div
-        id="filters-panel"
-        className={`filters__panel ${expanded ? 'filters__panel--open' : ''}`}
-      >
-        <div className="filters__field">
-          <label className="filters__label" htmlFor="filter-search">
-            <span className="filters__label-icon">/</span> Search
-          </label>
-          <input
-            id="filter-search"
-            className="filters__input"
-            type="text"
-            placeholder="quiz name, topic..."
-            value={filters.search || ''}
-            onChange={handleSearch}
-          />
-        </div>
-
-        <div className="filters__field">
-          <label className="filters__label" htmlFor="filter-org">
-            <span className="filters__label-icon">@</span> Organisation
-          </label>
-          <input
-            id="filter-org"
-            className="filters__input"
-            type="text"
-            placeholder="hosting org..."
-            value={filters.org || ''}
-            onChange={handleOrg}
-          />
-        </div>
-
-        <div className="filters__field">
-          <label className="filters__checkbox-row">
+      {/* A click on the backdrop lands on the dialog element itself */}
+      <dialog ref={dialog} className="sheet" aria-labelledby="filters-title" onClose={() => setOpen(false)}
+        onClick={e => e.target === dialog.current && dialog.current.close()}>
+        <form method="dialog">
+          {/* focusable so that opening the sheet lands here, not in the search box with a keyboard over everything */}
+          <h2 id="filters-title" tabIndex={-1}>Search and filter</h2>
+          <label className="search">
+            <Icon name="search" />
             <input
-              type="checkbox"
-              checked={filters.upcoming !== false}
-              onChange={handleUpcoming}
+              type="search"
+              value={filters.search}
+              onChange={e => set({ search: e.target.value })}
+              placeholder="Quiz, host or quizmaster"
+              aria-label="Search quizzes"
             />
-            <span className="filters__checkbox-label">Upcoming only</span>
           </label>
-        </div>
 
-        <div className="filters__field">
-          <label className="filters__label" htmlFor="filter-mode">
-            <span className="filters__label-icon">~</span> Mode
+          {eligibility.length > 0 && (
+            <fieldset>
+              <legend>Who can play</legend>
+              {eligibility.map(tag => (
+                <Chip key={tag} on={filters.eligibility.includes(tag)} onClick={() => toggleEligibility(tag)}>{tag}</Chip>
+              ))}
+            </fieldset>
+          )}
+          {quizzes.some(q => q.teamSize) && (
+            <fieldset>
+              <legend>Team size</legend>
+              {TEAM.map(([value, text]) => (
+                <Chip key={value} on={filters.team === value}
+                  onClick={() => set({ team: filters.team === value ? '' : value })}>{text}</Chip>
+              ))}
+            </fieldset>
+          )}
+          {quizzes.some(q => q.entryFee) && (
+            <label className="check">
+              <input type="checkbox" checked={filters.free} onChange={e => set({ free: e.target.checked })} />
+              Free entry only
+            </label>
+          )}
+          <label className="check">
+            <input type="checkbox" checked={filters.past} onChange={e => set({ past: e.target.checked })} />
+            Show past quizzes
           </label>
-          <select
-            id="filter-mode"
-            className="filters__input"
-            value={filters.mode || ''}
-            onChange={handleMode}
-          >
-            <option value="">All</option>
-            <option value="offline">Offline</option>
-            <option value="online">Online</option>
-            <option value="hybrid">Hybrid</option>
-          </select>
-        </div>
 
-        <fieldset className="filters__fieldset">
-          <legend className="filters__legend">Eligibility</legend>
-          {Object.entries(ELIGIBILITY_GROUPS).map(([group, tags]) => (
-            <div key={group} className="filters__group">
-              <span className="filters__group-name">{group}</span>
-              <div className="filters__group-tags">
-                {tags.map(tag => (
-                  <label key={tag} className="filters__checkbox-row filters__checkbox-row--tag">
-                    <input
-                      type="checkbox"
-                      checked={(filters.eligibility || []).includes(tag)}
-                      onChange={e => handleEligibility(tag, e.target.checked)}
-                    />
-                    <span className="filters__checkbox-label">{tag}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-          ))}
-        </fieldset>
-
-        <button className="filters__clear" onClick={onClear}>
-          x Clear all filters
-        </button>
-      </div>
-    </aside>
+          <div className="sheet__actions">
+            <button type="button" className="btn" disabled={!active && !filters.when} onClick={() => onChange(defaults)}>
+              Clear all
+            </button>
+            <button className="btn btn--primary">Show {count} {count === 1 ? 'quiz' : 'quizzes'}</button>
+          </div>
+        </form>
+      </dialog>
+    </div>
   );
 }

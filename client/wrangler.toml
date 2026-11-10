@@ -1,0 +1,12 @@
+# Cloudflare Pages config: only here to bind KV and the VAPID public key for functions/api/*.
+# Secrets (VAPID_PRIVATE_KEY, NOTIFY_SECRET) are set with `npx wrangler pages secret put`.
+name = "quizfinder"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-10-01"
+
+[vars]
+VAPID_PUBLIC_KEY = "BLmv7M0YBESAiXBzzFd5RlpFYkbAWt-EBYX3zz7QGQpgl95dem_tZRrtpQ0ZVroajV-ARhVBhy1adK-Y0uavSqk"
+
+[[kv_namespaces]]
+binding = "PUSH_SUBS"
+id = "856f2727545a40b2a217098a158476ae"

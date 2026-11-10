@@ -1,18 +1,14 @@
-import { useState, useEffect } from 'react';
-import { fetchQuiz } from '../utils/api';
-import { getTagColor } from '../utils/tagColors';
-
-const IconCalendar = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: '-0.15em' }}>
-    <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /><text x="12" y="18" textAnchor="middle" fontSize="7" fill="currentColor" stroke="none" fontWeight="bold">G</text>
-  </svg>
-);
+import { useEffect, useState } from 'react';
+import DateLeaf from './DateLeaf';
+import Icon from './Icon';
+import Link from './Link';
+import { SITE_ORIGIN } from '../utils/api';
+import { daysAway, externalUrl, gcalLink, isOnline, relativeDay, teamLabel, timeAgo, whenText } from '../utils/quiz';
 
 /* Minimal markdown-ish renderer: bold, italic, bullet lists, line breaks.
    No library needed -- just a few regex passes and basic sanitization. */
 function renderMarkdown(text) {
-  if (!text) return '';
-  let html = text
+  return text
     // escape HTML entities first (sanitize)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -22,302 +18,160 @@ function renderMarkdown(text) {
     // italic
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     // bullet lists: lines starting with - or *
-    .replace(/^[\-\*]\s+(.+)$/gm, '<li>$1</li>')
+    .replace(/^[-*]\s+(.+)$/gm, '<li>$1</li>')
     // wrap consecutive <li> in <ul>
     .replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>')
     // line breaks
     .replace(/\n/g, '<br/>');
-  return html;
 }
 
-function formatDateTime(dateStr, timeStr) {
-  if (!dateStr) return { date: 'TBA', time: '' };
-  // Parse date string manually to avoid timezone issues
-  const parts = dateStr.split('-');
-  if (parts.length !== 3) return { date: dateStr, time: '' };
-  const [year, month, day] = parts.map(Number);
-  const d = new Date(year, month - 1, day);
-  if (isNaN(d)) return { date: dateStr, time: '' };
-  const formattedDate = d.toLocaleDateString('en-IN', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
-  let formattedTime = '';
-  if (timeStr) {
-    const [h, m] = timeStr.split(':').map(Number);
-    const t = new Date(2000, 0, 1, h, m);
-    formattedTime = t.toLocaleTimeString('en-IN', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-    });
+const mapsUrl = venue => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue)}`;
+const waLink = number => `https://wa.me/${number.replace(/[^0-9]/g, '')}`;
+
+function Source({ quiz, groupNames }) {
+  const posted = quiz.sourceTimestamp && ` · posted ${timeAgo(quiz.sourceTimestamp)}`;
+  if (quiz.sourceUsername) {
+    return (
+      <p>
+        From{' '}
+        <a href={externalUrl(quiz.instagramLink || `instagram.com/${quiz.sourceUsername}`)} target="_blank" rel="noopener noreferrer">
+          @{quiz.sourceUsername}
+        </a>
+        {' '}on Instagram{posted}
+      </p>
+    );
   }
-  return { date: formattedDate, time: formattedTime };
+  if (!quiz.sourceGroupId) return null;
+  return <p>From {groupNames[quiz.sourceGroupId] || 'a WhatsApp quiz group'} on WhatsApp{posted}</p>;
 }
 
-function mapsUrl(venue) {
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue)}`;
-}
-
-function waLink(number) {
-  const clean = (number || '').replace(/[^0-9]/g, '');
-  return `https://wa.me/${clean}`;
-}
-
-function parseTo24h(timeStr) {
-  if (!timeStr) return null;
-  const m = timeStr.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
-  if (!m) return null;
-  let h = Number(m[1]), min = Number(m[2]);
-  if (m[3]) {
-    const pm = m[3].toUpperCase() === 'PM';
-    if (pm && h < 12) h += 12;
-    if (!pm && h === 12) h = 0;
-  }
-  return String(h).padStart(2, '0') + ':' + String(min).padStart(2, '0');
-}
-
-function gcalLink(quiz) {
-  const p = new URLSearchParams();
-  p.set('action', 'TEMPLATE');
-  p.set('text', quiz.name || 'Quiz Event');
-  if (quiz.date) {
-    const d = quiz.date.replace(/-/g, '');
-    const t24 = parseTo24h(quiz.time);
-    if (t24) {
-      const startStr = `${d}T${t24.replace(':', '')}00`;
-      const endDate = new Date(`${quiz.date}T${t24}:00`);
-      if (!isNaN(endDate)) {
-        endDate.setHours(endDate.getHours() + 2);
-        const pad = n => String(n).padStart(2, '0');
-        const endStr = `${endDate.getFullYear()}${pad(endDate.getMonth() + 1)}${pad(endDate.getDate())}T${pad(endDate.getHours())}${pad(endDate.getMinutes())}00`;
-        p.set('dates', `${startStr}/${endStr}`);
-      } else {
-        p.set('dates', `${d}/${d}`);
-      }
-    } else {
-      p.set('dates', `${d}/${d}`);
-    }
-  }
-  if (quiz.venue) p.set('location', quiz.venue);
-  const details = [
-    quiz.hostingOrg ? `Hosted by ${quiz.hostingOrg}` : '',
-    quiz.regLink ? `Register: ${quiz.regLink}` : '',
-  ].filter(Boolean).join('\n');
-  if (details) p.set('details', details);
-  return `https://calendar.google.com/calendar/render?${p.toString()}`;
-}
-
-export default function QuizDetail({ quizId, onBack }) {
-  const [quiz, setQuiz] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+export default function QuizDetail({ quiz, loading, groupNames, home }) {
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    let cancelled = false;
-    setLoading(true);
-    setError(null);
-    fetchQuiz(quizId)
-      .then(data => { if (!cancelled) setQuiz(data); })
-      .catch(err => { if (!cancelled) setError(err.message); })
-      .finally(() => { if (!cancelled) setLoading(false); });
-    return () => { cancelled = true; };
-  }, [quizId]);
+    if (!quiz) return;
+    document.title = quiz.name;
+    return () => { document.title = 'Quiz Finder India'; };
+  }, [quiz]);
 
-  if (loading) {
+  if (!quiz) {
     return (
-      <div className="quiz-detail quiz-detail--loading">
-        <div className="loader">
-          <span className="loader__bar" />
-          <span className="loader__bar" />
-          <span className="loader__bar" />
-        </div>
-        <p>Loading quiz data...</p>
-      </div>
+      <main className="state">
+        {loading ? <p>Loading quiz…</p> : (
+          <>
+            <p>This quiz is not listed any more.</p>
+            <Link className="btn" href="/">{home}</Link>
+          </>
+        )}
+      </main>
     );
   }
 
-  if (error || !quiz) {
-    return (
-      <div className="quiz-detail quiz-detail--error">
-        <p className="quiz-detail__error-text">
-          {error || 'Quiz not found. It may have been abducted by aliens.'}
-        </p>
-        <button className="btn btn--back" onClick={onBack}>&lt;-- Back to quizzes</button>
-      </div>
-    );
-  }
-
-  const { date, time } = formatDateTime(quiz.date, quiz.time);
-  const raw = quiz.eligibilityCategories || quiz.eligibility || [];
-  const tags = (Array.isArray(raw) ? raw : [raw]).filter(Boolean);
-  const quizMasters = (quiz.quizMasters || []).filter(Boolean);
+  const url = `${SITE_ORIGIN}/quiz/${quiz.id}/`;
+  const shareText = [quiz.name, whenText(quiz), quiz.venue].filter(Boolean).join(' — ');
+  const reportUrl = 'https://github.com/kirtan05/quizfinderindia/issues/new'
+    + `?title=${encodeURIComponent(`Wrong details: ${quiz.name}`)}&body=${encodeURIComponent(url)}`;
+  const n = quiz.date ? daysAway(quiz.date) : null;
   const poc = quiz.poc || {};
+  const quizMasters = (quiz.quizMasters || []).filter(Boolean);
+  // older entries store eligibility as one string rather than a list
+  const whoCanPlay = [].concat(quiz.eligibility?.length ? quiz.eligibility : quiz.eligibilityCategories || []);
+
+  // The facts sheet: only rows we have an answer for
+  const facts = [
+    ['When', whenText(quiz)],
+    quiz.venue && ['Where', (
+      <a href={quiz.venueMapLink ? externalUrl(quiz.venueMapLink) : mapsUrl(quiz.venue)} target="_blank" rel="noopener noreferrer">
+        <Icon name="pin" />{quiz.venue}
+      </a>
+    )],
+    quiz.city && quiz.city !== 'Online' && ['City', quiz.city],
+    quiz.hostingOrg && ['Host', quiz.hostingOrg],
+    quizMasters.length > 0 && [quizMasters.length > 1 ? 'Quizmasters' : 'Quizmaster', quizMasters.join(', ')],
+    whoCanPlay.length > 0 && ['Who can play', whoCanPlay.join('; ')],
+    (quiz.teamSize || quiz.crossCollege != null) && ['Teams', [
+      quiz.teamSize && teamLabel(quiz.teamSize),
+      quiz.crossCollege === true && 'cross-college teams allowed',
+      quiz.crossCollege === false && 'same college only',
+    ].filter(Boolean).join(', ')],
+    quiz.entryFee && ['Entry', quiz.entryFee],
+    (poc.name || poc.phone || poc.whatsapp) && ['Contact', (
+      <>
+        {poc.name} {poc.phone && <a href={`tel:${poc.phone}`}>{poc.phone}</a>}
+        {poc.whatsapp && <> <a href={waLink(poc.whatsapp)} target="_blank" rel="noopener noreferrer">WhatsApp</a></>}
+      </>
+    )],
+  ].filter(Boolean);
 
   return (
-    <div className="quiz-detail">
-      <button className="btn btn--back" onClick={onBack}>
-        &lt;-- Back to quizzes
-      </button>
+    <main className="detail">
+      <div className="detail__main">
+        <Link className="detail__back" href="/"><Icon name="back" />{home}</Link>
 
-      <div className="quiz-detail__hero">
-        {quiz.posterImage ? (
-          <img
-            className="quiz-detail__poster"
-            src={`/${quiz.posterImage}`}
-            alt={`${quiz.name} poster`}
-          />
-        ) : (
-          <div className="quiz-detail__poster-placeholder">
-            <span>?!</span>
-            <span>No poster available</span>
+        <header className={`detail__head${n < 0 ? ' entry--past' : ''}`}>
+          <DateLeaf date={quiz.date} />
+          <div>
+            <h1 className="detail__title">{quiz.name}</h1>
+            <p className="detail__marks">
+              {quiz.date && <span className={`hand${n === 0 || n === 1 ? ' hand--soon' : ''}`}>{relativeDay(quiz.date)}</span>}
+              {n < 0 && <span className="stamp">Over</span>}
+              {isOnline(quiz) && <span className="stamp stamp--online">Online</span>}
+              {quiz.mode === 'hybrid' && <span className="stamp stamp--online">Also online</span>}
+              {quiz.entryFee === 'Free' && <span className="stamp">Free entry</span>}
+            </p>
           </div>
-        )}
-      </div>
+        </header>
 
-      <h1 className="quiz-detail__title">{quiz.name}</h1>
-
-      {quiz.hostingOrg && (
-        <p className="quiz-detail__org">
-          Hosted by <strong>{quiz.hostingOrg}</strong>
-        </p>
-      )}
-
-      <div className="quiz-detail__datetime">
-        <div className="quiz-detail__date-block">
-          <span className="quiz-detail__date-label">When</span>
-          <span className="quiz-detail__date-value">{date}</span>
-          {time && <span className="quiz-detail__time-value">{time}</span>}
-        </div>
-      </div>
-
-      {quiz.venue && (
-        <div className="quiz-detail__venue">
-          <span className="quiz-detail__venue-label">Where</span>
-          <a
-            href={quiz.venueMapLink || mapsUrl(quiz.venue)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="quiz-detail__venue-link"
-          >
-            {quiz.venue} ^
-          </a>
-        </div>
-      )}
-
-      {tags.length > 0 && (
-        <div className="quiz-detail__tags">
-          {tags.map((tag, i) => (
-            <span key={i} className="tag tag--lg" style={{ '--tag-color': getTagColor(tag) }}>
-              {tag}
-            </span>
+        <dl className="facts">
+          {facts.map(([label, value]) => (
+            <div key={label} className="facts__row">
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
           ))}
-        </div>
-      )}
+        </dl>
 
-      {(quiz.teamSize || quiz.crossCollege != null) && (
-        <div className="quiz-detail__team-info">
-          {quiz.teamSize && (
-            <span className="tag tag--lg" style={{ '--tag-color': 'var(--accent-gold)' }}>
-              {quiz.teamSize === 1 ? 'Solo' : `Teams of ${quiz.teamSize}`}
-            </span>
+        <div className="detail__actions">
+          {quiz.regLink && !(n < 0) && (
+            <a className="btn btn--primary" href={externalUrl(quiz.regLink)} target="_blank" rel="noopener noreferrer">Register</a>
           )}
-          {quiz.crossCollege === true && (
-            <span className="tag tag--lg" style={{ '--tag-color': 'var(--accent-lime)' }}>
-              Cross-college OK
-            </span>
+          {n >= 0 && quiz.date && (
+            <a className="btn" href={gcalLink(quiz)} target="_blank" rel="noopener noreferrer">
+              <Icon name="calendar" />Add to calendar
+            </a>
           )}
-          {quiz.crossCollege === false && (
-            <span className="tag tag--lg" style={{ '--tag-color': 'var(--accent-red)' }}>
-              Same college only
-            </span>
+          <a className="btn" href={`https://wa.me/?text=${encodeURIComponent(`${shareText} ${url}`)}`} target="_blank" rel="noopener noreferrer">
+            <Icon name="share" />Share on WhatsApp
+          </a>
+          <button type="button" className="btn" onClick={() => navigator.clipboard.writeText(url).then(() => setCopied(true))}>
+            {copied ? 'Link copied' : 'Copy link'}
+          </button>
+          {quiz.instagramLink && (
+            <a className="btn" href={externalUrl(quiz.instagramLink)} target="_blank" rel="noopener noreferrer">
+              <Icon name="link" />Instagram
+            </a>
           )}
         </div>
-      )}
-
-      {quiz.description && (
-        <div className="quiz-detail__section">
-          <h2 className="quiz-detail__section-title">// About</h2>
-          <div
-            className="quiz-detail__description"
-            dangerouslySetInnerHTML={{ __html: renderMarkdown(quiz.description) }}
-          />
-        </div>
-      )}
-
-      {quizMasters.length > 0 && (
-        <div className="quiz-detail__section">
-          <h2 className="quiz-detail__section-title">// Quiz Masters</h2>
-          <ul className="quiz-detail__qm-list">
-            {quizMasters.map((qm, i) => (
-              <li key={i} className="quiz-detail__qm">{qm}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {(poc.name || poc.phone || poc.whatsapp) && (
-        <div className="quiz-detail__section">
-          <h2 className="quiz-detail__section-title">// Point of Contact</h2>
-          <div className="quiz-detail__poc">
-            {poc.name && <p className="quiz-detail__poc-name">{poc.name}</p>}
-            {poc.phone && (
-              <p>
-                <a href={`tel:${poc.phone}`} className="quiz-detail__poc-link">
-                  {poc.phone}
-                </a>
-              </p>
-            )}
-            {poc.whatsapp && (
-              <p>
-                <a
-                  href={waLink(poc.whatsapp)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="quiz-detail__poc-link quiz-detail__poc-link--wa"
-                >
-                  WhatsApp: {poc.whatsapp}
-                </a>
-              </p>
-            )}
-          </div>
-        </div>
-      )}
-
-      <div className="quiz-detail__actions">
-        {quiz.date && (
-          <a
-            href={gcalLink(quiz)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn--secondary"
-          >
-            <IconCalendar /> Add to Calendar
-          </a>
-        )}
-        {quiz.regLink && (
-          <a
-            href={quiz.regLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn--primary btn--lg"
-          >
-            Register Now &gt;&gt;
-          </a>
-        )}
-        {quiz.instagramLink && (
-          <a
-            href={quiz.instagramLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn--secondary"
-          >
-            Instagram
-          </a>
-        )}
       </div>
-    </div>
+
+      {quiz.posterImage && (
+        <a className="detail__poster" href={`/${quiz.posterImage}`} target="_blank" rel="noopener noreferrer">
+          <img src={`/${quiz.posterImage}`} alt={`Poster for ${quiz.name}. Open full size.`} />
+        </a>
+      )}
+
+      <div className="detail__rest">
+        {quiz.description && (
+          <>
+            <h2>About this quiz</h2>
+            <div className="detail__description" dangerouslySetInnerHTML={{ __html: renderMarkdown(quiz.description) }} />
+          </>
+        )}
+        <footer className="detail__source">
+          <Source quiz={quiz} groupNames={groupNames} />
+          <p><a href={reportUrl} target="_blank" rel="noopener noreferrer">Report a problem</a> with these details</p>
+        </footer>
+      </div>
+    </main>
   );
 }

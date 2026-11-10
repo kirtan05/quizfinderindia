@@ -1,137 +1,51 @@
+import { store } from './browser';
 const IS_STATIC = import.meta.env.PROD;
-const BASE = '';
 
-// --- Static mode helpers (Vercel / no backend) ---
-
-let _quizzesCache = null;
-let _citiesCache = null;
-
-async function loadStaticQuizzes() {
-  if (_quizzesCache) return _quizzesCache;
-  const res = await fetch(`${BASE}/data/quizzes.json`);
-  if (!res.ok) return [];
-  _quizzesCache = await res.json();
-  return _quizzesCache;
-}
-
-async function loadStaticCities() {
-  if (_citiesCache) return _citiesCache;
-  const quizzes = await loadStaticQuizzes();
-  const citySet = new Set(
-    quizzes.filter(q => q.city && q.status === 'published').map(q => q.city)
-  );
-  // Sort alphabetically, but keep "Online" last
-  _citiesCache = [...citySet].sort((a, b) => {
-    if (a === 'Online') return 1;
-    if (b === 'Online') return -1;
-    return a.localeCompare(b);
-  });
-  return _citiesCache;
-}
+export const SITE_ORIGIN = 'https://quizfinder.pages.dev';
 
 const UNDATED_FRESH_DAYS = 14;
 
-function filterQuizzesLocally(allQuizzes, params) {
-  let quizzes = allQuizzes.filter(q => q.status === 'published');
-
-  if (params.city) {
-    quizzes = quizzes.filter(q => q.city === params.city);
-  }
-
-  if (params.eligibility) {
-    const filters = params.eligibility.split(',');
-    quizzes = quizzes.filter(q =>
-      (q.eligibilityCategories || []).some(e => filters.includes(e))
-    );
-  }
-
-  if (params.org) {
-    const orgLower = params.org.toLowerCase();
-    quizzes = quizzes.filter(q =>
-      q.hostingOrg?.toLowerCase().includes(orgLower)
-    );
-  }
-
-  if (params.upcoming === true || params.upcoming === 'true') {
-    const today = new Date().toISOString().split('T')[0];
-    // A quiz with no date can't be compared to today, so it counts as upcoming
-    // only while its announcement is recent; after that it is treated as past.
-    const undatedCutoff = new Date(Date.now() - UNDATED_FRESH_DAYS * 86400_000).toISOString();
-    quizzes = quizzes.filter(q => q.date
-      ? q.date >= today
-      : (q.sourceTimestamp || q.createdAt || '') >= undatedCutoff);
-  }
-
-  if (params.mode) {
-    quizzes = quizzes.filter(q => {
-      const quizMode = q.mode || (q.venue && !/\bonline\b/i.test(q.venue) ? 'offline' : 'online');
-      return quizMode === params.mode;
-    });
-  }
-
-  if (params.search) {
-    const s = params.search.toLowerCase();
-    quizzes = quizzes.filter(q =>
-      q.name?.toLowerCase().includes(s) ||
-      q.description?.toLowerCase().includes(s) ||
-      q.hostingOrg?.toLowerCase().includes(s) ||
-      (q.quizMasters || []).some(qm => qm.toLowerCase().includes(s))
-    );
-  }
-
-  quizzes.sort((a, b) => {
-    if (a.date && b.date) return a.date.localeCompare(b.date);
-    if (a.date) return -1;
-    if (b.date) return 1;
-    return (b.createdAt || '').localeCompare(a.createdAt || '');
-  });
-
-  return quizzes;
+// A quiz with no date can't be compared to today, so it counts as upcoming
+// only while its announcement is recent; after that it is treated as past.
+export function isUpcoming(q) {
+  if (q.date) return q.date >= new Date().toLocaleDateString('en-CA');
+  const cutoff = new Date(Date.now() - UNDATED_FRESH_DAYS * 86400_000).toISOString();
+  return (q.sourceTimestamp || q.createdAt || '') >= cutoff;
 }
 
 // --- Public API ---
 
-export async function fetchCities() {
-  if (IS_STATIC) return loadStaticCities();
-  const res = await fetch(`${BASE}/api/quizzes/cities`);
-  if (!res.ok) throw new Error('Failed to fetch cities');
-  return res.json();
-}
-
-export async function fetchQuizzes(params = {}) {
-  if (IS_STATIC) {
-    const all = await loadStaticQuizzes();
-    return filterQuizzesLocally(all, params);
-  }
-
-  const query = new URLSearchParams();
-  if (params.city) query.set('city', params.city);
-  if (params.eligibility) query.set('eligibility', params.eligibility);
-  if (params.org) query.set('org', params.org);
-  if (params.upcoming !== undefined) query.set('upcoming', params.upcoming);
-  if (params.search) query.set('search', params.search);
-
-  const res = await fetch(`${BASE}/api/quizzes?${query}`);
+export async function fetchQuizzes() {
+  const res = await fetch(IS_STATIC ? '/data/quizzes.json' : '/api/quizzes');
   if (!res.ok) throw new Error('Failed to fetch quizzes');
-  return res.json();
+  return (await res.json()).filter(q => q.status === 'published');
 }
 
-export async function fetchQuiz(id) {
-  if (IS_STATIC) {
-    const all = await loadStaticQuizzes();
-    const quiz = all.find(q => q.id === id && q.status === 'published');
-    if (!quiz) throw new Error('Quiz not found');
-    return quiz;
+// Past quizzes have their own file on the built site and are fetched only when asked for.
+// The dev API already returns them with the rest, and has no such file.
+export async function fetchPast() {
+  try {
+    const res = await fetch('/data/past.json');
+    return res.ok ? await res.json() : [];
+  } catch {
+    return [];
   }
-  const res = await fetch(`${BASE}/api/quizzes/${id}`);
-  if (!res.ok) throw new Error('Quiz not found');
-  return res.json();
+}
+
+// WhatsApp group jid -> group name; only the built site has this file (the dev API has no equivalent)
+export async function fetchGroupNames() {
+  if (!IS_STATIC) return {};
+  const res = await fetch('/data/city-groups.json');
+  const { cities } = await res.json();
+  return Object.fromEntries(
+    Object.values(cities).flatMap(c => c.groups.map(g => [g.id, g.name]))
+  );
 }
 
 // --- Admin API (only works with backend) ---
 
 function authHeaders() {
-  const token = localStorage.getItem('dqc_admin_token');
+  const token = store.get('dqc_admin_token');
   return {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${token}`,
@@ -139,19 +53,13 @@ function authHeaders() {
 }
 
 export async function fetchAllQuizzes() {
-  const res = await fetch(`${BASE}/api/quizzes/admin/all`, { headers: authHeaders() });
-  if (!res.ok) throw new Error('Unauthorized');
-  return res.json();
-}
-
-export async function fetchFlaggedQuizzes() {
-  const res = await fetch(`${BASE}/api/quizzes/admin/flagged`, { headers: authHeaders() });
+  const res = await fetch('/api/quizzes/admin/all', { headers: authHeaders() });
   if (!res.ok) throw new Error('Unauthorized');
   return res.json();
 }
 
 export async function createQuiz(data) {
-  const res = await fetch(`${BASE}/api/quizzes`, {
+  const res = await fetch('/api/quizzes', {
     method: 'POST', headers: authHeaders(), body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error('Create failed');
@@ -159,7 +67,7 @@ export async function createQuiz(data) {
 }
 
 export async function updateQuiz(id, data) {
-  const res = await fetch(`${BASE}/api/quizzes/${id}`, {
+  const res = await fetch(`/api/quizzes/${id}`, {
     method: 'PATCH', headers: authHeaders(), body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error('Update failed');
@@ -167,7 +75,7 @@ export async function updateQuiz(id, data) {
 }
 
 export async function publishQuiz(id) {
-  const res = await fetch(`${BASE}/api/quizzes/${id}/publish`, {
+  const res = await fetch(`/api/quizzes/${id}/publish`, {
     method: 'POST', headers: authHeaders(),
   });
   if (!res.ok) throw new Error('Publish failed');
@@ -175,7 +83,7 @@ export async function publishQuiz(id) {
 }
 
 export async function deleteQuiz(id) {
-  const res = await fetch(`${BASE}/api/quizzes/${id}`, {
+  const res = await fetch(`/api/quizzes/${id}`, {
     method: 'DELETE', headers: authHeaders(),
   });
   if (!res.ok) throw new Error('Delete failed');
@@ -183,7 +91,7 @@ export async function deleteQuiz(id) {
 }
 
 export async function triggerSync() {
-  const res = await fetch(`${BASE}/api/sync/trigger`, {
+  const res = await fetch('/api/sync/trigger', {
     method: 'POST', headers: authHeaders(),
   });
   if (res.status === 401) throw new AuthError();
@@ -195,14 +103,14 @@ export async function triggerSync() {
 }
 
 export async function fetchSyncStatus() {
-  const res = await fetch(`${BASE}/api/sync/status`, { headers: authHeaders() });
+  const res = await fetch('/api/sync/status', { headers: authHeaders() });
   if (res.status === 401) throw new AuthError();
   if (!res.ok) throw new Error('Failed to fetch sync status');
   return res.json();
 }
 
 export async function reconnectWhatsApp() {
-  const res = await fetch(`${BASE}/api/sync/reconnect`, {
+  const res = await fetch('/api/sync/reconnect', {
     method: 'POST', headers: authHeaders(),
   });
   if (res.status === 401) throw new AuthError();
@@ -211,7 +119,7 @@ export async function reconnectWhatsApp() {
 }
 
 export async function fetchCachedGroups() {
-  const res = await fetch(`${BASE}/api/sync/groups`, { headers: authHeaders() });
+  const res = await fetch('/api/sync/groups', { headers: authHeaders() });
   if (res.status === 401) throw new AuthError();
   if (res.status === 404) return null;
   if (!res.ok) throw new Error('Failed to fetch groups');
@@ -219,8 +127,8 @@ export async function fetchCachedGroups() {
 }
 
 export function connectWhatsAppSSE(onQr, onStatus, onGroups, onError) {
-  const token = localStorage.getItem('dqc_admin_token');
-  const evtSource = new EventSource(`${BASE}/api/sync/connect?token=${token}`);
+  const token = store.get('dqc_admin_token');
+  const evtSource = new EventSource(`/api/sync/connect?token=${token}`);
 
   evtSource.addEventListener('qr', (e) => {
     onQr(JSON.parse(e.data));
@@ -242,7 +150,7 @@ export function connectWhatsAppSSE(onQr, onStatus, onGroups, onError) {
 }
 
 export async function setWhatsAppGroup(groupId) {
-  const res = await fetch(`${BASE}/api/sync/set-group`, {
+  const res = await fetch('/api/sync/set-group', {
     method: 'POST', headers: authHeaders(), body: JSON.stringify({ groupId }),
   });
   if (res.status === 401) throw new AuthError();

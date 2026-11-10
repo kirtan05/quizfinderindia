@@ -160,6 +160,7 @@ export async function processMessage(msg, groupId, threshold, sock, city) {
     poc: extracted.poc || { name: null, phone: null, whatsapp: null },
     regLink: extracted.regLink,
     instagramLink: extracted.instagramLink,
+    entryFee: extracted.entryFee ?? null,
     teamSize: extracted.teamSize ?? null,
     crossCollege: extracted.crossCollege ?? null,
     mode: extracted.mode || 'offline',

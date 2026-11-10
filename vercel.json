@@ -1,8 +1,7 @@
 {
-  "buildCommand": "cd client && npm install && npx vite build",
+  "buildCommand": "mkdir -p client/dist",
   "outputDirectory": "client/dist",
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/(.*)", "destination": "/index.html" }
+  "redirects": [
+    { "source": "/(.*)", "destination": "https://quizfinder.pages.dev/$1", "permanent": false }
   ]
 }

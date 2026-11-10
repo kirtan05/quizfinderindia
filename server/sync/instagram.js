@@ -205,6 +205,7 @@ export async function syncInstagram({ offset = 0 } = {}) {
       poc: extracted.poc || { name: null, phone: null, whatsapp: null },
       regLink: extracted.regLink,
       instagramLink: extracted.instagramLink || `https://instagram.com/p/${post.post_id}`,
+      entryFee: extracted.entryFee ?? null,
       teamSize: extracted.teamSize ?? null,
       crossCollege: extracted.crossCollege ?? null,
       mode: extracted.mode || 'offline',
@@ -214,7 +215,7 @@ export async function syncInstagram({ offset = 0 } = {}) {
       sourceUsername: post.username,
       posterImage: imagePath ? `posters/${post.image_file}` : null,
       sourceCaption: post.caption || null,
-      sourceTimestamp: post.timestamp || new Date().toISOString(),
+      sourceTimestamp: post.timestamp ? post.timestamp.replace(/(?<!Z|[+-]\d\d:?\d\d)$/, 'Z') : new Date().toISOString(), // scraper gives UTC without a zone
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       extractedFields: extracted.extractedFields || [],
