@@ -7220,5 +7220,50 @@
       "poc",
       "city"
     ]
+  },
+  {
+    "id": "2fc28ccd-934f-4e7f-825d-10f9801768a9",
+    "status": "published",
+    "confidence": 0.8,
+    "name": "Ender Bender 2026",
+    "description": "**QFI's annual mixer** to end the year with a bang!\n\nJoin the Quiz Foundation of India for a day of drinks, hi-jinks and all-round wholesome fun. Meet fellow quizzing enthusiasts and celebrate a year of fervent, competitive and spirited quizzing.\n\n**Ground rules:**\n- Teams will be formed on the spot\n- **₹1,000 per person** covers welcome snacks, lunch and all-day beverages (alcohol is an add-on, purchasable on the day)\n- You can become a **QM for the day**! Bring your questions and run a session for an all-round curious audience\n\n**Seating is limited**, so register early.",
+    "date": "2026-12-06",
+    "time": null,
+    "venue": "Madras Boat Club, Chennai",
+    "venueMapLink": null,
+    "eligibility": [],
+    "eligibilityCategories": [],
+    "hostingOrg": "Quiz Foundation of India",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": "https://kynhood.com/event/6aef3b55f61f301ed364fb93",
+    "instagramLink": null,
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Chennai",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:AC9930DD1857BA0C1873ECF7BD235DD5",
+    "sourceGroupId": "918610809414-1533791094@g.us",
+    "posterImage": null,
+    "sourceCaption": "Ready to end the year with a bang?\n\nThe Quiz Foundation of India presents *Ender Bender 2026* ! On the 6th of December, the *Madras Boat Club* will play host to QFI’s annual mixer.\n\nJoin us for a day of drinks, hi-jinks and all-round wholesome fun! Meet your fellow quizzing enthusiasts as we celebrate a year of fervent, competitive and spirited quizzing!\n\n *REGISTER HERE* : https://kynhood.com/event/6aef3b55f61f301ed364fb93\n\nHere are the ground rules:\n\n1. Teams will be formed on the spot\n2. There's a *₹1,000 charge per person* that covers welcome snacks, lunch and all-day beverages (alcohol will be an add-on that you can purchase on the day)\n3. You can become a QM for the day! Bring your questions in and run it for an all-round curious audience. \n\nSeating is limited, so hurry and register today!",
+    "sourceMessageId": "AC9930DD1857BA0C1873ECF7BD235DD5",
+    "sourceTimestamp": "2026-11-10T13:40:55.000Z",
+    "createdAt": "2026-11-10T14:07:32.840Z",
+    "updatedAt": "2026-11-10T14:07:32.840Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "venue",
+      "mode",
+      "hostingOrg",
+      "regLink",
+      "city"
+    ]
   }
 ]
