@@ -39,7 +39,11 @@ router.get('/', (req, res) => {
 
   if (upcoming === 'true') {
     const today = new Date().toISOString().split('T')[0];
-    quizzes = quizzes.filter(q => !q.date || q.date >= today);
+    // Undated quizzes count as upcoming only while the announcement is recent (matches the client)
+    const undatedCutoff = new Date(Date.now() - 14 * 86400_000).toISOString();
+    quizzes = quizzes.filter(q => q.date
+      ? q.date >= today
+      : (q.sourceTimestamp || q.createdAt || '') >= undatedCutoff);
   }
 
   if (mode) {

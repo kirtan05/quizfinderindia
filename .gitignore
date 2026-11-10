@@ -28,3 +28,8 @@ Thumbs.db
 *.kate-swp
 .idea/
 .vscode/
+
+# Python env for the Instagram scraper
+.venv/
+data/.watch.lock
+__pycache__/

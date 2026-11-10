@@ -10,4 +10,4 @@ Type=oneshot
 WorkingDirectory=%h/Desktop/projects/quizfinderindia
 Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
 ExecStart=/usr/bin/node server/sync/watch.js
-TimeoutStartSec=45min
+TimeoutStartSec=90min

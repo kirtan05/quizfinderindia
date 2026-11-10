@@ -11,11 +11,16 @@
  *   --dry-run     extract and print, write nothing
  *   --no-push     write data files but skip git commit/push
  *   --days N      look back N days on this run (default: since last run, max 14)
+ *   --ig          scrape Instagram on this run even if it is not due yet
+ *   --no-ig       skip Instagram on this run
+ *
+ * Instagram pages (server/sync/instagram/pages.json) are scraped at most once
+ * every IG_EVERY_HOURS, since Instagram rate-limits anonymous access.
  */
 import { DatabaseSync } from 'node:sqlite';
 import { execFileSync } from 'child_process';
 import { randomUUID } from 'crypto';
-import { existsSync, mkdirSync, writeFileSync, rmSync } from 'fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'fs';
 import os from 'os';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
@@ -34,6 +39,7 @@ const WA_CLI_DIR = process.env.WA_CLI_DIR || path.join(os.homedir(), 'Desktop', 
 const MAX_LOOKBACK_DAYS = 14;
 const MERGE_WINDOW = 120; // seconds between a poster and its text from the same sender
 const ALERT_EVERY_MS = 6 * 3600_000;
+const IG_EVERY_MS = (Number(process.env.IG_EVERY_HOURS) || 6) * 3600_000;
 const QUIZ_HINT = /quiz|regist|prelim|finals|venue|prize|forms\.gle|📅|🗓/i;
 
 const args = process.argv.slice(2);
@@ -218,7 +224,8 @@ function publish(newQuizzes) {
   git('add', 'data/quizzes.json', 'data/posters/');
   const today = new Date().toISOString().split('T')[0];
   const n = newQuizzes.length;
-  git('commit', '-m', `data: sync ${today} — ${n} new quiz${n === 1 ? '' : 'zes'} (whatsapp)`,
+  const sources = [...new Set(newQuizzes.map(q => q.source))].sort().reverse().join('+') || 'whatsapp';
+  git('commit', '-m', `data: sync ${today} — ${n} new quiz${n === 1 ? '' : 'zes'} (${sources})`,
     '--', 'data/quizzes.json', 'data/posters/');
   try {
     git('push', 'origin', 'master');
@@ -245,7 +252,20 @@ function alertOwner(message) {
   }
 }
 
+/** One run at a time: a manual run and the timer must not write the data files together. */
+function takeLock() {
+  const lock = path.join(ROOT, 'data', '.watch.lock');
+  if (existsSync(lock)) {
+    const pid = Number(readFileSync(lock, 'utf-8'));
+    try { process.kill(pid, 0); return false; } catch { /* stale lock, owner is gone */ }
+  }
+  writeFileSync(lock, String(process.pid));
+  process.on('exit', () => rmSync(lock, { force: true }));
+  return true;
+}
+
 async function main() {
+  if (!DRY && !takeLock()) { log('Another watcher run is in progress; exiting.'); return; }
   const groups = groupConfig();
   if (groups.size === 0) throw new Error('No groups configured in data/city-groups.json');
   if (!existsSync(WA_DB)) throw new Error(`wa store not found at ${WA_DB}`);
@@ -305,6 +325,8 @@ async function main() {
 
   log(`\n${added.length} new quizzes, ${attempted} extraction calls, ${failed} failed.`);
 
+  const igProblem = await instagramPass(added);
+
   if (!DRY) {
     const fresh = getSyncState();
     // Stop the cursor just before the first failure so that message is retried.
@@ -322,6 +344,35 @@ async function main() {
   if (!NO_PUSH) publish(added);
 
   if (failed && failed === attempted) throw new Error(`all ${failed} extraction calls failed`);
+  if (igProblem) throw new Error(igProblem);
+}
+
+/** Scrape Instagram if it is due. Returns a problem description, or null. */
+async function instagramPass(added) {
+  if (DRY || args.includes('--no-ig')) return null;
+  const state = getSyncState();
+  const last = state.watch?.lastIgAt ? Date.parse(state.watch.lastIgAt) : 0;
+  if (!args.includes('--ig') && Date.now() - last < IG_EVERY_MS) return null;
+
+  log('\n=== Instagram ===');
+  let problem = null;
+  let nextOffset = state.watch?.igOffset || 0;
+  try {
+    const ig = await import('./instagram.js');
+    const quizzes = await ig.syncInstagram({ offset: nextOffset });
+    added.push(...quizzes);
+    const { pagesDone, pagesTotal, blocked } = ig.lastRun;
+    log(`Instagram: ${pagesDone}/${pagesTotal} pages read${blocked ? ', then blocked' : ''}.`);
+    nextOffset = blocked ? ig.lastRun.nextOffset : 0;
+    if (pagesTotal && pagesDone === 0) problem = 'Instagram refused every page (rate limited or login required)';
+  } catch (err) {
+    console.error(`Instagram pass failed: ${err.message}`);
+    problem = `Instagram pass failed: ${err.message}`;
+  }
+  const fresh = getSyncState();
+  fresh.watch = { ...fresh.watch, lastIgAt: new Date().toISOString(), igOffset: nextOffset };
+  saveSyncState(fresh);
+  return problem;
 }
 
 main()

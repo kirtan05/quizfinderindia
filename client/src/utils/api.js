@@ -29,6 +29,8 @@ async function loadStaticCities() {
   return _citiesCache;
 }
 
+const UNDATED_FRESH_DAYS = 14;
+
 function filterQuizzesLocally(allQuizzes, params) {
   let quizzes = allQuizzes.filter(q => q.status === 'published');
 
@@ -52,7 +54,12 @@ function filterQuizzesLocally(allQuizzes, params) {
 
   if (params.upcoming === true || params.upcoming === 'true') {
     const today = new Date().toISOString().split('T')[0];
-    quizzes = quizzes.filter(q => !q.date || q.date >= today);
+    // A quiz with no date can't be compared to today, so it counts as upcoming
+    // only while its announcement is recent; after that it is treated as past.
+    const undatedCutoff = new Date(Date.now() - UNDATED_FRESH_DAYS * 86400_000).toISOString();
+    quizzes = quizzes.filter(q => q.date
+      ? q.date >= today
+      : (q.sourceTimestamp || q.createdAt || '') >= undatedCutoff);
   }
 
   if (params.mode) {
