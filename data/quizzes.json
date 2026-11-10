@@ -6926,5 +6926,57 @@
       "regLink",
       "city"
     ]
+  },
+  {
+    "id": "872fc49b-524a-4e21-8e15-660cd4a1714a",
+    "status": "published",
+    "confidence": 0.88,
+    "name": "Quiz Katte - Monthly Meet Up",
+    "description": "**Quiz Katte** is the KQA's monthly meet-up series for those curious about quizzing, in a casual, non-competitive atmosphere.\n\n- **Format:** BYOQ (*Bring Your Own Questions*) on the month's theme (not mandatory)\n- **Theme:** Indian Comics\n- Come for good conversation, feedback on your questions, tips on cracking answers, and a chinwag on quizzing or any other topic, all over some good coffee.\n- **No entry fee**, no teams, just turn up.\n- Venue Partner: The Bookworm",
+    "date": "2026-11-14",
+    "time": "17:00",
+    "venue": "Bookworm Bookstore, Church Street, Bengaluru",
+    "venueMapLink": null,
+    "eligibility": [
+      "Open to all"
+    ],
+    "eligibilityCategories": [
+      "Open"
+    ],
+    "hostingOrg": "KQA (Karnataka Quiz Association)",
+    "quizMasters": [],
+    "poc": {
+      "name": "Gautham Shenoy",
+      "phone": "9845176773",
+      "whatsapp": "9845176773"
+    },
+    "regLink": null,
+    "instagramLink": null,
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Bangalore",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:AC49F1A05D4C2C7FE770E2F028FE40C6",
+    "sourceGroupId": "919902444486-1522038543@g.us",
+    "posterImage": "posters/3a5f3278-1e4d-43c0-90c8-ea7e537f8013.jpg",
+    "sourceCaption": "*QUIZ KATTE - MONTHLY MEET UP ON NOVEMBER 14*\n\n*Quiz Katte* – the KQA's monthly meet-up series for ~quizzers~ those curious about quizzing, and who'd like to experience it in a casual, non-competitive atmosphere is back for another edition!\n\nThe meetings will be a BYOQ format i.e., *Bring Your Own Questions* on the month’s theme (not a mandatory requirement).\n\n*When:* Saturday, 14th November, 5 pm\n\n*Where:* Bookworm Bookstore, Church Street, Bengaluru. \n\n*Theme:* Indian Comics \n\nCome for good conversation, feedback on your questions, tips on cracking answers, and chinwag on quizzing or any other topic in general, all over some good coffee.\n\nOpen to absolutely all with no entry fee or teams or any of that. Just turn up.  \n\nFor any queries, contact Gautham Shenoy at 9845176773",
+    "sourceMessageId": "AC49F1A05D4C2C7FE770E2F028FE40C6",
+    "sourceTimestamp": "2026-11-10T09:50:03.000Z",
+    "createdAt": "2026-11-10T10:08:45.726Z",
+    "updatedAt": "2026-11-10T10:08:45.726Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "eligibilityCategories",
+      "mode",
+      "hostingOrg",
+      "poc",
+      "city"
+    ]
   }
 ]
