@@ -1,5 +1,6 @@
 {
-  "buildCommand": "mkdir -p client/dist",
+  "installCommand": "echo 'nothing to install'",
+  "buildCommand": "mkdir -p client/dist && echo 'Moved to https://quizfinder.pages.dev' > client/dist/index.html",
   "outputDirectory": "client/dist",
   "redirects": [
     { "source": "/(.*)", "destination": "https://quizfinder.pages.dev/$1", "permanent": false }
