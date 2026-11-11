@@ -7377,5 +7377,61 @@
       "poc",
       "city"
     ]
+  },
+  {
+    "id": "17ca4b06-c999-4e91-b6c5-c41dae48784b",
+    "status": "published",
+    "confidence": 0.9,
+    "name": "Back to School Quiz (Children's Day Special)",
+    "description": "**Children's Day Special: Back to School Quiz** at Vasant Kunj SOCIAL, part of **SOCIAL Trivia Nights**, hosted by **Calm Your Wits**.\n\nMiss sitting on the last bench with your friends instead of being stuck in an office cubicle? Revisit your childhood with a fun back to school quiz!\n\n**Rounds themed on:**\n- Math\n- Science\n- Geography\n- Literature\n\nExpect an evening full of calculus memes, science puns, and literary laughs.\n\n**Prizes:**\n- Lots of **free beer** for the top 3 teams\n- Free drinks for bonus questions during the quiz\n\n**Teams of up to 6 people.** Showing up solo? No worries, you'll be helped to team up with fellow quizzers on the spot.\n\nCome early, and come curious!",
+    "date": "2026-11-14",
+    "time": "17:00",
+    "venue": "Vasant Kunj SOCIAL, Vasant Kunj, New Delhi",
+    "venueMapLink": null,
+    "eligibility": [
+      "Open to all"
+    ],
+    "eligibilityCategories": [
+      "Open"
+    ],
+    "hostingOrg": "Calm Your Wits",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": "7209209679",
+      "whatsapp": "7209209679"
+    },
+    "regLink": "https://offlyn.life/e/5dShnbh",
+    "instagramLink": "https://instagram.com/calm.your.wits.quizzing",
+    "entryFee": null,
+    "teamSize": 6,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Delhi",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:ACB17F794FECDF6A3405C062D077202E",
+    "sourceGroupId": "919910038334-1526411369@g.us",
+    "posterImage": "posters/b99eb434-b012-4b89-b126-8762a6fd4a68.jpg",
+    "sourceCaption": "*CHILDREN'S DAY SPECIAL: BACK TO SCHOOL QUIZ AT VASANT KUNJ SOCIAL*\n\nMiss sitting on the last bench with your friends instead of being stuck in an office cubicle? Wish you were passing notes in class instead of replying to endless emails? Unfortunately, we don't have a time machine (yet), but we do have the next best thing!\n\nThis Children's Day, join us for a fun back to school quiz and revisit your childhood. With rounds themed on math, science, geography, and literature, expect an evening full of calculus memes, science puns, and literary laughs.\n\n📅 Sat, 14th Nov\n🕣 5 PM\n📍 Vasant Kunj SOCIAL\n🏆 Lots of free beer up for grabs for the top 3 teams, along with free drinks for bonus questions during the quiz!\n🎟️ Register here - https://offlyn.life/e/5dShnbh\n🙋🏻‍♂️ Teams of up to 6 people\n\nShowing up solo? No worries, we'll help you team up with fellow quizzers on the spot.\n\nCome early, and come curious. For any queries, please contact 7209209679 or DM us on instagram.com/calm.your.wits.quizzing",
+    "sourceMessageId": "ACB17F794FECDF6A3405C062D077202E",
+    "sourceTimestamp": "2026-11-11T11:42:46.000Z",
+    "createdAt": "2026-11-11T12:08:02.183Z",
+    "updatedAt": "2026-11-11T12:08:02.183Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "eligibilityCategories",
+      "teamSize",
+      "mode",
+      "hostingOrg",
+      "poc",
+      "regLink",
+      "instagramLink",
+      "city"
+    ]
   }
 ]
