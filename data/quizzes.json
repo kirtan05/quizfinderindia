@@ -7319,5 +7319,63 @@
       "regLink",
       "city"
     ]
+  },
+  {
+    "id": "75b6cff8-9137-4b01-bfe2-c0d0fae4be19",
+    "status": "published",
+    "confidence": 0.9,
+    "name": "INMANIA'26",
+    "description": "**INMANIA'26** is IIM Calcutta's annual flagship quiz festival, presented by **Go Travel Buddies (GTB Pvt Ltd)** and **IIM Calcutta Quiz Club**, in collaboration with **7 Lakes Fest**.\n\n**Dates:** 21st & 22nd November 2026\n\n**Day 1 (21st November 2026):**\n- **Zero Proper Nouns: Movies Quiz** — QM: **Arindam Dutta**, 10 AM – 1 PM (Open Quiz), ₹25K prizes, in collaboration with JKFC\n- **Sci-Biz-Tech Quiz** — QM: **Saswata Acharya**, 3 PM – 6 PM (Open Quiz), ₹25K prizes, in collaboration with IIMC Economics Club\n\n**Highlights:**\n- 4 exciting quizzes across two days\n- Prize pool of **₹1 Lakh+**\n- Special prizes for the best college teams\n- Team size: 1–3 members\n- **Registration:** ₹100 (1-day pass) | ₹150 (2-day pass), free for IIMC students\n- Happening alongside the vibrant 7 Lakes Fest\n\n**Venue:** Amphitheatre 250, New Academic Block, IIM Calcutta",
+    "date": "2026-11-21",
+    "time": "10:00",
+    "venue": "Amphitheatre 250, New Academic Block, IIM Calcutta",
+    "venueMapLink": null,
+    "eligibility": [
+      "Open to all"
+    ],
+    "eligibilityCategories": [
+      "Open"
+    ],
+    "hostingOrg": "IIM Calcutta Quiz Club",
+    "quizMasters": [
+      "Arindam Dutta",
+      "Saswata Acharya"
+    ],
+    "poc": {
+      "name": "Avinash",
+      "phone": "+91 8697573729",
+      "whatsapp": "+91 8697573729"
+    },
+    "regLink": null,
+    "instagramLink": "https://instagram.com/p/Dfktrn3E35s",
+    "entryFee": "₹100 (1-day pass) | ₹150 (2-day pass), free for IIMC students",
+    "teamSize": 3,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Kolkata",
+    "source": "instagram",
+    "sourceId": "instagram:Dfktrn3E35s",
+    "sourceUsername": "iimcalcuttaquizclub",
+    "posterImage": "posters/fd84d257-273d-4782-8119-07900996d0c1.jpg",
+    "sourceCaption": "🚨 QUIZ ENTHUSIASTS, IT’S TIME TO LEVEL UP! 🧠🔥\n\nThe countdown to INMANIA’26 has begun! Get ready for two days of thrilling quizzing, fierce competition, and loads of fun at IIM Calcutta’s annual flagship quiz festival on 21st & 22nd November 2026!\n\n✨ Prize Pool: ₹1 Lakh+\n👥 Team Size: 1–3 members\n🎟️ Registration: ₹100 (1-day pass) | ₹150 (2-day pass) (Free for IIMC Students)\n📍 Venue: Amphitheatre 250, New Academic Block, IIM Calcutta\n\nWith 4 exciting quizzes, special prizes for the best college teams, and the vibrant 7 Lakes Fest happening alongside, there’s something for everyone!\n\nOpen to all. Bring your team and let the quizzing begin!\n\n🔗 Register now — Link in Bio!\n\nFor queries:\nAvinash: +91 8697573729\nShrabasti: +91 7022132141\nSwagat: +91 7749914583\nPrahlad: +91 7259424904\n\n#InMania26 #IIMCalcutta #ICQC #Quizzing #7lakesfest_iimc",
+    "sourceTimestamp": "2026-11-10T19:59:45Z",
+    "createdAt": "2026-11-11T00:01:56.778Z",
+    "updatedAt": "2026-11-11T00:01:56.778Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "eligibilityCategories",
+      "teamSize",
+      "entryFee",
+      "mode",
+      "hostingOrg",
+      "quizMasters",
+      "poc",
+      "city"
+    ]
   }
 ]
