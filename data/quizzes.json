@@ -7433,5 +7433,50 @@
       "instagramLink",
       "city"
     ]
+  },
+  {
+    "id": "85cbb8f9-a530-48f7-9d42-497223e7234a",
+    "status": "flagged",
+    "confidence": 0.6,
+    "name": "Quiz O'Clock: Movies Quiz",
+    "description": "**Quiz O'Clock** presented by **Summer House** is a movies-themed quiz.\n\nFrom \"Kitne Aadmi The?\" to \"I'll be back\", it's time to separate the cinephiles from the casual Netflix scrollers!\n\n- **Theme:** Movies\n- **Format:** Team quiz, so bring your A-game and assemble your Avengers\n- **Prizes:** Exciting prizes for the winning teams\n- **Prize partner:** Hachette India\n\nLights, Camera, Action... QUIZ! 🎬🍿",
+    "date": "2026-11-17",
+    "time": "20:00",
+    "venue": null,
+    "venueMapLink": null,
+    "eligibility": [],
+    "eligibilityCategories": [],
+    "hostingOrg": "Summer House",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": null,
+    "instagramLink": null,
+    "entryFee": null,
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Delhi",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:AC73D42AFDEB0C556A48AA05E21F0FEE",
+    "sourceGroupId": "919910038334-1526411369@g.us",
+    "posterImage": "posters/00a413f8-0763-462f-a1e7-f20ae52bc182.jpg",
+    "sourceCaption": "Are you the Main Character or just an extra in the movie trivia game?\n\nFrom \"Kitne Aadmi The?\" to \"I'll be back\", it's time to separate the cinephiles from the casual Netflix scrollers!\n\nGet your movie madness on at the Movies Quiz , Bring your A-game, assemble your Avengers and may the odds be ever in your favour!\n\nOh, and there's a plot twist: We have some exciting prizes waiting for our winning teams!\n\nLights, Camera, Action🎬🍿\n\n... QUIZ!",
+    "sourceMessageId": "AC73D42AFDEB0C556A48AA05E21F0FEE",
+    "sourceTimestamp": "2026-11-12T16:02:31.000Z",
+    "createdAt": "2026-11-12T16:08:27.071Z",
+    "updatedAt": "2026-11-12T16:08:27.071Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "mode",
+      "hostingOrg",
+      "city"
+    ]
   }
 ]
