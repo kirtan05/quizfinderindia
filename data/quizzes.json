@@ -7719,5 +7719,56 @@
       "quizMasters",
       "city"
     ]
+  },
+  {
+    "id": "ccac1ef7-71b0-4b66-9546-0a320ee1392e",
+    "status": "published",
+    "confidence": 0.85,
+    "name": "AddyHD: Generational Run at the Movies – The Movies Quiz",
+    "description": "**Quiz Saturday Meetup: Generational Run at the Movies**\n\n2026 has been a great year for movies. From myths and history to horror and superheroes, video games, sequels, and brilliant adaptations, the big screen has given us plenty to talk about.\n\n**This Saturday, come show us just how much you know about the movies—and the original works that inspired them.** 🎬🍿\n\n- **Total spots:** 40\n- **Community fee:** ₹200\n- **Host:** Addy",
+    "date": "2026-11-14",
+    "time": "16:00",
+    "venue": "The Beer Café, World Mark, Sector 65, Gurgaon",
+    "venueMapLink": "https://maps.app.goo.gl/MxdJHA5UpGSSEUfs8?g_st=ac",
+    "eligibility": [],
+    "eligibilityCategories": [],
+    "hostingOrg": null,
+    "quizMasters": [
+      "Addy"
+    ],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": "https://misfitsclubs.app.link/wvOpqZKSY7b",
+    "instagramLink": null,
+    "entryFee": "₹200",
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Delhi",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:3A79A0265F0090614E19",
+    "sourceGroupId": "120363272321359581@g.us",
+    "posterImage": "posters/0c7d97c2-1768-4a94-9800-f259c0648a4c.jpg",
+    "sourceCaption": "Meetup Listed\n🤯 Quiz Saturday meetup\n*Generational Run at the Movies : The Movies Quiz*\n📅 *Date:* Saturday, 14th Nov\n🕔 *Time:* 4:00PM - 6:30PM\n👥 *Total spots:* 40\n\n💸 *Community fee:* 200.00\n\n\n🔗 *Register:* https://misfitsclubs.app.link/wvOpqZKSY7b\n\n📍 *Location:* The Beer Café, World Mark, Sector 65, Gurgaon \nhttps://maps.app.goo.gl/MxdJHA5UpGSSEUfs8?g_st=ac\n\n🎪 *About the meetup:* **2026 has been a great year for movies.**\n\nFrom myths and history to horror and superheroes, video games, sequels, and brilliant adaptations, the big screen has given us plenty to talk about.\n\n**This Saturday, come show us just how much you know about the movies—and the original works that inspired them.** 🎬🍿\n\nPeople who are coming:\nAddy 🕷️ - 🙋Host \n\n",
+    "sourceMessageId": "3A79A0265F0090614E19",
+    "sourceTimestamp": "2026-11-13T07:12:23.000Z",
+    "createdAt": "2026-11-13T07:38:15.129Z",
+    "updatedAt": "2026-11-13T07:38:15.129Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "venueMapLink",
+      "entryFee",
+      "mode",
+      "quizMasters",
+      "regLink",
+      "city"
+    ]
   }
 ]
