@@ -7886,5 +7886,57 @@
       "poc",
       "regLink"
     ]
+  },
+  {
+    "id": "1dd06bc3-11e2-4cf3-a8e2-662d70a7ff67",
+    "status": "published",
+    "confidence": 0.85,
+    "name": "Bheja Fry #123: Tark Kutark",
+    "description": "**Bheja Fry #123: Tark Kutark** – Quiz Tuesday meetup\n\nGet ready for questions and challenges where you'll need your **TARK** to crack the questions and a little creativity to survive the **KUTARK** games.\n\nGuiding you through this intellectual rollercoaster is your overdressed gameshow host, **Anmol**.\n\n**Expect a mixed bag of topics:**\n- Pop culture\n- Science and etymology\n- Mythology\n- Everything in between. If it's interesting, it's fair game.\n\nSo bring your knowledge, trust your instincts, question everything, and prepare for some gloriously questionable logic.\n\n**Total spots:** 50",
+    "date": "2026-11-17",
+    "time": "20:30",
+    "venue": "Beerlin, Gurgaon",
+    "venueMapLink": "https://maps.app.goo.gl/RAKb2bacdjETMUL4A?g_st=ic",
+    "eligibility": [],
+    "eligibilityCategories": [],
+    "hostingOrg": "Bheja Fry",
+    "quizMasters": [
+      "Anmol Kumar"
+    ],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": "https://misfitsclubs.app.link/PCete9zo27b",
+    "instagramLink": null,
+    "entryFee": "₹200 (community fee)",
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Delhi",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:3EB041B881EB6E9955477F",
+    "sourceGroupId": "120363272321359581@g.us",
+    "posterImage": "posters/251f565f-4e15-45f1-9339-77518c68317e.jpg",
+    "sourceCaption": "Meetup Listed\n🤯 Quiz Tuesday meetup\n*Bheja Fry #123: Tark Kutark*\n📅 *Date:* Tuesday, 17th Nov\n🕔 *Time:* 8:30PM - 10:30PM\n👥 *Total spots:* 50\n\n💸 *Community fee:* 200.00\n\n\n🔗 *Register:* https://misfitsclubs.app.link/PCete9zo27b\n\n📍 *Location:* Beerlin, Gurgaon\nhttps://maps.app.goo.gl/RAKb2bacdjETMUL4A?g_st=ic\n\n🎪 *About the meetup:* Get ready for questions and challenges where you'll need your TARK to crack the questions and a little creativity to survive the KUTARK games.\n\nGuiding you through this intellectual rollercoaster is your overdressed gameshow host, Anmol – making sure you put your Tark to good use while using his own Kutark to give your Bheja a little Fry!\n\nAnd remember: Don't judge a book by its cover! Expect a mixed bag of topics — from pop culture, science and etymology to mythology, and everything in between. If it's interesting, it's fair game.\n\nSo bring your knowledge, trust your instincts, question everything, and prepare for some gloriously questionable logic.\n\nPeople who are coming:\nAnmol Kumar - 🙋Host \n\n",
+    "sourceMessageId": "3EB041B881EB6E9955477F",
+    "sourceTimestamp": "2026-11-13T16:40:25.000Z",
+    "createdAt": "2026-11-13T17:07:32.956Z",
+    "updatedAt": "2026-11-13T17:07:32.956Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "venueMapLink",
+      "entryFee",
+      "mode",
+      "hostingOrg",
+      "quizMasters",
+      "regLink",
+      "city"
+    ]
   }
 ]
