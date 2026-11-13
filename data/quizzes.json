@@ -7828,5 +7828,63 @@
       "regLink",
       "city"
     ]
+  },
+  {
+    "id": "51b9b27a-fe4c-4e65-9fd3-55e2a268d224",
+    "status": "published",
+    "confidence": 0.8,
+    "name": "WRQL Season 5 (World Rapid Quiz League)",
+    "description": "**WRQL Season 5** is here! *Where the world's quizzers meet every weekday.*\n\n- **800 questions** across 3 leagues\n- A **10-question quiz every weekday**, under 4 minutes\n- Only your **best 4 of 5** count each week\n- **Over 2,000 past questions** to play online at rapidquizleague.com\n- Set by 10 of the best quizzers\n- A **bonus Science edition** is coming soon\n\n**Duration:** 30 Nov 2026 – 15 Feb 2027\n\n**Fee:** ₹1,200 / $15. Played before? ₹999 / $12.",
+    "date": "2026-11-30",
+    "time": null,
+    "venue": null,
+    "venueMapLink": null,
+    "eligibility": [],
+    "eligibilityCategories": [],
+    "hostingOrg": "World Rapid Quiz League",
+    "quizMasters": [
+      "Aaran Mohann",
+      "Shree Patwardhan",
+      "Malte Durr",
+      "Abhinav Dasgupta (DG)",
+      "Kunal Roy",
+      "J Ramanand",
+      "Dibyo Haldar",
+      "Ramesh Athreya",
+      "Samrat Sengupta",
+      "Notts"
+    ],
+    "poc": {
+      "name": "Ramesh",
+      "phone": "9820120206",
+      "whatsapp": "9820120206"
+    },
+    "regLink": "https://rapidquizleague.com/WRQLSub",
+    "instagramLink": null,
+    "entryFee": "₹1,200 / $15 (Played before? ₹999 / $12)",
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "online",
+    "city": "Online",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:3ADA629C23E293744F3D",
+    "sourceGroupId": "919910038334-1526411369@g.us",
+    "posterImage": "posters/06e87b83-8b6d-49b5-8e71-a75aea486d9c.jpg",
+    "sourceCaption": "WRQL Season 5 is here!\nWhere the world's quizzers meet every weekday. Sign up soon - a bonus Science edition coming soon! \n\n•⁠  ⁠800 questions across 3 leagues\n•⁠  ⁠A 10-question quiz every weekday, under 4 minutes\n•⁠  ⁠Set by some of the best quizzers \n•⁠  ⁠Over 2,000 past questions to play online on the website rapidquizleague.com \n\n📅 30 Nov 2026 – 15 Feb 2027\n💰 ₹1,200 / $15 • Played before? ₹999 / $12\n\nFor more details, and payment link: https://rapidquizleague.com/WRQLSub\n\nQuestions? ramesh@rapidquizleague.com | 9820120206",
+    "sourceMessageId": "3ADA629C23E293744F3D",
+    "sourceTimestamp": "2026-11-13T13:05:37.000Z",
+    "createdAt": "2026-11-13T13:08:34.124Z",
+    "updatedAt": "2026-11-13T13:08:34.124Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "entryFee",
+      "mode",
+      "hostingOrg",
+      "quizMasters",
+      "poc",
+      "regLink"
+    ]
   }
 ]
