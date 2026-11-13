@@ -7770,5 +7770,63 @@
       "regLink",
       "city"
     ]
+  },
+  {
+    "id": "c1223c5c-923a-4b42-b32d-d99d7b58cf6b",
+    "status": "published",
+    "confidence": 0.92,
+    "name": "Conoscenza '26",
+    "description": "**Quintessence**, the Quizzing Society of Zakir Husain Delhi College, presents **CONOSCENZA '26**, a one-day quizfest.\n\n**Lineup:**\n- **B.R.A.T. Quiz** (Books, Radio, Art, Television)\n- **Spirited A-frame** (Animation filler)\n\n**Prize Pool:** ₹6,000\n\n**Rules and Guidelines:**\n- Teams can have up to 2 members; cross-institutional teams are welcome\n- On-spot registration is allowed\n- Individual registration required\n- Bring your institutional ID for entry and verification\n- Eligibility: UG and PG, U23 (23 years and below)\n- Join the WhatsApp group upon registration\n\n**Nearest Metro stations:** New Delhi and Delhi Gate",
+    "date": "2026-11-18",
+    "time": "09:30",
+    "venue": "Auditorium, Zakir Husain Delhi College",
+    "venueMapLink": null,
+    "eligibility": [
+      "UG and PG U23 (23 years and below)"
+    ],
+    "eligibilityCategories": [
+      "UG",
+      "PG",
+      "U23"
+    ],
+    "hostingOrg": "Quintessence - The Quizzing Society of Zakir Husain Delhi College",
+    "quizMasters": [],
+    "poc": {
+      "name": "Vidhee",
+      "phone": "+91 93156 85237",
+      "whatsapp": "+91 93156 85237"
+    },
+    "regLink": "https://forms.gle/yHigdUyPMyYt8YAB8",
+    "instagramLink": null,
+    "entryFee": null,
+    "teamSize": 2,
+    "crossCollege": true,
+    "mode": "offline",
+    "city": "Delhi",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:AC13B4D20EE0FABF297830B8C9F51B24",
+    "sourceGroupId": "919910038334-1526411369@g.us",
+    "posterImage": "posters/9b8bf8d8-a41e-41ce-899b-7453669034b3.jpg",
+    "sourceCaption": "Hello there!\n\n*QUINTESSENCE*- The Quizzing Society of Zakir Husain Delhi College, is back with our one day quizfest, *CONOSCENZA '26.*\n\nThe day's lineup is as follows:\n\n• *B.R.A.T. Quiz* (Books, Radio, Art, Television)\n• *Spirited A-frame* (Animation filler)\n\n\nRegistration link:\nhttps://forms.gle/yHigdUyPMyYt8YAB8\n\n🕰*Timing- 9:30 am onwards*\n\n📅*Date: 18th November 2026*\n\n📍*Venue: Auditorium, Zakir Husain Delhi College*\n• Nearest Metro stations: New Delhi and Delhi Gate\n\n🏆 *Prize Pool- ₹6,000* \n\n📌*Rules and Guidelines:*\n1. Teams can have up to 2 members, and cross-institutional teams are welcome!\n2. On spot registration is allowed!\n3. Individual registration required.\n3. Please bring your institutional ID for entry and verification at the venue.\n4. Eligibility: UG and PG U23 *(23 years and below)*\n5. Join the WhatsApp group upon registration.\n\nFor queries, contact the peeps:\nVidhee: +91 93156 85237\nShanmukh: +91 82607 49595",
+    "sourceMessageId": "AC13B4D20EE0FABF297830B8C9F51B24",
+    "sourceTimestamp": "2026-11-13T12:28:28.000Z",
+    "createdAt": "2026-11-13T12:39:03.265Z",
+    "updatedAt": "2026-11-13T12:39:03.265Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "eligibilityCategories",
+      "teamSize",
+      "crossCollege",
+      "mode",
+      "hostingOrg",
+      "poc",
+      "regLink",
+      "city"
+    ]
   }
 ]
