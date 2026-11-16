@@ -8390,5 +8390,62 @@
       "regLink",
       "city"
     ]
+  },
+  {
+    "id": "f6d4572d-fe23-47d6-bc82-6789eabb1d67",
+    "status": "published",
+    "confidence": 0.9,
+    "name": "INDICA 2026–27 – India Quiz for Schools (New Delhi Leg)",
+    "description": "**INDICA 2026–27** is the 12th edition of *India Quiz for Schools*, a 'fun with fundas' event presented by **Nexus**. The 2026–27 season is being held across eight cities.\n\n**New Delhi Leg**\n- **Juniors (Std 5–8):** 9:00 AM\n- **Seniors (Std 9–12):** 1:00 PM\n\n**Topics:** India-focused topics including current affairs, history, geography, science, sports, entertainment and more.\n\n**Teams:** Each team must consist of two students from the same school. Students from different classes within the same category can team up.\n\n**Prizes:** Win amazing prizes worth **₹1 lakh**!\n\n**Registration is FREE!**",
+    "date": "2026-11-20",
+    "time": "09:00",
+    "venue": "NDMC Convention Centre, New Delhi",
+    "venueMapLink": null,
+    "eligibility": [
+      "School students – Juniors (Std 5–8) and Seniors (Std 9–12)",
+      "Teams of two students from the same school"
+    ],
+    "eligibilityCategories": [
+      "U18"
+    ],
+    "hostingOrg": "Nexus",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": "indica.consultnexus.in",
+    "instagramLink": null,
+    "entryFee": "Free",
+    "teamSize": 2,
+    "crossCollege": false,
+    "mode": "offline",
+    "city": "Delhi",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:3AABF2B5563FED20A46F",
+    "sourceGroupId": "919910038334-1526411369@g.us",
+    "posterImage": "posters/e12da342-c860-4730-8831-3dffe8d13aa9.jpg",
+    "sourceCaption": "Greetings from Nexus, India’s leading quiz and content research team!\n\nWe are delighted to announce the 12th edition of *INDICA – India Quiz for Schools*, presented by Nexus. The 2026–27 season is being held across eight cities, bringing students together for a celebration of knowledge, curiosity and fun!\n\n📍 *The New Delhi leg of INDICA 2026–27 will be held on 20 November 2026.*\n\n🏛️ *Venue:* NDMC Convention Centre, New Delhi\n\n*Juniors (Std 5–8):* 9:00 AM  \n*Seniors (Std 9–12):* 1:00 PM\n\n🏆 *Win amazing prizes worth ₹1 lakh!*\n\nGet ready to explore a wide range of India-focused topics, including current affairs, history, geography, science, sports, entertainment and much more.\n\n👥 Each team must consist of two students from the same school. Students from different classes within the same category are welcome to team up.\n\n✅ *REGISTRATION IS FREE!*\n\n👉 *Register now:* indica.consultnexus.in\n\nJoin us for an exciting day of quizzing, learning and fun at *INDICA 2026–27 in New Delhi!*\n\nBe there and put your quizzing skills to the test!",
+    "sourceMessageId": "3AABF2B5563FED20A46F",
+    "sourceTimestamp": "2026-11-16T07:32:19.000Z",
+    "createdAt": "2026-11-16T07:39:16.976Z",
+    "updatedAt": "2026-11-16T07:39:16.976Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "eligibilityCategories",
+      "teamSize",
+      "entryFee",
+      "crossCollege",
+      "mode",
+      "hostingOrg",
+      "regLink",
+      "city"
+    ]
   }
 ]
