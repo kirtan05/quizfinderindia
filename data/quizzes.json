@@ -8447,5 +8447,64 @@
       "regLink",
       "city"
     ]
+  },
+  {
+    "id": "b2065749-16bd-4645-b964-42edcdc1c112",
+    "status": "published",
+    "confidence": 0.9,
+    "name": "Cluesday Edition 565",
+    "description": "**Cluesday** is a weekly pub quiz at Watson's Indiranagar.\n\n**Edition 565**, hosted by **Sadhvik (a.k.a. SRK)**, brings nostalgia on a platter with cartoons, movies and music you grew up loving, plus a few surprises.\n\n**What is Cluesday?**\n- Correct answers are appreciated, but PJs and bad puns earn bigger applause\n- Heckling the QM is a competitive sport (not the WWE kind)\n- Answering bonus questions gets you house special shots\n- Shout loudly enough and the QM gives clues\n- Anyone can host, provided you've attended three straight weeks\n\n**Details**\n- Written quiz; answer sheets and pencils provided\n- Up to 4 people per team/table\n- **Prize:** the winning table gets a Watson's voucher worth Rs. 5000, usable on the next visit",
+    "date": "2026-11-17",
+    "time": "20:00",
+    "venue": "Watson's, Indiranagar 100 ft. Road, Bangalore",
+    "venueMapLink": "https://maps.app.goo.gl/qMVZXkvA7v5SstpS7",
+    "eligibility": [
+      "Open to all"
+    ],
+    "eligibilityCategories": [
+      "Open"
+    ],
+    "hostingOrg": "Cluesday",
+    "quizMasters": [
+      "Sadhvik (SRK)"
+    ],
+    "poc": {
+      "name": null,
+      "phone": "+91 88617 52004",
+      "whatsapp": "+91 88617 52004"
+    },
+    "regLink": null,
+    "instagramLink": null,
+    "entryFee": "Free",
+    "teamSize": 4,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Bangalore",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:ACC5E38787C3FC9BADFCD3FB1E4BA951",
+    "sourceGroupId": "919902444486-1522038543@g.us",
+    "posterImage": "posters/1feccc01-dfcf-4ca0-930c-89da2fa668d7.jpg",
+    "sourceCaption": "📢📢 📢📢 If it's Tuesday, it must be... Cluesday!\n\nJoin us AT 8.00 PM this TUESDAY at Watson's Indiranagar for Edition 565, hosted by *Sadhvik* (a.k.a. SRK), who brings you nostalgia on a platter, with cartoons, movies and music you've loved growing up, and a few surprises thrown in for good measure. Come by to have some midweek fun.\n\nIf you're a first-timer...\n\nWhat is Cluesday? It's a pub quiz where...\n\n⭐ Correct answers are appreciated, but PJs and bad puns earn bigger applause\n\n⭐ Heckling the QM is a competitive sport — but not of the WWE kind\n\n⭐ Answering bonus questions gets you house special shots \n\n⭐ If you shout loudly enough, the QM gives clues (it's called Cluesday for a reason, duh!)\n\n⭐ And most importantly, anyone can host, provided you've attended for three straight weeks.\n\nHere are the deets:\n\n⏱️ November 17, Tuesday. 8:00 PM to 11:00PM.\n\n📍 Watson’s, Indiranagar 100 ft. Road\nhttps://maps.app.goo.gl/qMVZXkvA7v5SstpS7\n\n🎟️ No entry fee. No prior registration\n\n🙋🏻‍♂️ Up to 4 people to a team/table. \n\n🖊️ It's a written quiz, but no need to carry writing implements. Answer sheets and pencils will be given.\n\n🍻 If you win, your table gets one Watson’s voucher worth Rs. 5000, that can be used on your NEXT VISIT.\n\nFor queries contact: +91 88617 52004",
+    "sourceMessageId": "ACC5E38787C3FC9BADFCD3FB1E4BA951",
+    "sourceTimestamp": "2026-11-16T08:55:45.000Z",
+    "createdAt": "2026-11-16T09:08:26.703Z",
+    "updatedAt": "2026-11-16T09:08:26.703Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "venueMapLink",
+      "eligibility",
+      "eligibilityCategories",
+      "teamSize",
+      "entryFee",
+      "mode",
+      "hostingOrg",
+      "quizMasters",
+      "poc",
+      "city"
+    ]
   }
 ]
