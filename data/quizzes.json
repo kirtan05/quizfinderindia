@@ -8776,5 +8776,61 @@
       "regLink",
       "city"
     ]
+  },
+  {
+    "id": "5174dcb6-f24d-403d-8ed2-99b80f75ab4c",
+    "status": "published",
+    "confidence": 0.9,
+    "name": "Café Quiz at Bougainvillea Café",
+    "description": "**Café Quiz** ft. 4Edge Quizzing Solutions at Bougainvillea Café, BTM Layout.\n\nCome by with your gang for a fun Saturday evening of quizzing with something for everyone and great prizes for the winners!\n\n**Theme:** General, Pop Culture, Current Affairs, Memes\n\n- **Entry:** Free, walk-ins welcome\n- **Teams:** Up to 4 people; solo participants also welcome\n- **Bring:** A pen\n\n**Prizes (top 3 teams):**\n- **1st:** Complimentary dinner at Bougainvillea Café valued up to ₹2000\n- **2nd:** 25% off + a complimentary dessert\n- **3rd:** 15% off + a complimentary beverage",
+    "date": "2026-11-21",
+    "time": "17:00",
+    "venue": "Bougainvillea Café, BTM Layout, Bangalore",
+    "venueMapLink": null,
+    "eligibility": [
+      "Open to all"
+    ],
+    "eligibilityCategories": [
+      "Open"
+    ],
+    "hostingOrg": "4Edge Quizzing Solutions",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": "9611957607",
+      "whatsapp": "9611957607"
+    },
+    "regLink": null,
+    "instagramLink": "https://www.instagram.com/4edgequizzing",
+    "entryFee": "Free",
+    "teamSize": 4,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Bangalore",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:AC1FD4A9B2674BBA145798AF1025218E",
+    "sourceGroupId": "120363417487420594@g.us",
+    "posterImage": "posters/f29b46dc-21e9-4803-b425-e79d895093a5.jpg",
+    "sourceCaption": "*Cafe Quiz at Bougainvillea Cafe*\n\nSouth Bangalore,we are back with our quiz at Bougainvillea Cafe, BTM Layout!\n\nCome by with your gang for a fun Saturday evening of quizzing with something for everyone and great prizes for the winners!\n\nTheme: General, Pop Culture, current affairs, Memes\n\n⏱️ November 21st,Saturday.5 PM to 7 PM.\n📍 Bougainvillea Cafe,BTM Layout\n🎟️ Free entry, you can walk in\n🙋🏻‍♂️ Teams of upto 4 people. Solo members are also welcome. \n🖊️ Please get a pen along\n🏆 Prizes for top 3 teams - \n\n1st prize\nComplimentary dinner at Bougainvillea cafe valued up to 2000/-\n\n2nd prize\n25% off + a Complimentary dessert \n\n3rd prize \n15% off + Complimentary Beverage\n\n\nFor queries contact: 9611957607 or DM https://www.instagram.com/4edgequizzing",
+    "sourceMessageId": "AC1FD4A9B2674BBA145798AF1025218E",
+    "sourceTimestamp": "2026-11-19T14:27:44.000Z",
+    "createdAt": "2026-11-19T14:37:56.308Z",
+    "updatedAt": "2026-11-19T14:37:56.308Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "eligibilityCategories",
+      "teamSize",
+      "entryFee",
+      "mode",
+      "hostingOrg",
+      "poc",
+      "instagramLink",
+      "city"
+    ]
   }
 ]
