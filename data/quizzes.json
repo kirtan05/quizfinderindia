@@ -8719,5 +8719,62 @@
       "instagramLink",
       "city"
     ]
+  },
+  {
+    "id": "193c0544-317c-42e7-950f-e87120c11397",
+    "status": "published",
+    "confidence": 0.9,
+    "name": "The Final Cut – Cinema Quiz at the 7th FootPrint Film Festival 2026",
+    "description": "**THE FINAL CUT** is a special **Cinema Quiz** presented by **FootPrint International Film Festival × Elenchus**, held at the 7th FootPrint Film Festival 2026.\n\nFrom Indian & regional cinema to world cinema, iconic films, legendary filmmakers & contemporary trends, put your movie knowledge to the ultimate test.\n\n**Levels & Schedule**\n- **Level 1: School (IX–XII)** – 27 November, Prelims from 10:30 AM onwards\n- **Level 2: College** – 28 November, Prelims from 9:30 AM onwards\n\n**Format**\n- Teams of 2\n- Prelims + Finals\n\n**Prizes**\n- Exciting prizes for the ultimate cinema buffs",
+    "date": "2026-11-27",
+    "time": "10:30",
+    "venue": "Amphitheatre, IGNCA, New Delhi",
+    "venueMapLink": null,
+    "eligibility": [
+      "School (IX–XII) on 27 November",
+      "College on 28 November"
+    ],
+    "eligibilityCategories": [
+      "U18",
+      "UG"
+    ],
+    "hostingOrg": "FootPrint International Film Festival × Elenchus",
+    "quizMasters": [],
+    "poc": {
+      "name": "Akriti",
+      "phone": "7011639600",
+      "whatsapp": "7011639600"
+    },
+    "regLink": "https://forms.gle/rDMEzSfwWEc4isjv6",
+    "instagramLink": null,
+    "entryFee": null,
+    "teamSize": 2,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Delhi",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:AC1F37D2C1E977A8E228BC4E7FFA710D",
+    "sourceGroupId": "919910038334-1526411369@g.us",
+    "posterImage": "posters/1f62dfc0-988e-48b6-98a9-5d2bd75dfdb0.jpg",
+    "sourceCaption": "🎬 LIGHTS. CAMERA. QUIZ! 🎥\n\nThink you know cinema beyond the usual blockbusters? 🍿\nIt’s time to put your movie knowledge to the ultimate test!\n\n✨ THE FINAL CUT — a special Cinema Quiz by FootPrint International Film Festival × Elenchus ✨\n\n🎞️ LEVEL 1: SCHOOL (IX–XII)\n📅 27 November\n⏰ Prelims: 10:30 AM onwards\n\n🎞️ LEVEL 2: COLLEGE\n📅 28 November\n⏰ Prelims: 9:30 AM onwards\n\n👥 Teams of 2\n🧠 Prelims + Finals\n📍 Amphitheatre, IGNCA, New Delhi\n🏆 Exciting prizes await the ultimate cinema buffs! 🎬✨\n\nFrom Indian & regional cinema to world cinema, iconic films, legendary filmmakers & contemporary trends — there’s more to explore than just lights, camera, action! 🎭🍿\n\n📝 Register your team here:\nhttps://forms.gle/rDMEzSfwWEc4isjv6\n\n📞 For any queries, contact:\nAkriti – 7011639600\nNeha – 6239193103\n\n🎬 Grab your teammate. Bring your cinema knowledge.\n🏆 Let’s find out who gets the FINAL CUT!",
+    "sourceMessageId": "AC1F37D2C1E977A8E228BC4E7FFA710D",
+    "sourceTimestamp": "2026-11-19T09:22:32.000Z",
+    "createdAt": "2026-11-19T11:09:24.174Z",
+    "updatedAt": "2026-11-19T11:09:24.174Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "eligibilityCategories",
+      "teamSize",
+      "mode",
+      "hostingOrg",
+      "poc",
+      "regLink",
+      "city"
+    ]
   }
 ]
