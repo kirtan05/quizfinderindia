@@ -8832,5 +8832,64 @@
       "instagramLink",
       "city"
     ]
+  },
+  {
+    "id": "66239f94-2ff6-404f-9023-75a562950b3e",
+    "status": "published",
+    "confidence": 0.93,
+    "name": "Pub Quiz ft. 4Edge Quizzing at Koramangala Social",
+    "description": "**Pub Quiz at Koramangala Social** featuring **4Edge Quizzing**\n\nKoramangala folks, a fun quiz is coming to the area this Saturday evening!\n\n- **Theme:** General\n- **Free Entry**, RSVP online\n- **Walk-ins allowed**\n- Teams of up to 6; solo participants also welcome\n\n**Prizes for top 3 teams:**\n- 🥇 ₹1500 off on table bill\n- 🥈 SOCIAL house wine bottle\n- 🥉 Round of Kamikaze shots (one per person)",
+    "date": "2026-11-21",
+    "time": "17:00",
+    "venue": "Koramangala Social, Koramangala, Bangalore",
+    "venueMapLink": "https://maps.app.goo.gl/RAttRZq62tEkvvzBA",
+    "eligibility": [
+      "Open to all",
+      "Solo members also welcome"
+    ],
+    "eligibilityCategories": [
+      "Open"
+    ],
+    "hostingOrg": "4Edge Quizzing",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": "+91 9611957607",
+      "whatsapp": "+91 9611957607"
+    },
+    "regLink": "https://puttingscene.com/events/6FZSRT/",
+    "instagramLink": "www.instagram.com/4edgequizzing",
+    "entryFee": "Free",
+    "teamSize": 6,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Bangalore",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:ACBDA711DA45CE9B684DFE5348B0BFCF",
+    "sourceGroupId": "120363417487420594@g.us",
+    "posterImage": "posters/30754b31-e5ec-4e74-a41b-4bb9173c8620.jpg",
+    "sourceCaption": "*Pub Quiz at Koramangala Social*\n\nKoramangala folks, we are bringing our fun quiz to the area this Saturday evening. Come by in large numbers!\n\nTheme: General\n\n📅 Saturday, November 21st\n🕝 5 PM - 7 PM\n🎟 Free Entry. RSVP now at https://puttingscene.com/events/6FZSRT/\n🏆 Prizes for top 3 teams \n👥 Teams of upto 6 . Solo members also welcome\n🔗 Walk ins allowed\n📍Koramangala Social - https://maps.app.goo.gl/RAttRZq62tEkvvzBA\n\nPrizes:\n🥇 ₹1500 off on table bill\n🥈 SOCIAL house wine bottle\n🥉 Round of Kamikaze shots(one per person)\n\nFor queries contact :+91 9611957607 or DM www.instagram.com/4edgequizzing",
+    "sourceMessageId": "ACBDA711DA45CE9B684DFE5348B0BFCF",
+    "sourceTimestamp": "2026-11-19T14:41:57.000Z",
+    "createdAt": "2026-11-19T15:08:12.931Z",
+    "updatedAt": "2026-11-19T15:08:12.931Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "venueMapLink",
+      "eligibility",
+      "eligibilityCategories",
+      "teamSize",
+      "entryFee",
+      "mode",
+      "hostingOrg",
+      "poc",
+      "regLink",
+      "instagramLink",
+      "city"
+    ]
   }
 ]
