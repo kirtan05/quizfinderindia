@@ -8891,5 +8891,51 @@
       "instagramLink",
       "city"
     ]
+  },
+  {
+    "id": "a3384d8a-ff18-474b-b05c-aa64063a2557",
+    "status": "flagged",
+    "confidence": 0.6,
+    "name": "Quiz O'clock: 90s Pop Culture",
+    "description": "**Summer House presents Quiz O'clock**, a quiz themed around **90s Pop Culture**.\n\n- **Theme:** 90s Pop Culture\n- Covers pop culture lore, iconic celebs, movies and music\n- **Prize partner:** Hachette India\n- Exciting prizes to be won\n\nBring your A-game and your most chronically online teammate. Nostalgia is cute, but getting the answers right? Hotter.",
+    "date": "2026-11-24",
+    "time": "20:00",
+    "venue": "Summer House",
+    "venueMapLink": null,
+    "eligibility": [],
+    "eligibilityCategories": [],
+    "hostingOrg": "Summer House",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": null,
+    "instagramLink": null,
+    "entryFee": null,
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Delhi",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:AC0FB9D275F8614E2F3B2EDED408A900",
+    "sourceGroupId": "919910038334-1526411369@g.us",
+    "posterImage": "posters/a7538db7-bf4a-4019-a6fc-47ca8dbf9657.jpg",
+    "sourceCaption": "Not to expose anyone...but if you think you know the 90s just because you can sing Wannabe and quote Friends, we have a reality check coming.📼💅\n\nFrom pop culture lore and iconic celebs to movies, music, this quiz is about to humble, heal and mildly traumatise you (in the best way)\n\nBring your A-game, your questionable confidence and your most chronically online teammate. Because nostalgia is cute, but getting the answers right? Hotter.😉\n\nThe 90s called. We made it competitive.🪩\n\nAre you all that and a bag of chips? Prove it and take your exciting wins home \n\nSee you at Quiz O'clock!!🪩",
+    "sourceMessageId": "AC0FB9D275F8614E2F3B2EDED408A900",
+    "sourceTimestamp": "2026-11-19T16:01:54.000Z",
+    "createdAt": "2026-11-19T16:07:14.511Z",
+    "updatedAt": "2026-11-19T16:07:14.511Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "mode",
+      "hostingOrg",
+      "city"
+    ]
   }
 ]
