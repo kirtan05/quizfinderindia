@@ -8937,5 +8937,51 @@
       "hostingOrg",
       "city"
     ]
+  },
+  {
+    "id": "db530d86-25c6-4e26-9df1-142729c12a9d",
+    "status": "flagged",
+    "confidence": 0.6,
+    "name": "QFI Meeting",
+    "description": "The **Quiz Foundation of India (QFI)** will hold its next meeting this Sunday at **Kynhood Technologies**.\n\n- **Prior registration is compulsory**\n- Registration is **free**",
+    "date": "2026-11-22",
+    "time": null,
+    "venue": "Kynhood Technologies",
+    "venueMapLink": null,
+    "eligibility": [],
+    "eligibilityCategories": [],
+    "hostingOrg": "The Quiz Foundation of India (QFI)",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": "https://kynhood.com/event/6afb093cba624c9ec7355f3a",
+    "instagramLink": null,
+    "entryFee": "Free",
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Chennai",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:AC37A01A6E6B605238432644BB1EDC47",
+    "sourceGroupId": "918610809414-1533791094@g.us",
+    "posterImage": null,
+    "sourceCaption": "*REMINDER:* The Quiz Foundation of India (QFI) will hold its next meeting this Sunday, at *Kynhood Technologies*. Look forward to seeing you all there!\n\n *PRIOR REGISTRATION IS COMPULSORY* . Please *register for free* at this link: https://kynhood.com/event/6afb093cba624c9ec7355f3a",
+    "sourceMessageId": "AC37A01A6E6B605238432644BB1EDC47",
+    "sourceTimestamp": "2026-11-20T14:44:41.000Z",
+    "createdAt": "2026-11-20T20:39:31.798Z",
+    "updatedAt": "2026-11-20T20:39:31.798Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "venue",
+      "entryFee",
+      "mode",
+      "hostingOrg",
+      "regLink"
+    ]
   }
 ]
