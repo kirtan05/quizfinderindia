@@ -8983,5 +8983,56 @@
       "hostingOrg",
       "regLink"
     ]
+  },
+  {
+    "id": "4e47348c-5072-45f8-a765-f156f6aff057",
+    "status": "published",
+    "confidence": 0.85,
+    "name": "Spill the Beans: A Namma Ooru Food Quiz",
+    "description": "Bengaluru has plenty of food stories simmering beneath the surface. Join **Quizmaster Arul Mani** for a quiz about the **food lore of Namma Ooru**.\n\n- **Duration:** 6pm–7:30pm\n- **Free registration**",
+    "date": "2026-11-21",
+    "time": "18:00",
+    "venue": "Science Gallery Bengaluru",
+    "venueMapLink": null,
+    "eligibility": [],
+    "eligibilityCategories": [],
+    "hostingOrg": "Science Gallery Bengaluru",
+    "quizMasters": [
+      "Arul Mani"
+    ],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": "https://quantum.scigalleryblr.org/programmes?p=Spill-the-Beans",
+    "instagramLink": null,
+    "entryFee": "Free",
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Bangalore",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:ACF2A9431E737613B05AEC2275FA5009",
+    "sourceGroupId": "919902444486-1522038543@g.us",
+    "posterImage": null,
+    "sourceCaption": "Quiz | Spill the Beans: A Namma Ooru Food Quiz\n\nBengaluru has plenty of food stories simmering beneath the surface, join Quizmaster Arul Mani for a quiz about the food lore of Namma Ooru. \n\n📆 21 November 2026, Saturday\n⏰ 6pm–7:30pm\n📍 Science Gallery Bengaluru\n\nFor details and free registration, please visit the URL https://quantum.scigalleryblr.org/programmes?p=Spill-the-Beans",
+    "sourceMessageId": "ACF2A9431E737613B05AEC2275FA5009",
+    "sourceTimestamp": "2026-11-21T08:14:16.000Z",
+    "createdAt": "2026-11-21T11:36:39.008Z",
+    "updatedAt": "2026-11-21T11:36:39.008Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "entryFee",
+      "mode",
+      "hostingOrg",
+      "quizMasters",
+      "regLink",
+      "city"
+    ]
   }
 ]
