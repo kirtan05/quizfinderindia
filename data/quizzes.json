@@ -9390,5 +9390,57 @@
       "instagramLink",
       "city"
     ]
+  },
+  {
+    "id": "313e2b88-2c07-4253-91bb-3742755ff37f",
+    "status": "published",
+    "confidence": 0.8,
+    "name": "The World Tour Quiz",
+    "description": "**Quiz Saturday meetup: The World Tour Quiz**\n\nThink you know something about this world? 🧠✨ Join us for an electrifying quiz.\n\n- Whether you're a **pop-culture buff**, a **history nerd**, or just love a good challenge, this is your chance to shine.\n- Fast-paced, brain-teasing showdown packed with **fun, surprises, and bragging rights**.\n- **Total spots:** 40\n- **Host:** Tarun A",
+    "date": "2026-11-28",
+    "time": "16:00",
+    "venue": "The Beer Café, World Mark, Sector 65, Gurgaon",
+    "venueMapLink": "https://maps.app.goo.gl/MxdJHA5UpGSSEUfs8?g_st=ac",
+    "eligibility": [],
+    "eligibilityCategories": [],
+    "hostingOrg": "Misfits Clubs",
+    "quizMasters": [
+      "Tarun A"
+    ],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": "https://misfitsclubs.app.link/QEuAY5fsn8b",
+    "instagramLink": null,
+    "entryFee": "₹200",
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Delhi",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:3AAF7E3ED53E9FA970CD",
+    "sourceGroupId": "120363272321359581@g.us",
+    "posterImage": "posters/51b31bd9-6cbf-42b7-859a-31c07f463c00.jpg",
+    "sourceCaption": "Meetup Listed\n🤯 Quiz Saturday meetup\n*The World Tour Quiz*\n📅 *Date:* Saturday, 28th Nov\n🕔 *Time:* 4:00PM - 6:30PM\n👥 *Total spots:* 40\n\n💸 *Community fee:* 200.00\n\n\n🔗 *Register:* https://misfitsclubs.app.link/QEuAY5fsn8b\n\n📍 *Location:* The Beer Café, World Mark, Sector 65, Gurgaon \nhttps://maps.app.goo.gl/MxdJHA5UpGSSEUfs8?g_st=ac\n\n🎪 *About the meetup:* Think you know something about this world? 🧠✨\nJoin us for an electrifying quiz. Whether you’re a pop-culture buff, a history nerd, feel connected to this globalised society we live in or just love a good challenge, this is your chance to shine.\nBring your A-game, and get ready for a fast-paced, brain-teasing showdown packed with fun, surprises, and bragging rights!\n\nPeople who are coming:\nTarun A - 🙋Host \n\n",
+    "sourceMessageId": "3AAF7E3ED53E9FA970CD",
+    "sourceTimestamp": "2026-11-26T09:12:09.000Z",
+    "createdAt": "2026-11-26T09:37:58.803Z",
+    "updatedAt": "2026-11-26T09:37:58.803Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "venueMapLink",
+      "entryFee",
+      "mode",
+      "hostingOrg",
+      "quizMasters",
+      "regLink",
+      "city"
+    ]
   }
 ]
