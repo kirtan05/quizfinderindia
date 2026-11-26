@@ -9496,5 +9496,51 @@
       "poc",
       "regLink"
     ]
+  },
+  {
+    "id": "6ecd2daa-ec31-42f4-87ef-53c7d28f17e1",
+    "status": "flagged",
+    "confidence": 0.65,
+    "name": "Quiz O'Clock: Food Around the Globe",
+    "description": "**Summer House** presents **Quiz O'Clock**, with the theme **Food Around the Globe**.\n\nYour group chat said \"let's go out to eat\". Now it's time to prove who actually knows food and who just orders fries everywhere. 🍝🥘🧆\n\nFrom Italy to Japan, the world's on your plate and the points are up for grabs. 🗺️\n\n- **Bring:** your foodie friends, chaotic team energy and appetite for trivia\n- **Prizes:** exciting prizes to be won\n- **Prize partner:** Hachette India",
+    "date": "2026-12-01",
+    "time": "20:00",
+    "venue": "Summer House",
+    "venueMapLink": null,
+    "eligibility": [],
+    "eligibilityCategories": [],
+    "hostingOrg": "Summer House",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": null,
+      "whatsapp": null
+    },
+    "regLink": null,
+    "instagramLink": null,
+    "entryFee": null,
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Delhi",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:ACFB369B5F1BCC03A373AD65B218D7C6",
+    "sourceGroupId": "919910038334-1526411369@g.us",
+    "posterImage": "posters/1af8c0c1-4beb-457e-b6b1-d578fcf21192.jpg",
+    "sourceCaption": "Your group chat said \"let's go out to eat\" and now it's time to prove who actually knows food and who just orders fries everywhere.🍝🥘🧆\n\nFrom Italy to Japan, the world's on your plate and the points are up for grabs.\n🗺️\n\nBring your foodie besties, your chaotic team energy, your appetite for trivia and take home exciting prizes .😉\n\nNo gatekeeping, good food , just gatekeeping the scores🤫!!",
+    "sourceMessageId": "ACFB369B5F1BCC03A373AD65B218D7C6",
+    "sourceTimestamp": "2026-11-26T16:07:40.000Z",
+    "createdAt": "2026-11-26T16:37:29.560Z",
+    "updatedAt": "2026-11-26T16:37:29.560Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "mode",
+      "hostingOrg",
+      "city"
+    ]
   }
 ]
