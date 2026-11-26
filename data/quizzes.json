@@ -9442,5 +9442,59 @@
       "regLink",
       "city"
     ]
+  },
+  {
+    "id": "eb25f88f-1593-4108-a4ca-7fd09988ef84",
+    "status": "published",
+    "confidence": 0.8,
+    "name": "Fact, Fiction & Fake News – Teachers' Lab Workshop",
+    "description": "**Fact, Fiction & Fake News: Practical Media & AI Literacy for Today's Classrooms**\n\nA **Teachers' Lab** workshop by **Times NIE** in partnership with **QShala**, led by **Durga Venkataraman**.\n\nAn interactive, hands-on workshop packed with:\n- Live quizzes\n- Breakout-room investigations\n- Classroom-ready activities\n\n**What you'll learn:**\n- Identify fake and misleading content\n- Explore simple fact-checking techniques\n- Evaluate AI-generated information\n- Bring media and AI literacy into your classroom\n\n**Limited seats!**",
+    "date": "2026-11-28",
+    "time": "16:30",
+    "venue": "Live online on Zoom",
+    "venueMapLink": null,
+    "eligibility": [
+      "Teachers and educators"
+    ],
+    "eligibilityCategories": [],
+    "hostingOrg": "Times NIE (in partnership with QShala)",
+    "quizMasters": [
+      "Durga Venkataraman"
+    ],
+    "poc": {
+      "name": null,
+      "phone": "82607 67488",
+      "whatsapp": "82607 67488"
+    },
+    "regLink": "https://nieworkshop.timesofindia.com/fact-fiction-and-fake-news",
+    "instagramLink": null,
+    "entryFee": "₹999 + 18% GST / applicable tax",
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "online",
+    "city": "Online",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:AC837D30ABC0AFA7A414F74274F2E449",
+    "sourceGroupId": "919902444486-1522038543@g.us",
+    "posterImage": "posters/f0880c16-05b6-4406-8fb9-e75fcafa20f1.jpg",
+    "sourceCaption": "Calling all TEACHERS and EDUCATORS!\n\nMisinformation, misleading forwards and AI-generated images are everywhere. Now more than ever, students need to question what they see and verify the information they consume.\n\nTEACHERS play a key role in helping students distinguish fact from fiction and recognise fake news.\n\nAnd so, Times NIE is launching *Fact, Fiction & Fake News*, a Teachers’ Lab workshop, in partnership with QShala, led by Durga Venkataraman.\n\n*An interactive, hands-on workshop packed with live quizzes, breakout-room investigations and classroom-ready activities!*\n\nLearn to identify fake and misleading content, explore simple fact-checking techniques, evaluate AI-generated information and bring media and AI literacy into your classroom.\n\nDate: Saturday, 28 November 2026\nTime: 4:30 PM – 6:00 PM\nPlatform: Live online on Zoom\nContact: 82607 67488\n\nLIMITED SEATS! Register now:\nhttps://nieworkshop.timesofindia.com/fact-fiction-and-fake-news",
+    "sourceMessageId": "AC837D30ABC0AFA7A414F74274F2E449",
+    "sourceTimestamp": "2026-11-26T10:30:47.000Z",
+    "createdAt": "2026-11-26T10:37:29.285Z",
+    "updatedAt": "2026-11-26T10:37:29.285Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "entryFee",
+      "mode",
+      "hostingOrg",
+      "quizMasters",
+      "poc",
+      "regLink"
+    ]
   }
 ]
