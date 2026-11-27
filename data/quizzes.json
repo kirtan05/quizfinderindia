@@ -9542,5 +9542,61 @@
       "hostingOrg",
       "city"
     ]
+  },
+  {
+    "id": "89175e21-c158-4bd8-b6a0-ced01d878b41",
+    "status": "published",
+    "confidence": 0.95,
+    "name": "Café Quiz at Bougainvillea Café",
+    "description": "**4EDGE Quizzing** is back with a quiz at **Bougainvillea Cafe, BTM Layout**! Bring your gang for a fun Saturday evening with something for everyone.\n\n*Same great trivia, a better view.*\n\n**Themes:** General, Pop Culture, Current Affairs and Memes\n\n**Timing:** 5 PM to 7 PM\n\n**Details:**\n- **Free entry**, and walk-ins are welcome\n- Teams of **up to 4**. Solo participants are also welcome.\n- Please bring a pen.\n\n**Prizes for the top 3 teams:**\n- **1st:** Complimentary dinner at Bougainvillea Cafe worth up to ₹2000\n- **2nd:** 25% off and a complimentary dessert\n- **3rd:** 15% off and a complimentary beverage\n\nFor queries, call the contact number or send a DM on Instagram.",
+    "date": "2026-11-28",
+    "time": "17:00",
+    "venue": "Bougainvillea Cafe, BTM Layout",
+    "venueMapLink": null,
+    "eligibility": [
+      "Open to all"
+    ],
+    "eligibilityCategories": [
+      "Open"
+    ],
+    "hostingOrg": "4 Edge Quizzing Solutions",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": "9611957607",
+      "whatsapp": "9611957607"
+    },
+    "regLink": null,
+    "instagramLink": "https://www.instagram.com/4edgequizzing",
+    "entryFee": "Free",
+    "teamSize": 4,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Bangalore",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:ACCC323F1CFFCE55FFFC2E8B864DA3CB",
+    "sourceGroupId": "120363417487420594@g.us",
+    "posterImage": "posters/48b775b2-044a-4875-a7b1-9f247a5132e6.jpg",
+    "sourceCaption": "*Cafe Quiz at Bougainvillea Cafe*\n\nSouth Bangalore,we are back with our quiz at Bougainvillea Cafe, BTM Layout!\n\nCome by with your gang for a fun Saturday evening of quizzing with something for everyone and great prizes for the winners!\n\nTheme: General, Pop Culture, current affairs, Memes\n\n⏱️ November 28th,Saturday.5 PM to 7 PM.\n📍 Bougainvillea Cafe,BTM Layout\n🎟️ Free entry, you can walk in\n🙋🏻‍♂️ Teams of upto 4 people. Solo members are also welcome. \n🖊️ Please get a pen along\n🏆 Prizes for top 3 teams - \n\n1st prize\nComplimentary dinner at Bougainvillea cafe valued up to 2000/-\n\n2nd prize\n25% off + a Complimentary dessert \n\n3rd prize \n15% off + Complimentary Beverage\n\n\nFor queries contact: 9611957607 or DM https://www.instagram.com/4edgequizzing",
+    "sourceMessageId": "ACCC323F1CFFCE55FFFC2E8B864DA3CB",
+    "sourceTimestamp": "2026-11-27T04:50:43.000Z",
+    "createdAt": "2026-11-27T05:07:57.303Z",
+    "updatedAt": "2026-11-27T05:07:57.303Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "eligibilityCategories",
+      "teamSize",
+      "entryFee",
+      "mode",
+      "hostingOrg",
+      "poc",
+      "instagramLink",
+      "city"
+    ]
   }
 ]
