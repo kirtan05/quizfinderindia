@@ -9795,5 +9795,65 @@
       "instagramLink",
       "city"
     ]
+  },
+  {
+    "id": "acf95f90-b798-4044-b06b-8dfc87e81144",
+    "status": "published",
+    "confidence": 0.95,
+    "name": "De-Tension: Quizzing for Not-So-Serious People",
+    "description": "**What's In A Name** presents another edition of **De-Tension**, a trivia night of *quizzing for not-so-serious people*.\n\nExpect trivia, wacky tasks and general tomfoolery. This isn't a conventional serious quiz, and **having fun matters**. Bring your friends, your chatty co-workers or your wacky aunt. All are welcome!\n\n- **Date:** Sunday, November 29th\n- **Time:** 5:30 PM onwards\n- **Venue:** What's In A Name, Koramangala\n- **Hosts:** Dr. Alden and Dr. Jittu\n- **Team size:** Maximum 4 people\n- **Registration fee:** ₹200 per head (not redeemable on your bill)\n- **Prizes:** For the top 2 teams",
+    "date": "2026-11-29",
+    "time": "17:30",
+    "venue": "What's In A Name, 1st Floor, 146, KHB Colony, 5th Block, Koramangala, Bengaluru, Karnataka 560095",
+    "venueMapLink": null,
+    "eligibility": [
+      "All are welcome"
+    ],
+    "eligibilityCategories": [
+      "Open"
+    ],
+    "hostingOrg": "What's In A Name",
+    "quizMasters": [
+      "Dr. Alden",
+      "Dr. Jittu"
+    ],
+    "poc": {
+      "name": null,
+      "phone": "8861989194",
+      "whatsapp": "8861989194"
+    },
+    "regLink": "https://forms.gle/eCNK6DVq7mHpSabo8",
+    "instagramLink": null,
+    "entryFee": "₹200 per head (not redeemable on your bill)",
+    "teamSize": 4,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Bangalore",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:AC2C7717029BEC28D716A37BE04FB4E7",
+    "sourceGroupId": "919902444486-1522038543@g.us",
+    "posterImage": "posters/f455574f-14ce-43ee-a639-ca015d9ceb1a.jpg",
+    "sourceCaption": "Thank you all for making this a ritual. Join us for another edition of *De-Tension: Quizzing for not so serious people* at Whats In A Name, Koramanagala. Make your sundays fun with some trivia, wacky tasks and general tomfoolery!\n\n📍*Whats In A Name - Koramangala*, on\n🍻*Sunday, November 29th at 5:30PM!* 🍻\n\nBring your friends, weird co workers who talks a lot! Bring your wacky aunt! All are welcome. \nWhoever you decide to bring along, make sure to have fun, because this is not your conventional serious quizzing…. \n\n🤌🏼*Remember! Having fun matters in this quiz …*🤌🏼\n\nDetails that might matter to you :\n💰 *Registration fee*: ₹200 per head(not redeemable on your bill)\n👥 *Teams*: Max 4 people\n🏆 *Prizes*: for the Top 2 Teams!\n🎤 *Quizmasters ❌* *Random Hosts* ✅: - Dr. Alden and Dr. Jittu (they both hold a PhD in tomfoolery and \"did you know\" facts) \n\n📍 *Location* - Whats In A Name, 1st Floor, 146, KHB Colony, 5th Block, Koramangala, Bengaluru, Karnataka 560095\n\n®️ *Register* - https://forms.gle/eCNK6DVq7mHpSabo8 \n\nFor queries contact: 8861989194",
+    "sourceMessageId": "AC2C7717029BEC28D716A37BE04FB4E7",
+    "sourceTimestamp": "2026-11-28T08:55:54.000Z",
+    "createdAt": "2026-11-28T09:08:56.871Z",
+    "updatedAt": "2026-11-28T09:08:56.871Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "eligibility",
+      "eligibilityCategories",
+      "teamSize",
+      "entryFee",
+      "mode",
+      "hostingOrg",
+      "quizMasters",
+      "poc",
+      "regLink",
+      "city"
+    ]
   }
 ]
