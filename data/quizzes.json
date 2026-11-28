@@ -9855,5 +9855,49 @@
       "regLink",
       "city"
     ]
+  },
+  {
+    "id": "34d01996-39b8-4c71-b518-ba1e4269e3fb",
+    "status": "flagged",
+    "confidence": 0.55,
+    "name": "Deva re Deva || A quiz on Indian mythology",
+    "description": "**Deva re Deva** is a quiz on **Indian mythology** by Quizarc.\n\n- **Date:** 29 November 2026\n- **Registration:** Use the Unstop link\n- **Queries:** Email query@quizarc.com or WhatsApp +91 90046 38927",
+    "date": "2026-11-29",
+    "time": null,
+    "venue": null,
+    "venueMapLink": null,
+    "eligibility": [],
+    "eligibilityCategories": [],
+    "hostingOrg": "Quizarc",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": "+91 90046 38927",
+      "whatsapp": "+91 90046 38927"
+    },
+    "regLink": "https://unstop.com/o/ZS57hH2?lb=QqFmoci&utm_medium=Share&utm_source=quizzes&utm_campaign=Aneekcho96407",
+    "instagramLink": null,
+    "entryFee": null,
+    "teamSize": null,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Bangalore",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:ACD11FC609A1FCC175F05A57D0D61018",
+    "sourceGroupId": "919902444486-1522038543@g.us",
+    "posterImage": null,
+    "sourceCaption": "Quizarc's *Deva re Deva || A quiz on Indian mythology* is scheduled for tomorrow.\n\n\nRegister now from the link below 👇🏻\n\nhttps://unstop.com/o/ZS57hH2?lb=QqFmoci&utm_medium=Share&utm_source=quizzes&utm_campaign=Aneekcho96407\n\nEmail query@quizarc.com for further details or WhatsApp on +91 90046 38927.",
+    "sourceMessageId": "ACD11FC609A1FCC175F05A57D0D61018",
+    "sourceTimestamp": "2026-11-28T11:59:28.000Z",
+    "createdAt": "2026-11-28T12:08:54.563Z",
+    "updatedAt": "2026-11-28T12:08:54.563Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "hostingOrg",
+      "poc",
+      "regLink"
+    ]
   }
 ]
