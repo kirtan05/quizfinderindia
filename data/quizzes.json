@@ -9694,5 +9694,55 @@
       "poc",
       "regLink"
     ]
+  },
+  {
+    "id": "032faa8f-de9d-4991-98db-6bd162621e42",
+    "status": "published",
+    "confidence": 0.9,
+    "name": "Pub Quiz at JP Nagar Social",
+    "description": "**4 Edge Quizzing** returns to JP Nagar with its weekly pub quiz at Social. Come for a fun evening of quizzing with your group.\n\n**Theme:** General, Pop Culture, Meme\n\n**Details:**\n- Teams of up to **6**\n- Solo participants are welcome, and the organisers can help you find a team\n- **Free entry**, with a **₹300 redeemable cover per person**\n- No registration required. Just walk in and pay the cover.\n- Please bring a pen\n- The poster says the quiz runs **every Sunday**\n\n**Prizes for the top 3 teams:**\n- 🥇 ₹1500 off the table bill\n- 🥈 A bottle of SOCIAL house wine\n- 🥉 A round of Kamikaze shots",
+    "date": "2026-11-29",
+    "time": "17:00",
+    "venue": "JP Nagar Social, JP Nagar, Bangalore 560078",
+    "venueMapLink": null,
+    "eligibility": [],
+    "eligibilityCategories": [],
+    "hostingOrg": "4 Edge Quizzing",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": "+91 9845620061",
+      "whatsapp": "+91 9845620061"
+    },
+    "regLink": null,
+    "instagramLink": "www.instagram.com/4edgequizzing",
+    "entryFee": "Free",
+    "teamSize": 6,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Bangalore",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:AC33155D0C92A62A7B4DCC671FB728BD",
+    "sourceGroupId": "120363417487420594@g.us",
+    "posterImage": "posters/02736159-584b-4fcb-963d-d59108cad071.jpg",
+    "sourceCaption": "*Pub Quiz at JP Nagara Social*\n\nSouth Bengaluru, we return to JP Nagar with our weekly quiz at Social this Sunday!\n\nCome by for a fun evening of quizzing with your group, prizes on offer for the top 3 teams.\n\nTheme: General, Pop Culture, Meme\n\n📅 Sunday, November 29th\n🕝 5 PM - 7 PM\n🎟 Free Entry\n👥 Teams of upto 6. Solo participants also welcome, we can help you find a team if required.\n🔗 Rs. 300 cover per person. No registration required. Just walk in and pay. \n🖊️ Please get a pen along\n📍JP Nagar Social\n\nPrizes:\n🥇 ₹1500 off on table bill\n🥈 SOCIAL house wine bottle\n🥉 Round of Kamikaze shots\n\nFor queries contact :+91 9845620061 or DM www.instagram.com/4edgequizzing",
+    "sourceMessageId": "AC33155D0C92A62A7B4DCC671FB728BD",
+    "sourceTimestamp": "2026-11-28T05:42:10.000Z",
+    "createdAt": "2026-11-28T06:08:11.672Z",
+    "updatedAt": "2026-11-28T06:08:11.672Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "teamSize",
+      "entryFee",
+      "mode",
+      "hostingOrg",
+      "poc",
+      "instagramLink",
+      "city"
+    ]
   }
 ]
