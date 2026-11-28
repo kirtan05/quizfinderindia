@@ -9744,5 +9744,56 @@
       "instagramLink",
       "city"
     ]
+  },
+  {
+    "id": "2f937671-b0ee-41ac-a56e-fcac0b779e53",
+    "status": "published",
+    "confidence": 0.9,
+    "name": "Pub Quiz by Calm Your Wits Quizzing at Koramangala SOCIAL",
+    "description": "**SOCIAL Trivia Nights: General Quiz** by Calm Your Wits Quizzing. The November leg of quizzes wraps up with a fun, general quiz in Koramangala!\n\n**What to expect:**\n- A classic general set broadly covering memes, news, music, entertainment, and all things internet and pop culture\n- A great place to start if you've never attended a pub quiz before\n- Every question is framed so you can work out the answer, and hints are given liberally\n\n**Details:**\n- **Time:** 5 PM to 7 PM\n- **Entry:** Free, with registration\n- **Prizes:** For the **top 3 teams**\n- **Teams:** Up to **6 people**\n- Solo participants will be helped to team up with fellow quizzers on the spot\n\nBring your friends, colleagues, and lovers. Come early, come curious, and maybe come with a pen.\n\nFor queries, call the number listed or DM Calm Your Wits Quizzing on Instagram.",
+    "date": "2026-11-29",
+    "time": "17:00",
+    "venue": "Koramangala SOCIAL",
+    "venueMapLink": null,
+    "eligibility": [],
+    "eligibilityCategories": [],
+    "hostingOrg": "Calm Your Wits Quizzing",
+    "quizMasters": [],
+    "poc": {
+      "name": null,
+      "phone": "7209209679",
+      "whatsapp": "7209209679"
+    },
+    "regLink": "https://offlyn.life/e/HVebjKA",
+    "instagramLink": "https://instagram.com/calm.your.wits.quizzing",
+    "entryFee": "Free",
+    "teamSize": 6,
+    "crossCollege": null,
+    "mode": "offline",
+    "city": "Bangalore",
+    "source": "whatsapp",
+    "sourceId": "whatsapp:ACC8FA427943E41EBD3CCD41980E397F",
+    "sourceGroupId": "919902444486-1522038543@g.us",
+    "posterImage": "posters/124a92c8-1791-4843-bec1-1106237cb27b.jpg",
+    "sourceCaption": "*PUB QUIZ BY CALM YOUR WITS QUIZZING AT KORAMANGALA SOCIAL*\n\nThe November leg of quizzes wraps up with a fun, general quiz in Koramangala!\n\nTest your smarts at one of our classic general sets, broadly covering memes, news, music, entertainment, and all things internet & pop culture. If you have never attended a pub quiz before, this is a great place to start. Every question is framed in a way that will let you work out the answer, and we are liberal with hints.\n\n📅 Sun, 29th Nov\n🕕 5 PM\n📍 Koramangala SOCIAL\n🎟️ Entry is FREE, please register here - https://offlyn.life/e/HVebjKA\n🏆 Prizes up for grabs for the top 3 teams!\n🙋🏻‍♂ Teams of up to 6 people\n\nBring your friends, colleagues, and lovers. Showing up solo? No worries, we’ll help you team up with fellow quizzers on the spot!\n\nCome early, come curious, and maybe come with a pen.\n\nFor any queries, please contact 7209209679 or DM us on instagram.com/calm.your.wits.quizzing",
+    "sourceMessageId": "ACC8FA427943E41EBD3CCD41980E397F",
+    "sourceTimestamp": "2026-11-28T08:14:46.000Z",
+    "createdAt": "2026-11-28T08:37:45.893Z",
+    "updatedAt": "2026-11-28T08:37:45.893Z",
+    "extractedFields": [
+      "name",
+      "description",
+      "date",
+      "time",
+      "venue",
+      "teamSize",
+      "entryFee",
+      "mode",
+      "hostingOrg",
+      "poc",
+      "regLink",
+      "instagramLink",
+      "city"
+    ]
   }
 ]
